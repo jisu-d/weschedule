@@ -56,8 +56,7 @@ fastify.get('/comciganData', async (req:MyRequest<c>, rep) => { // ?school=새�
     let d
     if(queryObj.school && queryObj.Year && queryObj.class && queryObj.zeroOne){
         d = await getComciganData(queryObj.school, queryObj.Year, queryObj.class, queryObj.zeroOne);
-        console.log(d);
-    } else{
+    } else {
         d = '해당 데이터가 존재하지 않음.'
     }
     return d
