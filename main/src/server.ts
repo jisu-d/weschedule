@@ -131,7 +131,7 @@ const comciganDataParsing = async (arr:any, a:number, b:number, num:number) => {
     return data
 }
 
-console.log(await getComciganData('새솔고등학교', 1, 1, 0));
+//console.log(await getComciganData('새솔고등학교', 1, 1, 0));
 
 //getComciganData('새솔고등학교', 1, 1, 0)//('정확한 학교이름(풀명)', '학년', '반', 이번주, 다음주 시간표 판단 (0:이번주,1:다음주))
 //여기 부터 급식 정보 가져오는거

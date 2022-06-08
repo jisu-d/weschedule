@@ -9,7 +9,7 @@ if(import.meta.env.DEV){
 
 const localda = await JSON.parse(localStorage.getItem('obj'))
 
-const da = await (await fetch(`${proxy}/comciganData?school=${localda.schoolname}&Year=${localda.year}&class=${localda.class}&zeroOne=1`)).json() as Datai;
+const da = await (await fetch(`${proxy}/comciganData?school=${localda.schoolname}&Year=${localda.year}&class=${localda.class}&zeroOne=0`)).json() as Datai;
 
 const makeTable = (arr:[string, string][], key:number) => <tr key={key * 6}><td>{key + 1}</td>{arr.map((v, i) => {
     if(v){
