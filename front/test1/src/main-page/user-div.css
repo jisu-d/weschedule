@@ -1,0 +1,8 @@
+.user-info-container {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 8px;
+    padding: 10px 30px;
+    font-weight: bolder;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}

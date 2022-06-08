@@ -1,0 +1,54 @@
+.cooktable-container {
+    margin-top: 20px;
+    padding: 20px 20px 10px 20px;
+}
+
+.cook-List {
+    display: flex;
+    padding: 20px 0;
+    /*
+    align-items: stretch;
+    justify-self: flex-start;
+    */
+    overflow-x: scroll;
+    /* white-space: nowrap; */
+}
+
+.cooktable {
+    box-sizing: border-box;
+    position: relative;
+    flex-shrink: 0;
+    flex-basis: 165px;
+    padding: 15px 7px;
+    margin-left: 15px;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+}
+
+.cooktable:nth-child(1){
+    margin: 0;
+}
+  
+.cooktable .date{
+    display: flex;
+    position: absolute;
+    justify-content: right;
+    right: 15px;
+    bottom: 15px;
+    font-size: 12px;
+}
+
+.cooktable .kcal{
+    display: flex;
+    justify-content: right;
+    padding-right: 8px;
+    font-size: 13px;
+    color: rgba(99, 99, 99, 0.377);
+}
+
+.cook-List .food-list{
+    font-size: 14px;
+    padding: 15px 0 15px 8px;
+}
+
+.cook-List::-webkit-scrollbar{ display:none; }
