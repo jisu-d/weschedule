@@ -15,7 +15,7 @@ const makeTable = (arr:[string, string][], key:number) => <tr key={key * 6}><td>
     if(v){
         return (<td key={i + 1 + key * 6}>{v[0]}<br />{v[1]}</td>)
     } else {
-        return(<td key={i + 1 + key * 6}></td>)
+        return(<td key={i + 1 + key * 6}>없</td>)
     }
 })}</tr>
 
