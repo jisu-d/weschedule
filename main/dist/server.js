@@ -67,7 +67,6 @@ export const getComciganData = async (school, a, b, num) => {
     // 학교 컴시간 데이터 요청하는곳 매개변수에 들어가는 학교이름이 정확해야함 -> 왜냐면 데이터 1개 오는걸 감안하고 만들었기 때문
     const schoolNum = await schoolListFetch(school); // 학교 고유번호 받아옴ㅋ
     const mainData = await schoolInfoFetch(schoolNum['학교검색'][0][3]); //schoolNum에서 받아온 데이터 넘겨줌
-    console.log(mainData);
     const parsingData = await comciganDataParsing(mainData, a, b, num); //mainData에서 받은 데이터를 파싱해줌
     return parsingData;
 };

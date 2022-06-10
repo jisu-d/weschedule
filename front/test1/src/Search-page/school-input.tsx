@@ -20,7 +20,7 @@ let Debounce: NodeJS.Timeout
 
 export function School_Search_Input(this: string) {
     const inputRef = useRef(null);
-    let [arr, setArr]  = useState<JSX.Element[]>([])
+    let [arr, setArr]  = useState<JSX.Element[] | JSX.Element>([])
 
     const onChange: React.ChangeEventHandler = async (e) => {
         const tar = e.currentTarget;
@@ -31,10 +31,14 @@ export function School_Search_Input(this: string) {
         }
         Debounce = setTimeout(async () => {
             const d = await fetchSchoolList(tar.value)
+            console.log(d);
+            
             if (d) {
                 setArr(d.map((v, i) => (<div key={`list-${i}`}>{v[2]}</div>)))
+            } else {
+                setArr(<div>결과 없음.</div>)
             }
-        }, 1000);
+        }, 800);
     }
 
     const onClick = (e:React.MouseEvent<HTMLDivElement>) => {
