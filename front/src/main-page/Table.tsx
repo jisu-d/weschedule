@@ -1,4 +1,5 @@
-import { Datai } from '../../../../public/type';
+import { Datai } from '../../../public/type';
+import { localda } from '../Search-page/local_data'
 import './Table.css'
 
 const day = ['월', '화', '수', '목', '금'] as const;
@@ -6,8 +7,6 @@ let proxy = '';
 if(import.meta.env.DEV){
     proxy = '/api'
 }
-
-const localda = await JSON.parse(localStorage.getItem('obj'))
 
 const da = await (await fetch(`${proxy}/comciganData?school=${localda.schoolname}&Year=${localda.year}&class=${localda.class}&zeroOne=0`)).json() as Datai;
 

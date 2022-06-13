@@ -1,0 +1,22 @@
+{
+  "name": "project1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx concurrently \"cd front&&npm run dev\" \"cd main&&npm start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jisu-d/project1.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jisu-d/project1/issues"
+  },
+  "homepage": "https://github.com/jisu-d/project1#readme",
+  "dependencies": {
+    "concurrently": "^7.2.1"
+  }
+}

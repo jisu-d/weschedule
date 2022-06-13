@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 
-import { schoolData } from './addData'
+import { schoolData } from './local_data'
 
 export function Class_Search_Input(this: string) {
     const onChange: React.ChangeEventHandler = async (e) => {

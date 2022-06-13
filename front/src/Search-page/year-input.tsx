@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 
-import { schoolData } from './addData'
+import { schoolData } from './local_data'
 
 
 export function Year_Search_Input(this: string) {

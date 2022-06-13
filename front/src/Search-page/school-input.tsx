@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import { schoolData } from './addData'
+import { schoolData } from './local_data'
 
 let proxy = '';
 
