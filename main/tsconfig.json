@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "esnext",    
+    "lib": ["DOM","ESNext"],
+    "module": "esnext",
+    "rootDir": "./src",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true                   
+  }
+}
