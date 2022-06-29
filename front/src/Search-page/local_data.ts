@@ -16,3 +16,5 @@ export const addLocalData = (data:DBdata) => {
     localStorage.setItem('obj', JSON.stringify(data))
     //document.cookie = `id=${data.schoolname}; expires=${d.toUTCString()};`;
 }
+
+//hi
