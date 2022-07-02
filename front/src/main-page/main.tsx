@@ -6,7 +6,7 @@ import { Table } from './Table'
 import { InfoDiv } from './user-div'
 import { CookDiv } from './Cook-div'
 import { MsgDiv } from './msg'
-
+import { MyoungEonDiv } from './helpful_test'
 
 import './index.css'
 
@@ -22,16 +22,19 @@ ReactDOM.createRoot(app).render(
             <InfoDiv />
           </div>
         </div>
+        <div className='myoungEon-container box_shadow'>
+          <MyoungEonDiv />
+        </div>
         <div className="timetable-container box_shadow" id="timetable-container">
-          {<Table size={7} />}
+          <Table size={7} />
         </div>
         <div className="cooktable-container box_shadow" id="cooktable-container">
           <CookDiv />
         </div>
+        <div className='side-comment-container'>
+          <MsgDiv/>
+        </div>
       </div>
     </main>
-    <div className='side-comment-container'>
-      <MsgDiv/>
-    </div>
   </React.StrictMode>
 )
