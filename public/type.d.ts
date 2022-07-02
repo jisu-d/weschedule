@@ -47,3 +47,12 @@ export type sc = {
         }
     ]
 }
+
+export type ME = [
+    {
+        result: string
+    },
+    {
+        respond: string
+    }
+]      

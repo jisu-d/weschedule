@@ -28,11 +28,13 @@ export async function getscNum() {
     }
     urlList.학교찾기 = euc.slice(d[0] + 1, euc.indexOf(`'`, d[0] + 1));
     urlList.학교정보 = euc.slice(d[1] + 1, euc.indexOf(`'`, d[1] + 1));
-    urlList.sc = euc.slice(euc.indexOf("sc_data('") + 9, euc.indexOf("sc_data('") + 15);
+    // urlList.sc = euc.slice(euc.indexOf("sc_data('") + 9, euc.indexOf("sc_data('") + 15)
+    urlList.sc = euc.slice(euc.indexOf("sc_data('") + 9, euc.indexOf("_'", euc.indexOf("sc_data('")) + 1);
     urlList.시간표번호_이번주 = euc.slice(euc.indexOf("일일자료=자료.") + 8, euc.indexOf("일일자료=자료.") + 13);
     urlList.시간표번호_다음주 = euc.slice(euc.indexOf("원자료=자료.") + 7, euc.indexOf("원자료=자료.") + 12);
     urlList.선생님이름 = euc.slice(euc.indexOf("th<자료.") + 6, euc.indexOf("th<자료.") + 11);
     urlList.과목리스트 = euc.slice(euc.indexOf(`속성+"'>"+자료.`) + 11, euc.indexOf(`속성+"'>"+자료.`) + 16);
+    console.log(urlList.sc);
 }
 const parsingJson = async (res) => {
     const arr = [];
@@ -107,8 +109,9 @@ const comciganDataParsing = async (arr, a, b, num) => {
     return data;
 };
 //console.log(await getComciganData('새솔고등학교', 1, 1, 0));
+//console.log(await getComciganData('새솔고등학교', 1, 1, 0));
 //getComciganData('새솔고등학교', 1, 1, 0)//('정확한 학교이름(풀명)', '학년', '반', 이번주, 다음주 시간표 판단 (0:이번주,1:다음주))
-//여기 부터 급식 정보 가져오는거
+//여기 부터 급식 정보 가져오는거\
 const neisApis = {
     key: 'dd01d62062ee4a26a12d9ea34e7b77a7',
     학교기본정보: 'https://open.neis.go.kr/hub/schoolInfo',
