@@ -14,7 +14,7 @@ export default defineConfig({
     }
   },
   server:{
-    port:443,
+    port:4000,
     proxy:{
       '/api': {
         target: 'http://0.0.0.0:3000',
