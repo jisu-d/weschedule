@@ -43,7 +43,7 @@ export async function getscNum(){ // 사이트 스크립트에 데이터 요청�
     urlList.선생님이름 = euc.slice(euc.indexOf("th<자료.") + 6, euc.indexOf("th<자료.") + 11)
     urlList.과목리스트 = euc.slice(euc.indexOf(`속성+"'>"+자료.`) + 11, euc.indexOf(`속성+"'>"+자료.`) + 16)
 
-    console.log(urlList.sc);
+    console.log(urlList + '정보를 가져왔음.');
 }
 
 const parsingJson = async (res:string) => { // 0 삭제 -> JSON 변환해서 return
@@ -150,9 +150,7 @@ const neisApis = { //나이스에 fetch할떄 필요한 key, url
 
 const changeDay = (i:number) => {
     const Day = new Date()
-    console.log(Day);
     Day.setDate(Day.getDate() + Number(i))
-    console.log(Day);
     const y: string = `${Day.getFullYear()}`.padStart(2, '0');
     const m: string = `${Day.getMonth() + 1}`.padStart(2, '0');
     const d: string = `${Day.getDate()}`.padStart(2, '0');
