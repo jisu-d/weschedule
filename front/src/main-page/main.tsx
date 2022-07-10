@@ -8,6 +8,8 @@ import { CookDiv } from './Cook-div'
 import { MsgDiv } from './msg'
 import { MyoungEonDiv } from './helpful_test'
 
+import { Href } from './user-div'
+
 import './index.css'
 
 const app = document.getElementById('app');
@@ -15,15 +17,11 @@ const app = document.getElementById('app');
 ReactDOM.createRoot(app).render(
   <React.StrictMode>
     <main>
-      {/*<a href="/page/">page로 가기</a>*/}
       <div>
         <div>
-          <div className="user-info-container" id="user-info-container">
+          <div className="user-info-container" id="user-info-container" onClick={Href}>
             <InfoDiv />
           </div>
-        </div>
-        <div className='myoungEon-container box_shadow'>
-          <MyoungEonDiv />
         </div>
         <div className="timetable-container box_shadow" id="timetable-container">
           <Table size={7} />
@@ -31,7 +29,10 @@ ReactDOM.createRoot(app).render(
         <div className="cooktable-container box_shadow" id="cooktable-container">
           <CookDiv />
         </div>
-        <div className='side-comment-container'>
+        <div className='myoungEon-container box_shadow'>
+          <MyoungEonDiv />
+        </div>
+        <div className='side-comment-container box_shadow'>
           <MsgDiv/>
         </div>
       </div>

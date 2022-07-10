@@ -1,11 +1,14 @@
-import './user-div.css';
+import {localda} from './localda';
 
-const localda = JSON.parse(localStorage.getItem('obj'))
+import './user-div.css';
 
 export function InfoDiv(){
     const element = (
         <>
-        <div>{localda.schoolname}</div>
+        <div className='school-container'>
+            <div>{localda.schoolname}</div>
+            <div className='arrow'></div>
+        </div>
         <div>
             <span>{localda.year + '학년 '}</span>
             <span>{localda.class + '반'}</span>
@@ -13,4 +16,8 @@ export function InfoDiv(){
         </>
     )
     return element
+}
+
+export function Href() {
+    location.href = '/page/'
 }

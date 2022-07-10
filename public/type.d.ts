@@ -10,6 +10,7 @@ export interface DBdata{
     schoolname: string
     year: number
     class: number
+    login: number
 }
 
 export type msg = {

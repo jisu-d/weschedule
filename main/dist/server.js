@@ -34,7 +34,7 @@ export async function getscNum() {
     urlList.시간표번호_다음주 = euc.slice(euc.indexOf("원자료=자료.") + 7, euc.indexOf("원자료=자료.") + 12);
     urlList.선생님이름 = euc.slice(euc.indexOf("th<자료.") + 6, euc.indexOf("th<자료.") + 11);
     urlList.과목리스트 = euc.slice(euc.indexOf(`속성+"'>"+자료.`) + 11, euc.indexOf(`속성+"'>"+자료.`) + 16);
-    console.log(urlList.sc);
+    console.log(urlList + '정보를 가져왔음.');
 }
 const parsingJson = async (res) => {
     const arr = [];
@@ -120,9 +120,7 @@ const neisApis = {
 };
 const changeDay = (i) => {
     const Day = new Date();
-    console.log(Day);
     Day.setDate(Day.getDate() + Number(i));
-    console.log(Day);
     const y = `${Day.getFullYear()}`.padStart(2, '0');
     const m = `${Day.getMonth() + 1}`.padStart(2, '0');
     const d = `${Day.getDate()}`.padStart(2, '0');

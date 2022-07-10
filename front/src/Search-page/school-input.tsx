@@ -17,8 +17,9 @@ let Debounce: NodeJS.Timeout
 
 export function School_Search_Input(this: string) {
     const inputRef = useRef(null);
+    
     let [arr, setArr]  = useState<JSX.Element[] | JSX.Element>([])
-
+    
     const onChange: React.ChangeEventHandler = async (e) => {
         const tar = e.currentTarget;
         if(!(tar instanceof HTMLInputElement)) return;
@@ -36,7 +37,7 @@ export function School_Search_Input(this: string) {
             }
         }, 800);
     }
-
+    
     const onClick = (e:React.MouseEvent<HTMLDivElement>) => {
         const tar = e.currentTarget;
         if(!(e.target instanceof HTMLDivElement)) return;

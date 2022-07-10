@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 
 import { addLocalData, schoolData } from './local_data'
 
@@ -13,21 +13,23 @@ export function Button(this: string) {
 
     const onclick = async () => {
         if(schoolData.year && schoolData.class && schoolData.schoolname){
-            if(schoolData.year < 0 && schoolData.class < 0){
+            if(schoolData.year < 0 || schoolData.class < 0){
                 alert('학교와 학년을 다시 입력해 주세요')
             } else{//존재 하는학교 반이 맞는지 확인
                 const da = await (await fetch(`${proxy}/checkSchool?school=${schoolData.schoolname}&Year=${(schoolData.year)}&class=${schoolData.class}`)).text()
     
-                let ch: true | false
+                let tf: true | false
     
                 if(da === 'true'){
-                    ch = true
+                    tf = true
                 } else {
-                    ch = false
+                    tf = false
                 }
 
-                if(ch){
+                if(tf){
+                    schoolData.login++
                     addLocalData(schoolData)
+                    location.href = '/'
                 } else{
                     alert('존재하지 않습니다.')
                 }
