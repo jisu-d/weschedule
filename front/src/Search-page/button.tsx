@@ -30,7 +30,7 @@ export function Button(this: string) {
                     schoolData.login++
                     addLocalData(schoolData)
                     location.href = '/'
-                } else{
+                } else {
                     alert('존재하지 않습니다.')
                 }
             }
