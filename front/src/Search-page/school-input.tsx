@@ -2,11 +2,7 @@ import React, { useRef, useState } from "react";
 
 import { schoolData } from './local_data'
 
-let proxy = '';
-
-if(import.meta.env.DEV){
-    proxy = '/api'
-}
+import { proxy } from "../proxy";
 
 const fetchSchoolList = async (school:string) => {
     const da = await (await fetch(`${proxy}/schoolList?school=${school}`)).json() as [number, string, string, number][];

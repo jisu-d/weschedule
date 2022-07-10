@@ -13,15 +13,15 @@ export default defineConfig({
         page:path.resolve(__dirname, 'page/index.html')
       }
     },
-    outDir:path.resolve(__dirname, '..', 'dist')
+    outDir:path.resolve(__dirname, '..', '..', 'jisu-d.github.io')
   },
   server:{
-    port:4000,
+    port:4,
     proxy:{
       '/api': {
         target: 'http://18.216.49.251:3000/',
         rewrite: (path) => path.replace(/^\/api/, ''),
-        secure:false,
+        secure:true,
         changeOrigin:true,
         ws:true
       }

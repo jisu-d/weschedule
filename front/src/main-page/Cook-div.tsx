@@ -1,10 +1,7 @@
 import './Cook-div.css';
 import { localda } from '../Search-page/local_data'
 
-let proxy = '';
-if(import.meta.env.DEV){
-    proxy = '/api'
-}
+import { proxy } from "../proxy";
 
 const da = await (await fetch(`${proxy}/cookInfo?school=${localda.schoolname}&getnum=5`)).json()
 //이거 급식 불러오는 날짜수정 필요함

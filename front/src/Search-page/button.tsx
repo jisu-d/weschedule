@@ -2,11 +2,7 @@ import { useRef } from "react";
 
 import { addLocalData, schoolData } from './local_data'
 
-let proxy = '';
-
-if (import.meta.env.DEV) {
-    proxy = '/api'
-}
+import { proxy } from "../proxy";
 
 export function Button(this: string) {
     const inputRef = useRef(null);
