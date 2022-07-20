@@ -11,6 +11,7 @@ fastify.register(fastifyCors, instance => {
         const origin = req.headers.origin;
         // do not include CORS headers for requests from localhost
         const hostname = new URL(origin).hostname;
+        console.log(hostname);
         if (hostname === "jisu-d.github.io") {
             corsOptions.origin = true;
         }
