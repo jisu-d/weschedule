@@ -1,22 +1,13 @@
 import Fastify from "fastify";
 import { getComciganData, fetchCookInfo, schoolListFetch, checkSchool } from './server.js';
 import { route } from "./frontRoute.js";
+import fastifyCors from '@fastify/cors';
 const fastify = Fastify({
     logger: true
 });
-// fastify.register(fastifyCors, instance => {
-//     return (req, callback) => {
-//         let corsOptions = { origin: false};
-//         const origin = req.headers.origin
-//         // do not include CORS headers for requests from localhost
-//         const hostname = new URL(origin).hostname
-//         console.log(hostname);
-//         if(hostname === "jisu-d.github.io"){
-//             corsOptions.origin = true;
-//         }
-//         callback(null, corsOptions) // callback expects two parameters: error and options
-//     }
-// });
+fastify.register(fastifyCors, {
+    origin: "https://jisu-d.github.io"
+});
 fastify.register(route, { prefix: '/' }); //이거 슈밤바/f/main 해야함 /* 모든것
 fastify.get('/schoolList', async (req, rep) => {
     let d;
