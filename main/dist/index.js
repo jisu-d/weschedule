@@ -3,7 +3,7 @@ import { getComciganData, fetchCookInfo, schoolListFetch, checkSchool } from './
 import { route } from "./frontRoute.js";
 import fastifyCors from '@fastify/cors';
 const fastify = Fastify({
-//logger:true
+    logger: true
 });
 fastify.register(fastifyCors, instance => {
     return (req, callback) => {
