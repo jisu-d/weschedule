@@ -161,6 +161,8 @@ interface SCINFO {
 }
 
 export const fetchSchoolInfo = async (schoolName:string) => {  //학교 정보를 가져 오는 코드
+    console.log(1111111111111111111111111111);
+    
     const res = await (await fetch(`${neisApis['학교기본정보']}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&SCHUL_NM=${schoolName}`)).json()
     
     const arr:SCINFO = {
@@ -173,9 +175,6 @@ export const fetchSchoolInfo = async (schoolName:string) => {  //학교 정보�
 
 export const fetchCookInfo = async (schoolName:string, getNum:number) => { //급식 정보를 가져온다.
     const arr = await fetchSchoolInfo(schoolName)
-
-    console.log(arr);
-    
     
     const dayList:string[] = []
 
