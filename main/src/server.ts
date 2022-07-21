@@ -214,6 +214,9 @@ export const checkSchool = async (schoolName:string, year:number, Class:number) 
        return false;
     } 
 }
+
+console.log('씨팔 왜 안떠');
+
 //console.log(await checkSchool('새솔고등학교', 1, 9 ));
 
 //fetchCookInfo('새솔고등학교', 3)
