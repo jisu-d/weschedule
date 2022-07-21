@@ -174,6 +174,8 @@ export const fetchSchoolInfo = async (schoolName:string) => {  //학교 정보�
 }
 
 export const fetchCookInfo = async (schoolName:string, getNum:number) => { //급식 정보를 가져온다.
+    console.log(1234565432123456543234565432);
+    
     const arr = await fetchSchoolInfo(schoolName)
     
     const dayList:string[] = []
