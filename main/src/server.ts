@@ -161,7 +161,6 @@ interface SCINFO {
 }
 
 export const fetchSchoolInfo = async (schoolName:string) => {  //학교 정보를 가져 오는 코드
-    console.log(1111111111111111111111111111);
     
     const res = await (await fetch(`${neisApis['학교기본정보']}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&SCHUL_NM=${schoolName}`)).json()
     
@@ -174,9 +173,10 @@ export const fetchSchoolInfo = async (schoolName:string) => {  //학교 정보�
 }
 
 export const fetchCookInfo = async (schoolName:string, getNum:number) => { //급식 정보를 가져온다.
-    console.log(1234565432123456543234565432);
     
     const arr = await fetchSchoolInfo(schoolName)
+    console.log(arr);
+    
     
     const dayList:string[] = []
 
@@ -191,6 +191,9 @@ export const fetchCookInfo = async (schoolName:string, getNum:number) => { //급
             dayList.push(now)
         }
     }
+
+    console.log(`${neisApis.급식식단정보}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${arr.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${arr.SD_SCHUL_CODE}&MLSV_FROM_YMD=${dayList[0]}&MLSV_TO_YMD=${dayList[1]}`);
+    
 
     const res = await (await fetch(`${neisApis.급식식단정보}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${arr.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${arr.SD_SCHUL_CODE}&MLSV_FROM_YMD=${dayList[0]}&MLSV_TO_YMD=${dayList[1]}`)).json();
     
@@ -214,8 +217,6 @@ export const checkSchool = async (schoolName:string, year:number, Class:number) 
        return false;
     } 
 }
-
-console.log('씨팔 왜 안떠');
 
 //console.log(await checkSchool('새솔고등학교', 1, 9 ));
 
