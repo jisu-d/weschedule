@@ -135,7 +135,6 @@ export const fetchSchoolInfo = async (schoolName) => {
 };
 export const fetchCookInfo = async (schoolName, getNum) => {
     const arr = await fetchSchoolInfo(schoolName);
-    console.log(arr);
     const dayList = [];
     for (let i = 0; i < 2; i++) {
         if (i !== 0) {
@@ -149,8 +148,15 @@ export const fetchCookInfo = async (schoolName, getNum) => {
             dayList.push(now);
         }
     }
-    console.log(`${neisApis.급식식단정보}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${arr.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${arr.SD_SCHUL_CODE}&MLSV_FROM_YMD=${dayList[0]}&MLSV_TO_YMD=${dayList[1]}`);
     const res = await (await fetch(`${neisApis.급식식단정보}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${arr.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${arr.SD_SCHUL_CODE}&MLSV_FROM_YMD=${dayList[0]}&MLSV_TO_YMD=${dayList[1]}`)).json();
+    if ('RESULT' in res) {
+        if (res.RESULT.MESSAGE === '해당하는 데이터가 없습니다.') {
+            return res.RESULT.MESSAGE;
+        }
+        else {
+            return res;
+        }
+    }
     return res;
 };
 export const checkSchool = async (schoolName, year, Class) => {
