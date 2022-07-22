@@ -51,7 +51,7 @@ fastify.get('/cookInfo', async (req:MyRequest<c>, rep) => { // ?school=학교&ge
     } else{
         d = '해당 데이터가 존재하지 않음.'
     }
-    return d
+    return d 
 });
 
 fastify.get('/comciganData', async (req:MyRequest<c>, rep) => { // ?school=새솔고등학교&Year=1&class=1&zeroOne=1
