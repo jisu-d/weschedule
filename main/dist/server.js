@@ -153,11 +153,10 @@ export const fetchCookInfo = async (schoolName, getNum) => {
         if (res.RESULT.MESSAGE === '해당하는 데이터가 없습니다.') {
             return res.RESULT.MESSAGE;
         }
-        else {
-            return res;
-        }
     }
-    return res;
+    else {
+        return res;
+    }
 };
 export const checkSchool = async (schoolName, year, Class) => {
     const schoolInfo = await fetchSchoolInfo(schoolName);

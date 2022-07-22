@@ -193,11 +193,10 @@ export const fetchCookInfo = async (schoolName:string, getNum:number) => { //급
     if('RESULT' in res){
         if(res.RESULT.MESSAGE === '해당하는 데이터가 없습니다.'){
             return res.RESULT.MESSAGE
-        } else{
-            return res
         }
+    } else{
+        return res
     }
-    return res
 }
 
 export const checkSchool = async (schoolName:string, year:number, Class:number) => {

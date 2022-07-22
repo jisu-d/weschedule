@@ -18,6 +18,8 @@ export function CookDiv() {
 
 const createCook = () => {
     const arr:JSX.Element[] = [];
+    console.log(da);
+    
     if(da === '해당하는 데이터가 없습니다.'){
         console.log(1);
         return(
