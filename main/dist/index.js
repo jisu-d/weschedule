@@ -23,13 +23,7 @@ fastify.get('/cookInfo', async (req, rep) => {
     const queryObj = req.query;
     let d;
     if (queryObj.school && queryObj.getnum) {
-        const res = await fetchCookInfo(queryObj.school, queryObj.getnum);
-        // if ('RESULT' in res) {
-        //     return res
-        // } else if ('mealServiceDietInfo' in res) {
-        //     return res
-        // }
-        return res;
+        d = await fetchCookInfo(queryObj.school, queryObj.getnum);
     }
     else {
         d = '해당 데이터가 존재하지 않음.';
