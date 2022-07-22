@@ -20,11 +20,9 @@ const createCook = () => {
     const arr:JSX.Element[] = [];
     if(da === '해당하는 데이터가 없습니다.'){
         console.log(1);
-        
-        const element = (
+        return(
             <div>{da}</div>
         )
-        arr.push(element)
     } else{
         for(let i = 0 ; i < da.length; i++){
             const element = (
@@ -39,10 +37,10 @@ const createCook = () => {
             )
             arr.push(element)
         }
+        return (
+            <>
+                {arr}
+            </>
+        )
     }
-    return (
-        <>
-            {arr}
-        </>
-    )
 }
