@@ -194,8 +194,8 @@ export const fetchCookInfo = async (schoolName:string, getNum:number) => { //급
         if(res.RESULT.MESSAGE === '해당하는 데이터가 없습니다.'){
             return res.RESULT.MESSAGE
         }
-    } else{
-        return res
+    } else if ('mealServiceDietInfo' in res){
+        return res.mealServiceDietInfo[1].row
     }
 }
 

@@ -154,8 +154,8 @@ export const fetchCookInfo = async (schoolName, getNum) => {
             return res.RESULT.MESSAGE;
         }
     }
-    else {
-        return res;
+    else if ('mealServiceDietInfo' in res) {
+        return res.mealServiceDietInfo[1].row;
     }
 };
 export const checkSchool = async (schoolName, year, Class) => {

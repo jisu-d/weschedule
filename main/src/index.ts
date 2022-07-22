@@ -43,18 +43,21 @@ fastify.get('/schoolList', async (req:MyRequest<d>, rep) => {// ?school=새솔
     return d['학교검색']
 })
 
-fastify.get('/cookInfo', async (req:MyRequest<c>, rep) => { // ?school=학교&getnum=받아올 양
+fastify.get('/cookInfo', async (req: MyRequest<c>, rep) => { // ?school=학교&getnum=받아올 양
     const queryObj = req.query
     let d
-    if(queryObj.school && queryObj.getnum){
+    if (queryObj.school && queryObj.getnum) {
         const res = await fetchCookInfo(queryObj.school, queryObj.getnum)
-        if('mealServiceDietInfo' in res){
-            d = res.mealServiceDietInfo[1].row
-        }
-    } else{
+        // if ('RESULT' in res) {
+        //     return res
+        // } else if ('mealServiceDietInfo' in res) {
+        //     return res
+        // }
+        return res
+    } else {
         d = '해당 데이터가 존재하지 않음.'
     }
-    return d 
+    return d
 });
 
 fastify.get('/comciganData', async (req:MyRequest<c>, rep) => { // ?school=새솔고등학교&Year=1&class=1&zeroOne=1
