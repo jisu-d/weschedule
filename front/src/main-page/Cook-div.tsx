@@ -18,18 +18,25 @@ export function CookDiv() {
 
 const createCook = () => {
     const arr:JSX.Element[] = [];
-    for(let i = 0 ; i < da.length; i++){
+    if(da === '해당하는 데이터가 없습니다.'){
         const element = (
-            <div className="cooktable" key={`cook-${i}`}>
-                <div className='kcal'>
-                    <span>{da[i].CAL_INFO}</span>
-                </div>
-                <div className='food-list'>{da[i].DDISH_NM.replace(/[\.0-9\(\)]/g, '').split('<br/>').map((v:string, j:number) => (<div key={`cook-menu-${j}`}>{v}</div>))}</div>
-                                                       
-                <div className='date'>{da[i].MLSV_TO_YMD.slice(4).replace(/(\d{2})(\d{2})/, '$1월 $2일')}</div>
-            </div>
+            <div>{da}</div>
         )
         arr.push(element)
+    } else{
+        for(let i = 0 ; i < da.length; i++){
+            const element = (
+                <div className="cooktable" key={`cook-${i}`}>
+                    <div className='kcal'>
+                        <span>{da[i].CAL_INFO}</span>
+                    </div>
+                    <div className='food-list'>{da[i].DDISH_NM.replace(/[\.0-9\(\)]/g, '').split('<br/>').map((v:string, j:number) => (<div key={`cook-menu-${j}`}>{v}</div>))}</div>
+                                                           
+                    <div className='date'>{da[i].MLSV_TO_YMD.slice(4).replace(/(\d{2})(\d{2})/, '$1월 $2일')}</div>
+                </div>
+            )
+            arr.push(element)
+        }
     }
     return (
         <>
