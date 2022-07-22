@@ -37,6 +37,8 @@ const createCook = () => {
             )
             arr.push(element)
         }
+        console.log(2);
+        
         return (
             <>
                 {arr}
