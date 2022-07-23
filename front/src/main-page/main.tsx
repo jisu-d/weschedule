@@ -5,6 +5,7 @@ import './local_data'
 import { Table } from './Table'
 import { InfoDiv } from './user-div'
 import { CookDiv } from './Cook-div'
+import { AdsensebyGoogleDiv } from './google_adsense'
 import { MsgDiv } from './msg'
 import { MyoungEonDiv } from './helpful_test'
 
@@ -31,6 +32,9 @@ ReactDOM.createRoot(app).render(
         </div>
         <div className='myoungEon-container box_shadow'>
           <MyoungEonDiv />
+        </div>
+        <div className='google_adsense box_shadow'>
+            <AdsensebyGoogleDiv />
         </div>
         <div className='side-comment-container box_shadow'>
           <MsgDiv/>
