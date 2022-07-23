@@ -5,8 +5,6 @@ export function AdsensebyGoogleDiv() {
         <>
             <div className='title'>오늘의 정보</div>
             <div>
-                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6211769300139830"
-                    crossOrigin="anonymous"></script>
                 <ins className="adsbygoogle"
                     data-ad-layout="in-article"
                     data-ad-format="fluid"
