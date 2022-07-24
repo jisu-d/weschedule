@@ -34,7 +34,6 @@ export async function getscNum(){ // 사이트 스크립트에 데이터 요청�
     urlList.학교찾기 = euc.slice(d[0] + 1, euc.indexOf(`'`, d[0] + 1));
     urlList.학교정보 = euc.slice(d[1] + 1, euc.indexOf(`'`, d[1] + 1));
 
-    // urlList.sc = euc.slice(euc.indexOf("sc_data('") + 9, euc.indexOf("sc_data('") + 15)
     urlList.sc = euc.slice(euc.indexOf("sc_data('") + 9, euc.indexOf("_'", euc.indexOf("sc_data('")) + 1)
 
     urlList.시간표번호_이번주 = euc.slice(euc.indexOf("일일자료=자료.") + 8, euc.indexOf("일일자료=자료.") + 13)
@@ -109,10 +108,8 @@ const comciganDataParsing = async (arr:any, a:number, b:number, num:number) => {
     const myComciganData:Array<7> = arr[urlList[days[num]]][a][b]
     
     for(let i = 0 ; i < myComciganData.length ; i++){
-        //if(i !== 0){
             for(let j = 0 ; j < day.length + 4; j++){
                 const classNumData = String(arr[urlList[days[num]]][a][b][i][j])
-                //if(Number(classNumData) !== 0){
                     if(classNumData.length === 3){
                         const l = parseInt(classNumData.slice(0, 1))
                         const f = parseInt(classNumData.slice(2))
@@ -125,15 +122,11 @@ const comciganDataParsing = async (arr:any, a:number, b:number, num:number) => {
                     } else if(classNumData.length === 0){
                         data[day[i - 1]].push(['', ''])
                     }
-                //}
             }
-        //}
     }
     
     return data
 }
-
-//console.log(await getComciganData('새솔고등학교', 1, 1, 0));
 
 //getComciganData('새솔고등학교', 1, 1, 0)//('정확한 학교이름(풀명)', '학년', '반', 이번주, 다음주 시간표 판단 (0:이번주,1:다음주))
 //여기 부터 급식 정보 가져오는거\
@@ -217,11 +210,4 @@ export const checkSchool = async (schoolName:string, year:number, Class:number) 
        return false;
     } 
 }
-
-//console.log(await checkSchool('새솔고등학교', 1, 9 ));
-
-//fetchCookInfo('새솔고등학교', 3)
-
-//const c = (await fetchCookInfo('새솔고등학교', 1)).mealServiceDietInfo[1].row
-
 
