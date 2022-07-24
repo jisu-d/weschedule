@@ -1,7 +1,8 @@
 import Fastify, {FastifyRequest} from "fastify";
-import {getComciganData, fetchCookInfo, fetchSchoolInfo, schoolListFetch, checkSchool} from './server.js';
+import {getComciganData, fetchCookInfo, schoolListFetch, checkSchool, getSkyData} from './server.js';
 import { route } from "./frontRoute.js";
 import fastifyCors from '@fastify/cors';
+import { type } from "os";
 const fastify = Fastify({
     logger:true
 });
@@ -32,6 +33,11 @@ type c = a & b & d;
 type MyRequest<T> = FastifyRequest<{
     Querystring: T
 }>
+
+type Sky = {
+    x: number,
+    y: number,
+}
 
 fastify.get('/schoolList', async (req:MyRequest<d>, rep) => {// ?school=새솔
     let d
@@ -70,6 +76,18 @@ fastify.get('/checkSchool', async (req:MyRequest<c>, rep) => { // ?school=새솔
     let d
     if(queryObj.school && queryObj.Year && queryObj.class){
         d = await checkSchool(queryObj.school, queryObj.Year, queryObj.class);
+    } else{
+        d = '해당 데이터가 존재하지 않음.'
+    }
+    return d
+});
+
+fastify.get('/Skydata', async (req:MyRequest<Sky>, rep) => { // ?school=새솔고등학교&Year=1&class=1
+    const queryObj = req.query
+    let d
+    if(queryObj.x && queryObj.y){
+        if(queryObj.y > 0 && queryObj.y > 0)
+        d = await getSkyData(queryObj.x, queryObj.y);
     } else{
         d = '해당 데이터가 존재하지 않음.'
     }
