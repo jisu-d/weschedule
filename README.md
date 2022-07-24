@@ -10,6 +10,15 @@
 - [나이스 급식식단정보](https://open.neis.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=OPEN17320190722180924242823&infSeq=2#none)
 - 컴시간 데이터 파싱
 
+### 사용한 프레임워크
+#### sever
+- [Fastify](https://www.fastify.io/)
+  - [Fastify Cors](https://www.npmjs.com/package/@fastify/cors/v/8.0.0)
+    다른 도메인에서 서버에 요청이 가능하도록 하기 위해서 사용함.
+
+### 개발 언어 
+- Typescript / React
+
 ### 넣을 고민중인 기능들
 - 날씨
     - 오늘은 우산이 필요해요.
