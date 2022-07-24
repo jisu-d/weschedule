@@ -213,7 +213,7 @@ export const checkSchool = async (schoolName:string, year:number, Class:number) 
 
 const SkyUrl = {
     url:'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst',
-    key: '272fQOyP6ihzZ0qF5xrgmgQVltQLoew2X+joJoeS00FhJELrgdmz00MrKpzXsTT4kSqoXWEbsudcdBOtnsX+Tw=='
+    key: '272fQOyP6ihzZ0qF5xrgmgQVltQLoew2X%2BjoJoeS00FhJELrgdmz00MrKpzXsTT4kSqoXWEbsudcdBOtnsX%2BTw%3D%3D'
 }
 
 export const getSkyData = async (lat: number, lng: number) => {
