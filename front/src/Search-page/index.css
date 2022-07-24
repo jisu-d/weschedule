@@ -52,8 +52,8 @@ input {
     background-color: rgba(99, 99, 99, 0.2);
 }
 
-.school-list > div{
-    text-align: center;
+.school-list-arr{
+    display: flex;
     font-size: 13px;
     padding: 5px 0;
 }

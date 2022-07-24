@@ -25,15 +25,20 @@ export function School_Search_Input(this: string) {
         }
         Debounce = setTimeout(async () => {
             const d = await fetchSchoolList(tar.value)
-            
+
             if (d) {
-                setArr(d.map((v, i) => (<div key={`list-${i}`}>{v[2]}</div>)))
+                setArr(d.map((v, i) => (
+                <div key={`list-${i}`} className="school-list-arr">
+                    <div>{v[1]}</div>
+                    <div>{v[2]}</div>
+                </div>
+                )))
             } else {
                 setArr(<div></div>)
             }
         }, 800);
     }
-    
+
     const onClick = (e:React.MouseEvent<HTMLDivElement>) => {
         const tar = e.currentTarget;
         if(!(e.target instanceof HTMLDivElement)) return;
