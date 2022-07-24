@@ -218,7 +218,7 @@ const SkyUrl = {
 
 export const getSkyData = async (lat:number, lng:number) => {
     const xydata = dfs_xy_conv(lat, lng);
-    const fetchData = await fetch(`${SkyUrl.url}?serviceKey=${SkyUrl.key}&pageNo=1&numOfRows=14&dataType=JSON&base_date=20220723&base_time=0500&nx=${xydata.x}&ny=${xydata.x}`)
+    const fetchData = await (await fetch(`${SkyUrl.url}?serviceKey=${SkyUrl.key}&pageNo=1&numOfRows=14&dataType=JSON&base_date=20220723&base_time=0500&nx=${xydata.x}&ny=${xydata.x}`)).json()
     return fetchData
 }
 const RE = 6371.00877; // 지구 반경(km)
