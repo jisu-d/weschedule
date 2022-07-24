@@ -116,12 +116,11 @@ const comciganDataParsing = async (arr:any, a:number, b:number, num:number) => {
                     if(classNumData.length === 3){
                         const l = classNumData.slice(0, 1)
                         const f = classNumData.slice(2)
-                        console.log(l, f);
-                        
                         data[day[i - 1]].push([`${arr[urlList.과목리스트][f]}`, `${arr[urlList.선생님이름][l].slice(0, 2)}`])
                     } else if(classNumData.length === 4){
                         const l = classNumData.slice(0, 2)
                         const f = classNumData.slice(2)
+                        console.log(l, f);
                         data[day[i - 1]].push([`${arr[urlList.과목리스트][f]}`, `${arr[urlList.선생님이름][l].slice(0, 2)}`])
                     } else if(classNumData.length === 0){
                         data[day[i - 1]].push(['', ''])
