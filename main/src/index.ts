@@ -82,7 +82,7 @@ fastify.get('/checkSchool', async (req:MyRequest<c>, rep) => { // ?school=새솔
     return d
 });
 
-fastify.get('/Skydata', async (req:MyRequest<Sky>, rep) => { // ?school=새솔고등학교&Year=1&class=1
+fastify.get('/Skydata', async (req:MyRequest<Sky>, rep) => { // /Skydata?x=10&y=20
     const queryObj = req.query
     let d
     if(queryObj.x && queryObj.y){
