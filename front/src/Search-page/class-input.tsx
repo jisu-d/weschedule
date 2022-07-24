@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 
 import { schoolData } from './local_data'
 
@@ -11,7 +11,7 @@ export function Class_Search_Input(this: string) {
         
     return (
         <>
-        <input onChange={onChange} type="number" placeholder='반'  />
+        <input onChange={onChange} type="number" placeholder='반' min="1" max='15' />
         </>
     );
 }
