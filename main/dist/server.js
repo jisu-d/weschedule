@@ -239,7 +239,10 @@ export const getSkyData = async (lat, lng) => {
             reData.push(`${dataType[v.category]}: ${v.fcstValue}`);
         }
     });
-    return reData;
+    return ({
+        data: reData,
+        msg: "본 저작물은 기상청에서 2021년 작성하여 공공누리 제1유형으로 개방한 '기상청_단기예보 ((구)_동네예보) 조회서비스'를 이용하였으며, https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15084084에서 이용하실 수 있습니다.",
+    });
 };
 // 이 함수 위경도 -> 좌표로 변환 //이거 기상청만 쓰는것임..
 const dfs_xy_conv = (v1, v2) => {
