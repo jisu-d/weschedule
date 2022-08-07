@@ -238,10 +238,24 @@ export const getSkyData = async (lat: number, lng: number) => {
     const base_date = `${Day.getFullYear()}${month}${date}`;
     const xydata = dfs_xy_conv(lat, lng);
 
-    const fetchData: Sky = await (await fetch(`${SkyUrl.url}?serviceKey=${SkyUrl.key}&pageNo=1&numOfRows=14&dataType=JSON&base_date=${base_date}&base_time=0500&nx=${xydata.x}&ny=${xydata.y}`)).json()
+    const hour = Day.getHours()
+    const minute = Day.getMinutes()
+
+    let baseTime = ''
+
+    if(minute >= 40){
+        baseTime = `${hour}`.padStart(2, '0') + '00'
+    } else{
+        baseTime = `${Math.abs(hour - 1)}`.padStart(2, '0') + '00'
+    }
+
+    const fetchData: Sky = await (await fetch(`${SkyUrl.url}?serviceKey=${SkyUrl.key}&pageNo=1&numOfRows=14&dataType=JSON&base_date=${base_date}&base_time=${baseTime}&nx=${xydata.x}&ny=${xydata.y}`)).json()
     const reData: string[] = []
     fetchData.response.body.items.item.map((v) => {
-        reData.push(`${dataType[v.category]}: ${v.fcstDate}`)
+        if(v.category = 'SKY'){
+
+        }
+        reData.push(`${dataType[v.category]}: ${v.fcstValue}`)
     })
     return reData
 }
