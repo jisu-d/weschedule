@@ -192,10 +192,9 @@ export const getSkyData = async (lat, lng) => {
     const date = `${Day.getDate()}`.padStart(2, '0');
     const base_date = `${Day.getFullYear()}${month}${date}`;
     const xydata = dfs_xy_conv(lat, lng);
-    const hour = Day.getHours();
+    const hour = Day.getHours() + 9;
     const minute = Day.getMinutes();
     let baseTime = '';
-    console.log(hour);
     if (minute >= 10) {
         if (hour === 2) {
             baseTime = `${hour}`.padStart(2, '0') + '00';

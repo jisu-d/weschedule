@@ -240,11 +240,10 @@ export const getSkyData = async (lat: number, lng: number) => {
     const base_date = `${Day.getFullYear()}${month}${date}`;
     const xydata = dfs_xy_conv(lat, lng);
 
-    const hour = Day.getHours()
+    const hour = Day.getHours() + 9
     const minute = Day.getMinutes()
 
     let baseTime = ''
-    console.log(hour);
 
     if(minute >= 10){
         if(hour === 2){
@@ -260,10 +259,8 @@ export const getSkyData = async (lat: number, lng: number) => {
         }
     }
 
-    
     console.log(`${SkyUrl.url}?serviceKey=${SkyUrl.key}&pageNo=1&numOfRows=14&dataType=JSON&base_date=${base_date}&base_time=${baseTime}&nx=${xydata.x}&ny=${xydata.y}`);
     
-
     const fetchData: Sky = await (await fetch(`${SkyUrl.url}?serviceKey=${SkyUrl.key}&pageNo=1&numOfRows=14&dataType=JSON&base_date=${base_date}&base_time=${baseTime}&nx=${xydata.x}&ny=${xydata.y}`)).json()
     const reData: string[] = []
     fetchData.response.body.items.item.map((v) => {
