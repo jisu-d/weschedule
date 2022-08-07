@@ -205,7 +205,7 @@ export const getSkyData = async (lat, lng) => {
     const fetchData = await (await fetch(`${SkyUrl.url}?serviceKey=${SkyUrl.key}&pageNo=1&numOfRows=14&dataType=JSON&base_date=${base_date}&base_time=0500&nx=${xydata.x}&ny=${xydata.y}`)).json();
     const reData = [];
     fetchData.response.body.items.item.map((v) => {
-        if (v.category = 'SKY') {
+        if (v.category === 'SKY') {
             const arr = {
                 '1': '맑음',
                 '3': '구름많음',
@@ -214,7 +214,7 @@ export const getSkyData = async (lat, lng) => {
             const d = v.fcstValue;
             reData.push(`${dataType[v.category]}: ${arr[d]}`);
         }
-        else if (v.category = 'PTY') {
+        else if (v.category === 'PTY') {
             const arr = {
                 '0': '없음',
                 '1': '비',
