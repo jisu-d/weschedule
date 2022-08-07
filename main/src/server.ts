@@ -239,8 +239,9 @@ export const getSkyData = async (lat: number, lng: number) => {
     const base_date = `${Day.getFullYear()}${month}${date}`;
     const xydata = dfs_xy_conv(lat, lng);
 
-    const hour = Day.getHours()
-    const minute = Day.getMinutes()
+    const Day2 = new Date()
+    const hour = Day2.getHours()
+    const minute = Day2.getMinutes()
 
     let baseTime = ''
 
