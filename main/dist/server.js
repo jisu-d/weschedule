@@ -184,7 +184,7 @@ export const dataType = {
     WAV: '파고',
     VVV: '강수확률',
     VEC: '풍향',
-    WSD: '풍속', //
+    WSD: '풍속',
 };
 export const getSkyData = async (lat, lng) => {
     const Day = new Date();
@@ -205,7 +205,29 @@ export const getSkyData = async (lat, lng) => {
     const fetchData = await (await fetch(`${SkyUrl.url}?serviceKey=${SkyUrl.key}&pageNo=1&numOfRows=14&dataType=JSON&base_date=${base_date}&base_time=0500&nx=${xydata.x}&ny=${xydata.y}`)).json();
     const reData = [];
     fetchData.response.body.items.item.map((v) => {
-        reData.push(`${dataType[v.category]}: ${v.fcstValue}`);
+        if (v.category = 'SKY') {
+            const arr = {
+                '1': '맑음',
+                '3': '구름많음',
+                '4': '흐림',
+            };
+            const d = v.fcstValue;
+            reData.push(`${dataType[v.category]}: ${arr[d]}`);
+        }
+        else if (v.category = 'PTY') {
+            const arr = {
+                '0': '없음',
+                '1': '비',
+                '2': '비/눈',
+                '3': '눈',
+                '4': '소나기',
+            };
+            const d = v.fcstValue;
+            reData.push(`${dataType[v.category]}: ${arr[d]}`);
+        }
+        else {
+            reData.push(`${dataType[v.category]}: ${v.fcstValue}`);
+        }
     });
     return reData;
 };
