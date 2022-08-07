@@ -249,13 +249,13 @@ export const getSkyData = async (lat: number, lng: number) => {
         baseTime = `${Math.abs(hour - 1)}`.padStart(2, '0') + '00'
     }
 
-    console.log(`${SkyUrl.url}?serviceKey=${SkyUrl.key}&pageNo=1&numOfRows=14&dataType=JSON&base_date=${base_date}&base_time=${1400}&nx=${xydata.x}&ny=${xydata.y}`);
+    console.log(`${SkyUrl.url}?serviceKey=${SkyUrl.key}&pageNo=1&numOfRows=14&dataType=JSON&base_date=${base_date}&base_time=0500&nx=${xydata.x}&ny=${xydata.y}`);
     
 
     const fetchData: Sky = await (await fetch(`${SkyUrl.url}?serviceKey=${SkyUrl.key}&pageNo=1&numOfRows=14&dataType=JSON&base_date=${base_date}&base_time=${baseTime}&nx=${xydata.x}&ny=${xydata.y}`)).json()
     const reData: string[] = []
     fetchData.response.body.items.item.map((v) => {
-        reData.push(`${dataType[v.category]}: `)
+        reData.push(`${dataType[v.category]}: ${v.fcstValue}`)
     })
     return reData
 }
