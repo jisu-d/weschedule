@@ -1,3 +1,6 @@
+import { type } from "os"
+import { dataType } from '../main/src/server'
+
 export interface Datai{
     [key:string]:[string, string][]
 }
@@ -87,4 +90,31 @@ export type ME = [
     {
         respond: string
     }
-]      
+]
+
+export type Sky = {
+    response: {
+        body: {
+            dataType: string
+            items: {
+                item: {
+                    baseDate: string
+                    baseTime: string
+                    category: keyof typeof dataType
+                    fcstDate: string
+                    fcstTime: string
+                    fcstValue: string
+                    nx: number
+                    ny: number
+                }[]
+            }
+            numOfRows: number
+            pageNo: number
+            totalCount: number
+        },
+        header: {
+            resultCode: string
+            resultMsg: string
+        }
+    }
+}

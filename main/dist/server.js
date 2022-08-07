@@ -171,26 +171,43 @@ const SkyUrl = {
     url: 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst',
     key: '272fQOyP6ihzZ0qF5xrgmgQVltQLoew2X%2BjoJoeS00FhJELrgdmz00MrKpzXsTT4kSqoXWEbsudcdBOtnsX%2BTw%3D%3D'
 };
+export const dataType = {
+    POP: '강수확률',
+    PTY: '강수형태',
+    PCP: '1시간 강수량',
+    REH: '습도',
+    SNO: '1시간 신적설',
+    SKY: '하늘상태',
+    TMP: '1시간 기온',
+    TMN: '일 최저기온',
+    UUU: '풍속(동서성분)',
+    VVV: '강수확률',
+    VEC: '풍향',
+    WSD: '풍속',
+};
 export const getSkyData = async (lat, lng) => {
     const Day = new Date();
     const month = `${Day.getMonth() + 1}`.padStart(2, '0');
     const date = `${Day.getDate()}`.padStart(2, '0');
     const base_date = `${Day.getFullYear()}${month}${date}`;
     const xydata = dfs_xy_conv(lat, lng);
-    console.log(`${SkyUrl.url}?serviceKey=${SkyUrl.key}&pageNo=1&numOfRows=14&dataType=JSON&base_date=${base_date}&base_time=0500&nx=${xydata.x}&ny=${xydata.y}`);
     const fetchData = await (await fetch(`${SkyUrl.url}?serviceKey=${SkyUrl.key}&pageNo=1&numOfRows=14&dataType=JSON&base_date=${base_date}&base_time=0500&nx=${xydata.x}&ny=${xydata.y}`)).json();
-    return fetchData;
+    const reData = [];
+    fetchData.response.body.items.item.map((v) => {
+        reData.push(`${dataType[v.category]}: ${v.fcstDate}`);
+    });
+    return reData;
 };
-const RE = 6371.00877; // 지구 반경(km)
-const GRID = 5.0; // 격자 간격(km)
-const SLAT1 = 30.0; // 투영 위도1(degree)
-const SLAT2 = 60.0; // 투영 위도2(degree)
-const OLON = 126.0; // 기준점 경도(degree)
-const OLAT = 38.0; // 기준점 위도(degree)
-const XO = 43; // 기준점 X좌표(GRID)
-const YO = 136; // 기1준점 Y좌표(GRID)
 // 이 함수 위경도 -> 좌표로 변환 //이거 기상청만 쓰는것임..
 const dfs_xy_conv = (v1, v2) => {
+    const RE = 6371.00877; // 지구 반경(km)
+    const GRID = 5.0; // 격자 간격(km)
+    const SLAT1 = 30.0; // 투영 위도1(degree)
+    const SLAT2 = 60.0; // 투영 위도2(degree)
+    const OLON = 126.0; // 기준점 경도(degree)
+    const OLAT = 38.0; // 기준점 위도(degree)
+    const XO = 43; // 기준점 X좌표(GRID)
+    const YO = 136; // 기1준점 Y좌표(GRID)
     const DEGRAD = Math.PI / 180.0;
     const re = RE / GRID;
     const slat1 = SLAT1 * DEGRAD;
