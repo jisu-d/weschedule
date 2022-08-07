@@ -250,7 +250,7 @@ export const getSkyData = async (lat: number, lng: number) => {
         baseTime = `${Math.floor(((hour - 1) - 2) / 3) * 3 + 2}`.padStart(2, '0') + '00'
     }
 
-    console.log(baseTime);
+    console.log(hour);
     
 
     console.log(`${SkyUrl.url}?serviceKey=${SkyUrl.key}&pageNo=1&numOfRows=14&dataType=JSON&base_date=${base_date}&base_time=${baseTime}&nx=${xydata.x}&ny=${xydata.y}`);
