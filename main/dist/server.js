@@ -181,9 +181,10 @@ export const dataType = {
     TMP: '1시간 기온',
     TMN: '일 최저기온',
     UUU: '풍속(동서성분)',
+    WAV: '파고',
     VVV: '강수확률',
     VEC: '풍향',
-    WSD: '풍속',
+    WSD: '풍속', //
 };
 export const getSkyData = async (lat, lng) => {
     const Day = new Date();
