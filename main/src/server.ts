@@ -234,14 +234,14 @@ export const dataType = {
 
 export const getSkyData = async (lat: number, lng: number) => {
     const Day = new Date()
+
     const month = `${Day.getMonth() + 1}`.padStart(2, '0');
     const date = `${Day.getDate()}`.padStart(2, '0');
     const base_date = `${Day.getFullYear()}${month}${date}`;
     const xydata = dfs_xy_conv(lat, lng);
 
-    const Day2 = new Date()
-    const hour = Day2.getHours()
-    const minute = Day2.getMinutes()
+    const hour = Day.getHours()
+    const minute = Day.getMinutes()
 
     let baseTime = ''
 
@@ -253,7 +253,6 @@ export const getSkyData = async (lat: number, lng: number) => {
 
     console.log(hour);
     
-
     console.log(`${SkyUrl.url}?serviceKey=${SkyUrl.key}&pageNo=1&numOfRows=14&dataType=JSON&base_date=${base_date}&base_time=${baseTime}&nx=${xydata.x}&ny=${xydata.y}`);
     
 
