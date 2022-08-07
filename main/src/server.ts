@@ -217,18 +217,19 @@ const SkyUrl = {
 }
 
 export const dataType = {
-    POP : '강수확률',
-    PTY : '강수형태',
-    PCP : '1시간 강수량',
-    REH : '습도',
-    SNO : '1시간 신적설',
-    SKY : '하늘상태',
-    TMP : '1시간 기온',
+    POP : '강수확률',// //
+    PTY : '강수형태',//
+    PCP : '1시간 강수량',//
+    REH : '습도',//
+    SNO : '1시간 신적설',//
+    SKY : '하늘상태',//
+    TMP : '1시간 기온',//
     TMN : '일 최저기온',
-    UUU : '풍속(동서성분)',
-    VVV : '강수확률',
-    VEC : '풍향',
-    WSD : '풍속',
+    UUU : '풍속(동서성분)',//
+    WAV	: '파고',
+    VVV : '강수확률',//
+    VEC : '풍향',//
+    WSD : '풍속',//
 }
 
 export const getSkyData = async (lat: number, lng: number) => {
