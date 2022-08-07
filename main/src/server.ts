@@ -245,15 +245,15 @@ export const getSkyData = async (lat: number, lng: number) => {
     let baseTime = ''
 
     if(minute >= 10){
-        baseTime = `${hour}`.padStart(2, '0') + '00'
-    } else{
-        baseTime = `${Math.abs(hour - 1)}`.padStart(2, '0') + '00'
+        baseTime = `${Math.floor((hour - 2) / 3) * 3 + 2}`.padStart(2, '0') + '00'
+    } else {
+        baseTime = `${Math.floor(((hour - 1) - 2) / 3) * 3 + 2}`.padStart(2, '0') + '00'
     }
 
-    console.log(`${SkyUrl.url}?serviceKey=${SkyUrl.key}&pageNo=1&numOfRows=14&dataType=JSON&base_date=${base_date}&base_time=0500&nx=${xydata.x}&ny=${xydata.y}`);
+    console.log(`${SkyUrl.url}?serviceKey=${SkyUrl.key}&pageNo=1&numOfRows=14&dataType=JSON&base_date=${base_date}&base_time=${baseTime}&nx=${xydata.x}&ny=${xydata.y}`);
     
 
-    const fetchData: Sky = await (await fetch(`${SkyUrl.url}?serviceKey=${SkyUrl.key}&pageNo=1&numOfRows=14&dataType=JSON&base_date=${base_date}&base_time=0500&nx=${xydata.x}&ny=${xydata.y}`)).json()
+    const fetchData: Sky = await (await fetch(`${SkyUrl.url}?serviceKey=${SkyUrl.key}&pageNo=1&numOfRows=14&dataType=JSON&base_date=${base_date}&base_time=${baseTime}&nx=${xydata.x}&ny=${xydata.y}`)).json()
     const reData: string[] = []
     fetchData.response.body.items.item.map((v) => {
         if(v.category === 'SKY'){
