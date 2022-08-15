@@ -30,9 +30,9 @@ ReactDOM.createRoot(app).render(
         <div className="cooktable-container box_shadow" id="cooktable-container">
           <CookDiv />
         </div>
-        <div className='google_adsense box_shadow'>
+        {/* <div className='google_adsense box_shadow'>
             <AdsensebyGoogleDiv />
-        </div>
+        </div> */}
         <div className='myoungEon-container box_shadow'>
           <MyoungEonDiv />
         </div>
