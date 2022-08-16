@@ -42,8 +42,10 @@ export function School_Search_Input(this: string) {
     const onClick = (e:React.MouseEvent<HTMLDivElement>) => {
         const tar = e.currentTarget;
         if(!(e.target instanceof HTMLDivElement)) return;
-        schoolData.schoolname = e.target.textContent
-        inputRef.current.value = e.target.textContent;
+        if(e.target.textContent.length > 2){
+            schoolData.schoolname = e.target.textContent
+            inputRef.current.value = e.target.textContent;
+        }
         setArr([])
     }
         
