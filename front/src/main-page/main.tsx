@@ -8,6 +8,7 @@ import { CookDiv } from './Cook-div'
 import { AdsensebyGoogleDiv } from './google_adsense'
 import { MsgDiv } from './msg'
 import { MyoungEonDiv } from './helpful_test'
+// import { Sky_div } from './Sky_div'
 
 import { Href } from './user-div'
 
@@ -23,6 +24,9 @@ ReactDOM.createRoot(app).render(
           <div className="user-info-container" id="user-info-container" onClick={Href}>
             <InfoDiv />
           </div>
+        </div>
+        <div className="box_shadow">
+          {/* <Sky_div /> */}
         </div>
         <div className="timetable-container box_shadow" id="timetable-container">
           <Table size={7} />

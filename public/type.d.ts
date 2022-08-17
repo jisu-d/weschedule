@@ -118,3 +118,8 @@ export type Sky = {
         }
     }
 }
+
+export type sever_Sky = {
+    data: string[]
+    msg: string
+}
