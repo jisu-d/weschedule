@@ -3,15 +3,28 @@ import {localda} from './localda';
 import './user-div.css';
 
 export function InfoDiv(){
+    // const element = (
+    //     <>
+    //     <div className='school-container'>
+    //         <div>{localda.schoolname}</div>
+    //         <div className='arrow'></div>
+    //     </div>
+    //     <div>
+    //         <span>{localda.year + '학년 '}</span>
+    //         <span>{localda.class + '반'}</span>
+    //     </div>
+    //     </>
+    // )
+    // return element
     const element = (
         <>
         <div className='school-container'>
-            <div>{localda.schoolname}</div>
+            <div>{'새솔고등학교'}</div>
             <div className='arrow'></div>
         </div>
         <div>
-            <span>{localda.year + '학년 '}</span>
-            <span>{localda.class + '반'}</span>
+            <span>{'1' + '학년 '}</span>
+            <span>{'1' + '반'}</span>
         </div>
         </>
     )

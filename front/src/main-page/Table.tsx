@@ -5,7 +5,8 @@ import { proxy } from "../proxy";
 
 const day = ['월', '화', '수', '목', '금'] as const;
 
-const da = await (await fetch(`${proxy}/comciganData?school=${localda.schoolname}&Year=${localda.year}&class=${localda.class}&zeroOne=0`)).json() as Datai;
+// const da = await (await fetch(`${proxy}/comciganData?school=${localda.schoolname}&Year=${localda.year}&class=${localda.class}&zeroOne=0`)).json() as Datai;
+const da = await (await fetch(`${proxy}/comciganData?school=${'새솔고등학교'}&Year=${1}&class=${1}&zeroOne=0`)).json() as Datai;
 
 const makeTable = (arr:[string, string][], key:number) => <tr key={key * 6}><td>{key + 1}</td>{arr.map((v, i) => {
     if(v){
