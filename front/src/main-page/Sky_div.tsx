@@ -32,13 +32,12 @@ navigator.geolocation.getCurrentPosition((pos) => {
     lo = pos.coords.longitude
 })
 
-let arr: JSX.Element
 const SkyDiv = async () => {
     const apiKey = 'd931b3df313d8586e334f45873e59273'
     const da: Skydata = await (await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${la}&lon=${lo}&appid=${apiKey}&lang=kr`)).json()
     const imgUrl = `http://openweathermap.org/img/wn/${da.weather[0].icon}@2x.png`
 
-    arr = (
+    return(
         <div>
             <div>
                 <img src={imgUrl} />
@@ -52,8 +51,7 @@ const SkyDiv = async () => {
 
 
 export function Sky_div() {
-    SkyDiv()
     return (
-        arr
+        SkyDiv()
     )
 }
