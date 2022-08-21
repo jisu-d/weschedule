@@ -25,7 +25,7 @@ ReactDOM.createRoot(app).render(
             <InfoDiv />
           </div>
         </div>
-        <div className="box_shadow">
+        <div className="SkyDiv-container box_shadow">
           <Sky_div />
         </div>
         <div className="timetable-container box_shadow" id="timetable-container">

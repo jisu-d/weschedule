@@ -1,0 +1,40 @@
+.SkyDiv-container{
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+}
+
+.container{
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.img_temp_container{
+    display: flex;
+    align-items: center;
+}
+
+.img_temp_container img{
+    width: 45px;
+}
+
+.img_temp_container > div{
+    font-size: 30px;
+    font-weight: 549;
+}
+
+.container .small_info{
+    display: flex;
+    align-items: center;
+    color: lightgray;
+    font-size: 12px;
+}
+
+.small_info > div{
+    height: 30px;
+}
+
+.container .small_info > div:nth-child(1){
+    padding-right: 10px;
+}

@@ -1,8 +1,6 @@
-import './Sky_div'
+import './Sky_div.css'
 import { sever_Sky, Skydata } from '../../../public/type';
-
-import { proxy } from "../proxy";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 let la = 0
 let lo = 0
@@ -12,47 +10,35 @@ navigator.geolocation.getCurrentPosition((pos) => {
     lo = pos.coords.longitude
 })
 
-const apiKey = 'd931b3df313d8586e334f45873e59273'
-const da: Skydata = await (await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${la}&lon=${lo}&appid=${apiKey}&lang=kr`)).json()
-
-let skyImg: string
-let temp: number
-let description: string
-let feelsLike: number
-// useEffect(() => {
-//     skyImg = `http://openweathermap.org/img/wn/${da.weather[0].icon}@2x.png`
-//     temp = da.main.temp
-//     description = da.weather[0].description
-//     feelsLike = da.main.feels_like
-// }, [da])
-
 export function Sky_div() {
-
-    const element = (
-        <div>
-            <div>
-                <img src={`http://openweathermap.org/img/wn/${da.weather[0].icon}@2x.png`} />
-                <div>{da.main.temp}°C</div>
-            </div>
-            <div>현재온도 {da.weather[0].description}도</div>
-            <div>{da.main.feels_like}</div>
-        </div>
-    )
+    let [da, setDa] = useState<Skydata>(null);
+    
+    const getData = async () => {
+        const apiKey = 'd931b3df313d8586e334f45873e59273'
+        const data = await (await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${la}&lon=${lo}&appid=${apiKey}&units=metric&lang=kr`)).json();
+        setDa(data);
+    }
 
     useEffect(() => {
-        return () => {
-            element
-        }
-    }, [element])
+        getData();
+    }, []);
 
     return (
-        <div>
-            <div>
-                <img src={skyImg} />
-                <div>{temp}°C</div>
+        <div className='container'>
+            <div className='img_temp_container'>
+                <img src={`http://openweathermap.org/img/wn/${da?.weather[0].icon}@2x.png`} />
+                <div>{Math.floor(da?.main.temp)}°C</div>
             </div>
-            <div>현재온도 {description}도</div>
-            <div>{feelsLike}</div>
+            <div className='small_info'>
+                <div>
+                    <div>체감온도 {Math.floor(da?.main.feels_like)}°</div>
+                    <div>{Math.floor(da?.main.temp_max)}°/{Math.floor(da?.main.temp_min)}°</div>
+                </div>
+                <div>
+                    <div>습도 {da?.main.humidity}%</div>
+                    <div>{da?.weather[0].description}</div>
+                </div>
+            </div>
         </div>
     )
 }
