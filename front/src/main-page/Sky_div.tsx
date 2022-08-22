@@ -2,16 +2,22 @@ import './Sky_div.css'
 import { sever_Sky, Skydata } from '../../../public/type';
 import React, { useEffect, useState } from "react";
 
+// const getPosition = () => {
+//     let la = 0
+//     let lo = 0
+
+//     navigator.geolocation.getCurrentPosition((pos) => {
+//         la = pos.coords.latitude
+//         lo = pos.coords.longitude
+//     })
+
+//     return { la: la, lo: lo }
+// }
 
 export function Sky_div() {
-    let [da, setDa] = useState<Skydata>(null);
     let la = 0
     let lo = 0
-    
-    navigator.geolocation.getCurrentPosition((pos) => {
-        la = pos.coords.latitude
-        lo = pos.coords.longitude
-    })
+    let [da, setDa] = useState<Skydata>(null);
     const getData = async () => {
         const apiKey = 'd931b3df313d8586e334f45873e59273'
         const data = await (await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${la}&lon=${lo}&appid=${apiKey}&units=metric&lang=kr`)).json();
@@ -19,7 +25,11 @@ export function Sky_div() {
     }
 
     useEffect(() => {
-        getData();
+        navigator.geolocation.getCurrentPosition((pos) => {
+            la = pos.coords.latitude
+            lo = pos.coords.longitude
+            getData();
+        })
     }, []);
 
     return (
