@@ -1,10 +1,10 @@
 import { DBdata } from "../../../public/type"
 
 export let schoolData: DBdata = {
-    schoolname: "",
-    year: 0,
-    class: 0,
-    login: 0,
+    schoolname: "새솔고등학교",
+    year: 1,
+    class: 1,
+    login: 1,
 };
 
 if(!localStorage.getItem('obj')) localStorage.setItem('obj', JSON.stringify(schoolData));

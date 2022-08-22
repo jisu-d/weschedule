@@ -19,12 +19,12 @@ export function InfoDiv(){
     const element = (
         <>
         <div className='school-container'>
-            <div>{'새솔고등학교'}</div>
+            <div>{localda.schoolname}</div>
             <div className='arrow'></div>
         </div>
         <div>
-            <span>{'1' + '학년 '}</span>
-            <span>{'1' + '반'}</span>
+            <span>{localda.year + '학년 '}</span>
+            <span>{localda.class + '반'}</span>
         </div>
         </>
     )

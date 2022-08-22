@@ -6,7 +6,7 @@ import { proxy } from "../proxy";
 import { msg, mSDI } from "../../../public/type"
 
 // let da: msg | mSDI  = await (await fetch(`${proxy}/cookInfo?school=${localda.schoolname}&getnum=5`)).json()
-let da: msg | mSDI  = await (await fetch(`${proxy}/cookInfo?school=${'새솔고등학교'}&getnum=5`)).json()
+let da: msg | mSDI  = await (await fetch(`${proxy}/cookInfo?school=${localda.schoolname}&getnum=14`)).json()
 //이거 급식 불러오는 날짜수정 필요함
 
 export function CookDiv() {
