@@ -7,7 +7,7 @@ const fastify = Fastify({
     logger:true
 });
 fastify.register(fastifyCors, {
-    origin:"https://www.weschedule.kr"
+    origin:"https://weschedule.kr"
     // origin:"/*"
 });
 
