@@ -36,7 +36,7 @@ export function School_Search_Input(this: string) {
             } else {
                 setArr(<div></div>)
             }
-        }, 800);
+        }, 500);
     }
 
     const onClick = (e:React.MouseEvent<HTMLDivElement>) => {
