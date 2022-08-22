@@ -6,7 +6,7 @@ const fastify = Fastify({
     logger: true
 });
 fastify.register(fastifyCors, {
-    origin: "https://jisu-d.github.io"
+    origin: "https://www.weschedule.kr"
     // origin:"/*"
 });
 fastify.register(route, { prefix: '/' }); //이거 슈밤바/f/main 해야함 /* 모든것
