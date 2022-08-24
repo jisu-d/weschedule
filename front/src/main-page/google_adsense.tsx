@@ -5,20 +5,14 @@ export function AdsensebyGoogleDiv() {
         <>
             <div className='title'>오늘의 정보</div>
             <div>
-                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6211769300139830"
-                    crossOrigin="anonymous"></script>
-                <ins className='adsbygoogle'
+                <ins className='kakao_ad_area'
                     style={{
-                        display: 'block',
-                        textAlign: 'center'
+                        display: 'inline-block'
                     }}
-                    data-ad-layout="in-article"
-                    data-ad-format="fluid"
-                    data-ad-client="ca-pub-6211769300139830"
-                    data-ad-slot="5189642459"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({ });
-                </script>
+                    data-ad-unit="DAN-vi152nWx4gPzYI1E"
+                    data-ad-width="300"
+                    data-ad-height="250">
+                </ins>
             </div>
         </>
     )
