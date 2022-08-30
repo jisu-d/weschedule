@@ -10,7 +10,8 @@ export default defineConfig({
     rollupOptions:{
       input:{
         index:path.resolve(__dirname, 'index.html'),
-        page:path.resolve(__dirname, 'page/index.html')
+        page:path.resolve(__dirname, 'login/index.html'),
+        page2:path.resolve(__dirname, 'myounEon/index.html')
       }
     },
     outDir:path.resolve(__dirname, '..', '..', 'jisu-d.github.io')

@@ -11,6 +11,7 @@ import { MyoungEonDiv } from './helpful_test'
 import { Sky_div } from './Sky_div'
 
 import { Href } from './user-div'
+import { Href2 } from './helpful_test'
 
 import './index.css'
 
@@ -34,10 +35,10 @@ ReactDOM.createRoot(app).render(
         <div className="cooktable-container box_shadow" id="cooktable-container">
           <CookDiv />
         </div>
-        <div className='google_adsense box_shadow'>
-            {/* <AdsensebyGoogleDiv /> */}
-        </div>
-        <div className='myoungEon-container box_shadow'>
+        {/* <div className='google_adsense box_shadow'>
+            <AdsensebyGoogleDiv />
+        </div> */}
+        <div className='myoungEon-container box_shadow' onClick={Href2}>
           <MyoungEonDiv />
         </div>
         <div className='side-comment-container box_shadow'>

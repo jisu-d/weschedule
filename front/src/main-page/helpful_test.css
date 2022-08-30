@@ -1,7 +1,17 @@
 .myoungEon-container{
     padding: 20px;
+	cursor: pointer;
 }
 
 .d{
     padding-bottom: 10px;
+}
+
+.myou-container {
+    display: flex;
+    align-items: center;
+}
+
+.myou-container > div:nth-child(1){
+    padding-right: 4px;
 }

@@ -8,18 +8,20 @@
     cursor: pointer;
 }
 
+.school-container{
+    display: flex;
+}
+
+.school-container > div:nth-child(1){
+    padding-right: 4px;
+}
+
 .arrow {
-	position: relative;
-	top: 50%;
-    left: 4%;
+    position: relative;
+    top: 50%;
 	width: 10px;
 	height: 10px;
 	border-top: 2px solid lightgray;
 	border-right: 2px solid lightgray;
     transform: translate3d(0,-50%,0) rotate(45deg);
-}
-
-
-.school-container{
-    display: flex;
 }

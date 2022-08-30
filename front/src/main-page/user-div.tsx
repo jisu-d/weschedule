@@ -32,5 +32,5 @@ export function InfoDiv(){
 }
 
 export function Href() {
-    location.href = '/page/'
+    location.href = '/login/'
 }

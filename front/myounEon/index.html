@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module" src="../src/myoungEon/min.tsx" defer></script>
+    <title>weschedule</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            padding: 0 5%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button {
+            bottom: 0;
+            right: 0;
+            margin: 20px;
+            position: absolute;
+            border: 0;
+            background: transparent;
+            box-sizing: border-box;
+            width: 0;
+            height: 20px;
+
+            border-color: transparent transparent transparent lightgray;
+            transition: 100ms all ease;
+            cursor: pointer;
+
+
+            border-style: solid;
+            border-width: 10px 0 10px 15px;
+
+        }
+
+        .paused {
+            border-style: double;
+            border-width: 0px 0 0px 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+    <div class="div-container"></div>
+    <button class='button'></button>
+    <script>
+        const btn = document.querySelector('button')
+        const div = document.querySelector('.div-container');
+        const body = document.querySelector('body');
+        btn.classList.toggle('paused')
+        let tf = true
+        let i = 0
+
+        const get = async () => {
+            div.innerHTML = ''
+            const d = await (await fetch('https://api.qwer.pw/request/helpful_text?apikey=guest')).json()
+            const div1 = document.createElement('div')
+            const setI = setInterval(() => {
+                i += 1 / 100
+                div1.style.opacity = i
+                if (i >= 1) {
+                    clearInterval(setI)
+                    i = 0
+                }
+            }, (2 * 1000) / 100)
+
+            setTimeout(() => {
+                div1.innerHTML = d[1].respond
+                div1.style.paddingTop = '15px'
+                div1.style.fontSize = '3vh'
+                div1.style.fontFamily = 'Jua'
+                div.appendChild(div1)
+            }, (2 * 1000) / 100)
+        }
+
+        const setI2 = setInterval(() => {
+            if (tf) {
+                get()
+            }
+        }, 4 * 1000)
+
+        get()
+        body.addEventListener('click', () => {
+            if (tf) {
+                tf = false
+                btn.classList.toggle('paused')
+            } else {
+                btn.classList.toggle('paused')
+                tf = true
+            }
+        })
+    </script>
+</body>
+
+</html>
