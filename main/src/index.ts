@@ -35,17 +35,19 @@ type MyRequest<T> = FastifyRequest<{
     Querystring: T
 }>
 
-type Sky = {
-    x: number,
-    y: number,
-}
+// type Sky = {
+//     x: number,
+//     y: number,
+// }
+
+const notDataMsg = '해당 데이터가 존재하지 않음.'
 
 fastify.get('/schoolList', async (req:MyRequest<d>, rep) => {// ?school=새솔
     let d
     if(req.query.school){
         d = await schoolListFetch(req.query.school);
     } else {
-        d = '해당 데이터가 존재하지 않음.'
+        d = notDataMsg
     }
     return d['학교검색']
 })
@@ -56,7 +58,7 @@ fastify.get('/cookInfo', async (req: MyRequest<c>, rep) => { // ?school=학교&g
     if (queryObj.school && queryObj.getnum) {
         d = await fetchCookInfo(queryObj.school, queryObj.getnum)
     } else {
-        d = '해당 데이터가 존재하지 않음.'
+        d = notDataMsg
     }
     return d
 });
@@ -67,7 +69,7 @@ fastify.get('/comciganData', async (req:MyRequest<c>, rep) => { // ?school=새�
     if(queryObj.school && queryObj.Year && queryObj.class && queryObj.zeroOne){
         d = await getComciganData(queryObj.school, queryObj.Year, queryObj.class, queryObj.zeroOne);
     } else {
-        d = '해당 데이터가 존재하지 않음.'
+        d = notDataMsg
     }
     return d
 });
@@ -78,7 +80,7 @@ fastify.get('/checkSchool', async (req:MyRequest<c>, rep) => { // ?school=새솔
     if(queryObj.school && queryObj.Year && queryObj.class){
         d = await checkSchool(queryObj.school, queryObj.Year, queryObj.class);
     } else{
-        d = '해당 데이터가 존재하지 않음.'
+        d = notDataMsg
     }
     return d
 });

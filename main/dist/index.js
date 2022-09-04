@@ -10,13 +10,18 @@ fastify.register(fastifyCors, {
     origin: "/*"
 });
 fastify.register(route, { prefix: '/' }); //이거 슈밤바/f/main 해야함 /* 모든것
+// type Sky = {
+//     x: number,
+//     y: number,
+// }
+const notDataMsg = '해당 데이터가 존재하지 않음.';
 fastify.get('/schoolList', async (req, rep) => {
     let d;
     if (req.query.school) {
         d = await schoolListFetch(req.query.school);
     }
     else {
-        d = '해당 데이터가 존재하지 않음.';
+        d = notDataMsg;
     }
     return d['학교검색'];
 });
@@ -27,7 +32,7 @@ fastify.get('/cookInfo', async (req, rep) => {
         d = await fetchCookInfo(queryObj.school, queryObj.getnum);
     }
     else {
-        d = '해당 데이터가 존재하지 않음.';
+        d = notDataMsg;
     }
     return d;
 });
@@ -38,7 +43,7 @@ fastify.get('/comciganData', async (req, rep) => {
         d = await getComciganData(queryObj.school, queryObj.Year, queryObj.class, queryObj.zeroOne);
     }
     else {
-        d = '해당 데이터가 존재하지 않음.';
+        d = notDataMsg;
     }
     return d;
 });
@@ -49,7 +54,7 @@ fastify.get('/checkSchool', async (req, rep) => {
         d = await checkSchool(queryObj.school, queryObj.Year, queryObj.class);
     }
     else {
-        d = '해당 데이터가 존재하지 않음.';
+        d = notDataMsg;
     }
     return d;
 });
