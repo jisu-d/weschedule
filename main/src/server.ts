@@ -232,67 +232,65 @@ export const dataType = {
     WSD : '풍속',
 }
 
-export const getSkyData = async (lat: number, lng: number) => {
-    const Day = new Date()
+// export const getSkyData = async (lat: number, lng: number) => {
+//     const Day = new Date()
 
-    const month = `${Day.getMonth() + 1}`.padStart(2, '0');
-    const date = `${Day.getDate()}`.padStart(2, '0');
-    const base_date = `${Day.getFullYear()}${month}${date}`;
-    const xydata = dfs_xy_conv(lat, lng);
+//     const month = `${Day.getMonth() + 1}`.padStart(2, '0');
+//     const date = `${Day.getDate()}`.padStart(2, '0');
+//     const base_date = `${Day.getFullYear()}${month}${date}`;
+//     const xydata = dfs_xy_conv(lat, lng);
 
-    const hour = Day.getHours() + 9
-    const minute = Day.getMinutes()
+//     const hour = Day.getHours() + 9
+//     const minute = Day.getMinutes()
 
-    let baseTime = ''
+//     let baseTime = ''
 
-    if(minute >= 10){
-        if(hour === 2){
-            baseTime = `${hour}`.padStart(2, '0') + '00'
-        } else{
-            baseTime = `${Math.floor((hour - 2) / 3) * 3 + 2}`.padStart(2, '0') + '00'
-        }
-    } else {
-        if(hour === 2){
-            baseTime = `${hour}`.padStart(2, '0') + '00'
-        } else{
-            baseTime = `${Math.floor(((hour - 1) - 2) / 3) * 3 + 2}`.padStart(2, '0') + '00'
-        }
-    }
-
-    console.log(`${SkyUrl.url}?serviceKey=${SkyUrl.key}&pageNo=1&numOfRows=14&dataType=JSON&base_date=${base_date}&base_time=${baseTime}&nx=${xydata.x}&ny=${xydata.y}`);
+//     if(minute >= 10){
+//         if(hour === 2){
+//             baseTime = `${hour}`.padStart(2, '0') + '00'
+//         } else{
+//             baseTime = `${Math.floor((hour - 2) / 3) * 3 + 2}`.padStart(2, '0') + '00'
+//         }
+//     } else {
+//         if(hour === 2){
+//             baseTime = `${hour}`.padStart(2, '0') + '00'
+//         } else{
+//             baseTime = `${Math.floor(((hour - 1) - 2) / 3) * 3 + 2}`.padStart(2, '0') + '00'
+//         }
+//     }
     
-    const fetchData: Sky = await (await fetch(`${SkyUrl.url}?serviceKey=${SkyUrl.key}&pageNo=1&numOfRows=14&dataType=JSON&base_date=${base_date}&base_time=${baseTime}&nx=${xydata.x}&ny=${xydata.y}`)).json()
-    const reData: string[] = []
-    fetchData.response.body.items.item.map((v) => {
-        if(v.category === 'SKY'){
-            const arr = {
-                '1': '맑음',
-                '3': '구름많음',
-                '4': '흐림',
-            }
-            const d = v.fcstValue as keyof typeof arr
-            reData.push(`${dataType[v.category]}: ${arr[d]}`)
-        } else if(v.category === 'PTY'){
-            const arr = {
-                '0': '없음',
-                '1': '비',
-                '2': '비/눈',
-                '3': '눈',
-                '4': '소나기',
-            }
-            const d = v.fcstValue as keyof typeof arr
-            reData.push(`${dataType[v.category]}: ${arr[d]}`)
-        } else {
-            reData.push(`${dataType[v.category]}: ${v.fcstValue}`)
-        }
-    })
-    return (
-        {
-            data: reData,
-            msg: "본 저작물은 기상청에서 2021년 작성하여 공공누리 제1유형으로 개방한 '기상청_단기예보 ((구)_동네예보) 조회서비스'를 이용하였으며, https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15084084에서 이용하실 수 있습니다.",
-        }
-    )
-}
+//     const fetchData: Sky = await (await fetch(`${SkyUrl.url}?serviceKey=${SkyUrl.key}&pageNo=1&numOfRows=14&dataType=JSON&base_date=${base_date}&base_time=${baseTime}&nx=${xydata.x}&ny=${xydata.y}`)).json()
+//     const reData: string[] = []
+//     fetchData.response.body.items.item.map((v) => {
+//         if(v.category === 'SKY'){
+//             const arr = {
+//                 '1': '맑음',
+//                 '3': '구름많음',
+//                 '4': '흐림',
+//             }
+//             const d = v.fcstValue as keyof typeof arr
+//             reData.push(`${dataType[v.category]}: ${arr[d]}`)
+//         } else if(v.category === 'PTY'){
+//             const arr = {
+//                 '0': '없음',
+//                 '1': '비',
+//                 '2': '비/눈',
+//                 '3': '눈',
+//                 '4': '소나기',
+//             }
+//             const d = v.fcstValue as keyof typeof arr
+//             reData.push(`${dataType[v.category]}: ${arr[d]}`)
+//         } else {
+//             reData.push(`${dataType[v.category]}: ${v.fcstValue}`)
+//         }
+//     })
+//     return (
+//         {
+//             data: reData,
+//             msg: "본 저작물은 기상청에서 2021년 작성하여 공공누리 제1유형으로 개방한 '기상청_단기예보 ((구)_동네예보) 조회서비스'를 이용하였으며, https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15084084에서 이용하실 수 있습니다.",
+//         }
+//     )
+// }
 
 
 // 이 함수 위경도 -> 좌표로 변환 //이거 기상청만 쓰는것임..
