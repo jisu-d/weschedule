@@ -1,5 +1,5 @@
 import Fastify, {FastifyRequest} from "fastify";
-import {getComciganData, fetchCookInfo, schoolListFetch, checkSchool} from './server.js';
+import {getComciganData, fetchCookInfo, schoolListFetch, checkSchool, fetchSchoolSchedule} from './server.js';
 import { route } from "./frontRoute.js";
 import fastifyCors from '@fastify/cors';
 import { type } from "os";
@@ -79,6 +79,17 @@ fastify.get('/checkSchool', async (req:MyRequest<c>, rep) => { // ?school=새솔
     let d
     if(queryObj.school && queryObj.Year && queryObj.class){
         d = await checkSchool(queryObj.school, queryObj.Year, queryObj.class);
+    } else{
+        d = notDataMsg
+    }
+    return d
+});
+
+fastify.get('/schoolSchedule', async (req:MyRequest<d>, rep) => { // ?school=새솔고등학교&Year=1&class=1
+    const queryObj = req.query
+    let d
+    if(queryObj.school){
+        d = await fetchSchoolSchedule(queryObj.school);
     } else{
         d = notDataMsg
     }

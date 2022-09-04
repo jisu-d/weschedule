@@ -101,12 +101,13 @@ const comciganDataParsing = async (arr, a, b, num) => {
     }
     return data;
 };
-//여기 부터 급식 정보 가져오는거
+/**나이스 API URL or KEY */
 const neisApis = {
     key: 'dd01d62062ee4a26a12d9ea34e7b77a7',
     학교기본정보: 'https://open.neis.go.kr/hub/schoolInfo',
     급식식단정보: 'https://open.neis.go.kr/hub/mealServiceDietInfo',
     반정보: 'https://open.neis.go.kr/hub/classInfo',
+    학사일정: 'https://open.neis.go.kr/hub/SchoolSchedule',
 };
 const changeDay = (i) => {
     const Day = new Date();
@@ -124,6 +125,12 @@ export const fetchSchoolInfo = async (schoolName) => {
         SCHUL_NMd: res.schoolInfo[1].row[0].SCHUL_NM,
     };
     return arr;
+};
+/**매개변수는 학교 이름이다.*/
+export const fetchSchoolSchedule = async (schoolName) => {
+    const arr = await fetchSchoolInfo(schoolName);
+    console.log(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${arr.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${arr.SD_SCHUL_CODE}`);
+    // const scheduleData = await fetch(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${arr.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${arr.SD_SCHUL_CODE}`)
 };
 export const fetchCookInfo = async (schoolName, getNum) => {
     const arr = await fetchSchoolInfo(schoolName);
@@ -241,45 +248,43 @@ export const dataType = {
 //     )
 // }
 // 이 함수 위경도 -> 좌표로 변환 //이거 기상청만 쓰는것임..
-const dfs_xy_conv = (v1, v2) => {
-    const RE = 6371.00877; // 지구 반경(km)
-    const GRID = 5.0; // 격자 간격(km)
-    const SLAT1 = 30.0; // 투영 위도1(degree)
-    const SLAT2 = 60.0; // 투영 위도2(degree)
-    const OLON = 126.0; // 기준점 경도(degree)
-    const OLAT = 38.0; // 기준점 위도(degree)
-    const XO = 43; // 기준점 X좌표(GRID)
-    const YO = 136; // 기1준점 Y좌표(GRID)
-    const DEGRAD = Math.PI / 180.0;
-    const re = RE / GRID;
-    const slat1 = SLAT1 * DEGRAD;
-    const slat2 = SLAT2 * DEGRAD;
-    const olon = OLON * DEGRAD;
-    const olat = OLAT * DEGRAD;
-    let sn = Math.tan(Math.PI * 0.25 + slat2 * 0.5) / Math.tan(Math.PI * 0.25 + slat1 * 0.5);
-    sn = Math.log(Math.cos(slat1) / Math.cos(slat2)) / Math.log(sn);
-    let sf = Math.tan(Math.PI * 0.25 + slat1 * 0.5);
-    sf = Math.pow(sf, sn) * Math.cos(slat1) / sn;
-    let ro = Math.tan(Math.PI * 0.25 + olat * 0.5);
-    ro = re * sf / Math.pow(ro, sn);
-    let rs = {
-        lat: 0,
-        lng: 0,
-        x: 0,
-        y: 0,
-    };
-    rs['lat'] = v1;
-    rs['lng'] = v2;
-    let ra = Math.tan(Math.PI * 0.25 + (v1) * DEGRAD * 0.5);
-    ra = re * sf / Math.pow(ra, sn);
-    let theta = v2 * DEGRAD - olon;
-    if (theta > Math.PI)
-        theta -= 2.0 * Math.PI;
-    if (theta < -Math.PI)
-        theta += 2.0 * Math.PI;
-    theta *= sn;
-    rs['x'] = Math.floor(ra * Math.sin(theta) + XO + 0.5);
-    rs['y'] = Math.floor(ro - ra * Math.cos(theta) + YO + 0.5);
-    return rs;
-};
+// const dfs_xy_conv = (v1: number, v2: number) => { //위도, 경도
+//     const RE = 6371.00877; // 지구 반경(km)
+//     const GRID = 5.0; // 격자 간격(km)
+//     const SLAT1 = 30.0; // 투영 위도1(degree)
+//     const SLAT2 = 60.0; // 투영 위도2(degree)
+//     const OLON = 126.0; // 기준점 경도(degree)
+//     const OLAT = 38.0; // 기준점 위도(degree)
+//     const XO = 43; // 기준점 X좌표(GRID)
+//     const YO = 136; // 기1준점 Y좌표(GRID)
+//     const DEGRAD = Math.PI / 180.0;
+//     const re = RE / GRID;
+//     const slat1 = SLAT1 * DEGRAD;
+//     const slat2 = SLAT2 * DEGRAD;
+//     const olon = OLON * DEGRAD;
+//     const olat = OLAT * DEGRAD;
+//     let sn = Math.tan(Math.PI * 0.25 + slat2 * 0.5) / Math.tan(Math.PI * 0.25 + slat1 * 0.5);
+//     sn = Math.log(Math.cos(slat1) / Math.cos(slat2)) / Math.log(sn);
+//     let sf = Math.tan(Math.PI * 0.25 + slat1 * 0.5);
+//     sf = Math.pow(sf, sn) * Math.cos(slat1) / sn;
+//     let ro = Math.tan(Math.PI * 0.25 + olat * 0.5);
+//     ro = re * sf / Math.pow(ro, sn);
+//     let rs = {
+//         lat: 0,
+//         lng: 0,
+//         x: 0,
+//         y: 0,
+//     };
+//     rs['lat'] = v1;
+//     rs['lng'] = v2;
+//     let ra = Math.tan(Math.PI * 0.25 + (v1) * DEGRAD * 0.5);
+//     ra = re * sf / Math.pow(ra, sn);
+//     let theta = v2 * DEGRAD - olon;
+//     if (theta > Math.PI) theta -= 2.0 * Math.PI;
+//     if (theta < -Math.PI) theta += 2.0 * Math.PI;
+//     theta *= sn;
+//     rs['x'] = Math.floor(ra * Math.sin(theta) + XO + 0.5);
+//     rs['y'] = Math.floor(ro - ra * Math.cos(theta) + YO + 0.5);
+//     return rs;
+// }
 //# sourceMappingURL=server.js.map
