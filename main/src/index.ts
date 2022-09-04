@@ -29,11 +29,18 @@ type d = {
     school:string,
 }
 
+type f = {
+    school:string,
+    startDay:string,
+    lastDay:string,
+}
+
 type c = a & b & d;
 
 type MyRequest<T> = FastifyRequest<{
     Querystring: T
 }>
+
 
 // type Sky = {
 //     x: number,
@@ -85,11 +92,11 @@ fastify.get('/checkSchool', async (req:MyRequest<c>, rep) => { // ?school=새솔
     return d
 });
 
-fastify.get('/schoolSchedule', async (req:MyRequest<d>, rep) => { // ?school=새솔고등학교&Year=1&class=1
+fastify.get('/schoolSchedule', async (req:MyRequest<f>, rep) => { // ?school=새솔고등학교&Year=1&class=1
     const queryObj = req.query
     let d
-    if(queryObj.school){
-        d = await fetchSchoolSchedule(queryObj.school);
+    if(queryObj.school && queryObj.startDay && queryObj.lastDay){
+        d = await fetchSchoolSchedule(queryObj.school, queryObj.startDay, queryObj.lastDay);
     } else{
         d = notDataMsg
     }

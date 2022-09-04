@@ -127,11 +127,14 @@ export const fetchSchoolInfo = async (schoolName) => {
     return arr;
 };
 /**매개변수는 학교 이름이다.*/
-export const fetchSchoolSchedule = async (schoolName) => {
+export const fetchSchoolSchedule = async (schoolName, startDay, lastDay) => {
     const arr = await fetchSchoolInfo(schoolName);
     const AA_FROM_YMD = changeDay(0);
-    console.log(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${arr.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${arr.SD_SCHUL_CODE}&AA_FROM_YMD=${AA_FROM_YMD}`);
-    // const scheduleData = await fetch(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${arr.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${arr.SD_SCHUL_CODE}&AA_FROM_YMD=${AA_FROM_YMD}`)
+    const arrd = [];
+    // console.log(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${arr.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${arr.SD_SCHUL_CODE}&AA_FROM_YMD=${AA_FROM_YMD}`);
+    const scheduleData = await (await fetch(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${arr.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${arr.SD_SCHUL_CODE}&AA_FROM_YMD=${startDay}&AA_TO_YMD=${lastDay}`)).json();
+    scheduleData.SchoolSchedule[1].row.flat().map((v) => { arrd.push(`${v.AA_YMD}: ${v.EVENT_NM}`); });
+    return arrd;
 };
 export const fetchCookInfo = async (schoolName, getNum) => {
     const arr = await fetchSchoolInfo(schoolName);

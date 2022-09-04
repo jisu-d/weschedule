@@ -3,7 +3,7 @@ import fs from 'fs/promises';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import { fetchNet } from './fetch.js';
-import { Datai, msg, CI, mSDI, Sky } from '../../public/type'
+import { Datai, msg, CI, mSDI, Sky, SCHDATA } from '../../public/type'
 
 const urlList = {
     '학교찾기': '',
@@ -164,11 +164,14 @@ export const fetchSchoolInfo = async (schoolName:string) => {  //학교 정보�
 }
 
 /**매개변수는 학교 이름이다.*/
-export const fetchSchoolSchedule = async (schoolName: string) => {
+export const fetchSchoolSchedule = async (schoolName: string, startDay: string, lastDay: string) => {
     const arr = await fetchSchoolInfo(schoolName)
     const AA_FROM_YMD = changeDay(0)
-    console.log(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${arr.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${arr.SD_SCHUL_CODE}&AA_FROM_YMD=${AA_FROM_YMD}`);
-    // const scheduleData = await fetch(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${arr.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${arr.SD_SCHUL_CODE}&AA_FROM_YMD=${AA_FROM_YMD}`)
+    const arrd: string[] = []
+    // console.log(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${arr.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${arr.SD_SCHUL_CODE}&AA_FROM_YMD=${AA_FROM_YMD}`);
+    const scheduleData:SCHDATA = await (await fetch(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${arr.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${arr.SD_SCHUL_CODE}&AA_FROM_YMD=${startDay}&AA_TO_YMD=${lastDay}`)).json();
+    scheduleData.SchoolSchedule[1].row.flat().map((v) => {arrd.push(`${v.AA_YMD}: ${v.EVENT_NM}`)})
+    return arrd
 }
 
 export const fetchCookInfo = async (schoolName:string, getNum:number) => { //급식 정보를 가져온다.

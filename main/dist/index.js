@@ -61,8 +61,8 @@ fastify.get('/checkSchool', async (req, rep) => {
 fastify.get('/schoolSchedule', async (req, rep) => {
     const queryObj = req.query;
     let d;
-    if (queryObj.school) {
-        d = await fetchSchoolSchedule(queryObj.school);
+    if (queryObj.school && queryObj.startDay && queryObj.lastDay) {
+        d = await fetchSchoolSchedule(queryObj.school, queryObj.startDay, queryObj.lastDay);
     }
     else {
         d = notDataMsg;
