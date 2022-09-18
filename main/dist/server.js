@@ -134,8 +134,9 @@ export const fetchSchoolSchedule = async (schoolName, startDay, lastDay) => {
     // console.log(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${arr.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${arr.SD_SCHUL_CODE}&AA_FROM_YMD=${AA_FROM_YMD}`);
     const scheduleData = await (await fetch(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${arr.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${arr.SD_SCHUL_CODE}&AA_FROM_YMD=${startDay}&AA_TO_YMD=${lastDay}`)).json();
     scheduleData.SchoolSchedule[1].row.flat().map((v) => { arrd.push(`${v.AA_YMD}: ${v.EVENT_NM}`); });
-    return scheduleData;
+    return arrd;
 };
+const getNameList = [];
 export const fetchCookInfo = async (schoolName, getNum) => {
     const arr = await fetchSchoolInfo(schoolName);
     const dayList = [];
@@ -177,7 +178,7 @@ export const checkSchool = async (schoolName, year, Class) => {
         return false;
     }
 };
-// 날씨 정보 가져오는거 기상청꺼
+// 날씨 정보 가져오는거 교육청꺼
 // const SkyUrl = {
 //     url:'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst',
 //     key: '272fQOyP6ihzZ0qF5xrgmgQVltQLoew2X%2BjoJoeS00FhJELrgdmz00MrKpzXsTT4kSqoXWEbsudcdBOtnsX%2BTw%3D%3D'
