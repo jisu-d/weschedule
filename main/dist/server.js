@@ -148,24 +148,24 @@ const schoolScheduleDataParsing = (data) => {
             }
         });
     });
-    let d;
-    let a;
+    let day;
+    let eventName;
     let reallastData = [];
     lastData.map((v, i) => {
-        if (!d) {
-            d = v.eventName;
-            a = v.day;
+        if (!eventName) {
+            eventName = v.eventName;
+            day = v.day;
         }
-        else if (d !== v.eventName) {
+        else if (eventName !== v.eventName) {
             reallastData.push({
                 day: {
-                    start: d,
+                    start: day,
                     last: lastData[i - 1].day
                 },
-                eventName: a
+                eventName: eventName
             });
-            d = v.eventName;
-            a = v.day;
+            eventName = v.eventName;
+            day = v.day;
         }
     });
     return reallastData;
