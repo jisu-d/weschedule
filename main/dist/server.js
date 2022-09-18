@@ -150,22 +150,33 @@ const schoolScheduleDataParsing = (data) => {
     });
     const datas = [];
     for (let i of lastData) {
-        for (let j of datas) {
-            if (j.eventName !== i.eventName) {
-                datas.push({
-                    day: {
-                        start: i.day,
-                        last: i.day
-                    },
-                    eventName: i.eventName
-                });
-            }
-            else if (j.eventName === i.eventName) {
-                if (j.day.start > i.day) {
-                    j.day.start = i.day;
+        if (!datas) {
+            datas.push({
+                day: {
+                    start: i.day,
+                    last: i.day
+                },
+                eventName: i.eventName
+            });
+        }
+        else if (datas) {
+            for (let j of datas) {
+                if (j.eventName !== i.eventName) {
+                    datas.push({
+                        day: {
+                            start: i.day,
+                            last: i.day
+                        },
+                        eventName: i.eventName
+                    });
                 }
-                else if (j.day.last > i.day) {
-                    j.day.last = i.day;
+                else if (j.eventName === i.eventName) {
+                    if (j.day.start > i.day) {
+                        j.day.start = i.day;
+                    }
+                    else if (j.day.last > i.day) {
+                        j.day.last = i.day;
+                    }
                 }
             }
         }
