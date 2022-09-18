@@ -150,37 +150,24 @@ const schoolScheduleDataParsing = (data) => {
     });
     const datas = [];
     for (let i of lastData) {
-        if (!datas) {
-            console.log(1);
-            datas.push({
-                day: {
-                    start: i.day,
-                    last: i.day
-                },
-                eventName: i.eventName
-            });
-        }
-        else {
-            console.log(2);
-            datas.forEach((_v) => {
-                if (_v.eventName !== i.eventName) {
-                    datas.push({
-                        day: {
-                            start: i.day,
-                            last: i.day
-                        },
-                        eventName: i.eventName
-                    });
+        for (let j of datas) {
+            if (j.eventName !== i.eventName) {
+                datas.push({
+                    day: {
+                        start: i.day,
+                        last: i.day
+                    },
+                    eventName: i.eventName
+                });
+            }
+            else if (j.eventName === i.eventName) {
+                if (j.day.start > i.day) {
+                    j.day.start = i.day;
                 }
-                else if (_v.eventName === i.eventName) {
-                    if (_v.day.start > i.day) {
-                        _v.day.start = i.day;
-                    }
-                    else if (_v.day.last > i.day) {
-                        _v.day.last = i.day;
-                    }
+                else if (j.day.last > i.day) {
+                    j.day.last = i.day;
                 }
-            });
+            }
         }
         // i.eventName을 찾고 없으면 하나 넣음
         // start, end를 똑같이 씀
