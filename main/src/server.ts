@@ -3,7 +3,7 @@ import fs from 'fs/promises';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import { fetchNet } from './fetch.js';
-import { Datai, msg, CI, mSDI, SCHDATA } from '../../public/type'
+import { Datai, msg, CI, mSDI, SCHDATA, EVLILF } from '../../public/type'
 import { type } from 'os';
 
 const urlList = {
@@ -171,14 +171,6 @@ type EVLI = {
     eventName:string
 }
 
-type EVLILF = {
-    day: {
-        start: string,
-        last: string,
-    },
-    eventName:string
-}
-
 /**매개변수는 학교 이름이다.*/
 export const fetchSchoolSchedule = async (schoolName: string, startDay: string, lastDay: string) => {
     const data = await fetchSchoolInfo(schoolName)
@@ -193,37 +185,42 @@ const schoolScheduleDataParsing = (data:SCHDATA) => {
     const lastData: EVLI[] = []
     data.SchoolSchedule[1].row.flat().map((v) => {arr.push({ day: v.AA_YMD, eventName: v.EVENT_NM})});
 
-    arr.map((v) => {
-        getNameList.testName.map((a:string, i) => {
+    arr.forEach((v) => {
+        getNameList.testName.forEach((a:string, i) => {
             if(v.eventName.includes(a)){
                 lastData.push(v)
             }
         })
     })
+    const datas:EVLILF[] = [];
 
-    let day:string
-    let eventName:string
-    let reallastData: EVLILF[] = []
-    
-    lastData.map((v, i) => {
-        if(!eventName){
-            eventName = v.eventName
-            day = v.day
-        } else if (eventName !== v.eventName){
-            reallastData.push({
-                day: {
-                    start: day,
-                    last: lastData[i - 1].day
-                },
-                eventName:eventName
-            })
-            eventName = v.eventName
-            day = v.day
+    for(let i of lastData){
+        // i.eventName을 찾고 없으면 하나 넣음
+        // start, end를 똑같이 씀
+        datas.forEach((_v) => {
+            if(_v.eventName !== i.eventName){
+                datas.push({
+                    day: {
+                        start: i.day,
+                        last: i.day
+                    },
+                    eventName: i.eventName
+                })
+            } else if(_v.eventName === i.eventName){
+                if(_v.day.start > i.day){
+                    _v.day.start = i.day
+                } else if (_v.day.last > i.day){
+                    _v.day.last = i.day
+                }
+            }
+        })
+        
+        // i.eventName가 있는 경우
+        // start보다 작으면 start에
+        // end보다 크면 end에
 
-        }
-    })
-
-    return lastData
+    }
+    return datas
 }
 
 export const fetchCookInfo = async (schoolName:string, getNum:number) => { //급식 정보를 가져온다.

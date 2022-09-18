@@ -141,34 +141,41 @@ const schoolScheduleDataParsing = (data) => {
     const arr = [];
     const lastData = [];
     data.SchoolSchedule[1].row.flat().map((v) => { arr.push({ day: v.AA_YMD, eventName: v.EVENT_NM }); });
-    arr.map((v) => {
-        getNameList.testName.map((a, i) => {
+    arr.forEach((v) => {
+        getNameList.testName.forEach((a, i) => {
             if (v.eventName.includes(a)) {
                 lastData.push(v);
             }
         });
     });
-    let day;
-    let eventName;
-    let reallastData = [];
-    lastData.map((v, i) => {
-        if (!eventName) {
-            eventName = v.eventName;
-            day = v.day;
-        }
-        else if (eventName !== v.eventName) {
-            reallastData.push({
-                day: {
-                    start: day,
-                    last: lastData[i - 1].day
-                },
-                eventName: eventName
-            });
-            eventName = v.eventName;
-            day = v.day;
-        }
-    });
-    return lastData;
+    const datas = [];
+    for (let i of lastData) {
+        // i.eventName을 찾고 없으면 하나 넣음
+        // start, end를 똑같이 씀
+        datas.forEach((_v) => {
+            if (_v.eventName !== i.eventName) {
+                datas.push({
+                    day: {
+                        start: i.day,
+                        last: i.day
+                    },
+                    eventName: i.eventName
+                });
+            }
+            else if (_v.eventName === i.eventName) {
+                if (_v.day.start > i.day) {
+                    _v.day.start = i.day;
+                }
+                else if (_v.day.last > i.day) {
+                    _v.day.last = i.day;
+                }
+            }
+        });
+        // i.eventName가 있는 경우
+        // start보다 작으면 start에
+        // end보다 크면 end에
+    }
+    return datas;
 };
 export const fetchCookInfo = async (schoolName, getNum) => {
     const arr = await fetchSchoolInfo(schoolName);
