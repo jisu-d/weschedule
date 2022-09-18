@@ -150,7 +150,7 @@ const schoolScheduleDataParsing = (data) => {
     });
     const datas = [];
     for (let i of lastData) {
-        if (!datas) {
+        if (datas) {
             console.log(1);
             datas.push({
                 day: {
@@ -160,7 +160,7 @@ const schoolScheduleDataParsing = (data) => {
                 eventName: i.eventName
             });
         }
-        else if (datas) {
+        else if (!datas) {
             console.log(2);
             for (let j of datas) {
                 if (j.eventName !== i.eventName) {
