@@ -201,28 +201,29 @@ const schoolScheduleDataParsing = (data:SCHDATA) => {
         })
     })
 
-    let d:string
-    let a:string
+    let day:string
+    let eventName:string
     let reallastData: EVLILF[] = []
     
     lastData.map((v, i) => {
-        if(!d){
-            d = v.eventName
-            a = v.day
-        } else if (d !== v.eventName){
+        if(!eventName){
+            eventName = v.eventName
+            day = v.day
+        } else if (eventName !== v.eventName){
             reallastData.push({
                 day: {
-                    start: d,
+                    start: day,
                     last: lastData[i - 1].day
                 },
-                eventName:a
+                eventName:eventName
             })
-            d = v.eventName
-            a = v.day
+            eventName = v.eventName
+            day = v.day
+
         }
     })
 
-    return reallastData
+    return lastData
 }
 
 export const fetchCookInfo = async (schoolName:string, getNum:number) => { //급식 정보를 가져온다.
