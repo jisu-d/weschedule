@@ -132,10 +132,15 @@ const getNameList = {
 /**매개변수는 학교 이름이다.*/
 export const fetchSchoolSchedule = async (schoolName, startDay, lastDay) => {
     const data = await fetchSchoolInfo(schoolName);
+    const scheduleData = await (await fetch(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${data.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${data.SD_SCHUL_CODE}&AA_FROM_YMD=${startDay}&AA_TO_YMD=${lastDay}`)).json();
+    const parsingData = await schoolScheduleDataParsing(scheduleData);
+    return parsingData;
+};
+/**D-day 태그로 만들기 위해 학사일정 데이터를 파싱하는 함수 */
+const schoolScheduleDataParsing = (data) => {
     const arr = [];
     const lastData = [];
-    const scheduleData = await (await fetch(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${data.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${data.SD_SCHUL_CODE}&AA_FROM_YMD=${startDay}&AA_TO_YMD=${lastDay}`)).json();
-    scheduleData.SchoolSchedule[1].row.flat().map((v) => { arr.push({ day: v.AA_YMD, eventName: v.EVENT_NM }); });
+    data.SchoolSchedule[1].row.flat().map((v) => { arr.push({ day: v.AA_YMD, eventName: v.EVENT_NM }); });
     arr.map((v) => {
         getNameList.testName.map((a, i) => {
             if (v.eventName.includes(a)) {
@@ -143,7 +148,27 @@ export const fetchSchoolSchedule = async (schoolName, startDay, lastDay) => {
             }
         });
     });
-    return lastData;
+    let d;
+    let a;
+    let reallastData = [];
+    lastData.map((v, i) => {
+        if (!d) {
+            d = v.eventName;
+            a = v.day;
+        }
+        else if (d !== v.eventName) {
+            reallastData.push({
+                day: {
+                    start: d,
+                    last: lastData[i - 1].day
+                },
+                eventName: a
+            });
+            d = v.eventName;
+            a = v.day;
+        }
+    });
+    return reallastData;
 };
 export const fetchCookInfo = async (schoolName, getNum) => {
     const arr = await fetchSchoolInfo(schoolName);

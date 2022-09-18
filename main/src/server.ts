@@ -3,7 +3,8 @@ import fs from 'fs/promises';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import { fetchNet } from './fetch.js';
-import { Datai, msg, CI, mSDI, Sky, SCHDATA } from '../../public/type'
+import { Datai, msg, CI, mSDI, SCHDATA } from '../../public/type'
+import { type } from 'os';
 
 const urlList = {
     '학교찾기': '',
@@ -165,19 +166,33 @@ const getNameList = {
     testName: ['지필평가', '중간고사', '기말고사', '중간고사', '고사'],
 }
 
+type EVLI = {
+    day: string,
+    eventName:string
+}
+
+type EVLILF = {
+    day: {
+        start: string,
+        last: string,
+    },
+    eventName:string
+}
+
 /**매개변수는 학교 이름이다.*/
 export const fetchSchoolSchedule = async (schoolName: string, startDay: string, lastDay: string) => {
     const data = await fetchSchoolInfo(schoolName)
-    const arr: {
-        day: string,
-        eventName:string
-    }[] = []
-    const lastData: {
-        day: string,
-        eventName:string
-    }[] = []
     const scheduleData:SCHDATA = await (await fetch(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${data.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${data.SD_SCHUL_CODE}&AA_FROM_YMD=${startDay}&AA_TO_YMD=${lastDay}`)).json();
-    scheduleData.SchoolSchedule[1].row.flat().map((v) => {arr.push({ day: v.AA_YMD, eventName: v.EVENT_NM})});
+    const parsingData = await schoolScheduleDataParsing(scheduleData)
+    return parsingData
+}
+
+/**D-day 태그로 만들기 위해 학사일정 데이터를 파싱하는 함수 */
+const schoolScheduleDataParsing = (data:SCHDATA) => {
+    const arr: EVLI[] = []
+    const lastData: EVLI[] = []
+    data.SchoolSchedule[1].row.flat().map((v) => {arr.push({ day: v.AA_YMD, eventName: v.EVENT_NM})});
+
     arr.map((v) => {
         getNameList.testName.map((a:string, i) => {
             if(v.eventName.includes(a)){
@@ -185,11 +200,32 @@ export const fetchSchoolSchedule = async (schoolName: string, startDay: string, 
             }
         })
     })
-    return lastData
+
+    let d:string
+    let a:string
+    let reallastData: EVLILF[] = []
+    
+    lastData.map((v, i) => {
+        if(!d){
+            d = v.eventName
+            a = v.day
+        } else if (d !== v.eventName){
+            reallastData.push({
+                day: {
+                    start: d,
+                    last: lastData[i - 1].day
+                },
+                eventName:a
+            })
+            d = v.eventName
+            a = v.day
+        }
+    })
+
+    return reallastData
 }
 
 export const fetchCookInfo = async (schoolName:string, getNum:number) => { //급식 정보를 가져온다.
-    
     const arr = await fetchSchoolInfo(schoolName)
     const dayList:string[] = []
 
