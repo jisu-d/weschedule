@@ -151,7 +151,7 @@ const schoolScheduleDataParsing = (data) => {
     const datas = [];
     for (let i of lastData) {
         if (datas) {
-            console.log(1);
+            console.log(datas);
             datas.push({
                 day: {
                     start: i.day,
