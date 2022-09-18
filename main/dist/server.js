@@ -150,8 +150,8 @@ const schoolScheduleDataParsing = (data) => {
     });
     const datas = [];
     for (let i of lastData) {
+        console.log(datas);
         if (datas) {
-            console.log(datas);
             datas.push({
                 day: {
                     start: i.day,
