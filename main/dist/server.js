@@ -152,6 +152,7 @@ const schoolScheduleDataParsing = (data) => {
     for (let i of lastData) {
         // i.eventName을 찾고 없으면 하나 넣음
         // start, end를 똑같이 씀
+        console.log(i.eventName);
         datas.forEach((_v) => {
             if (_v.eventName !== i.eventName) {
                 datas.push({
