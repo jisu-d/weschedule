@@ -2,6 +2,7 @@ import { Datai } from '../../../public/type';
 import { localda } from '../Search-page/local_data'
 import './Table.css'
 import { proxy } from "../proxy";
+import { useEffect, useState } from 'react';
 
 const day = ['월', '화', '수', '목', '금'] as const;
 
@@ -37,13 +38,45 @@ const firstTable = () => {
 }
 
 export function Table(props:{size:number}){
+    let [arr, setArr] = useState<JSX.Element>();
+    // return (
+    //     <>
+    //     <div className="title">시간표</div>
+    //     <table>
+    //         <tbody>
+    //             {firstTable()}
+    //             {makeTableAll(props.size)}
+    //         </tbody>
+    //     </table>
+    //     </>
+    // )
+
+    const createTable = () => {
+        setArr (
+            <>
+                {firstTable()}
+                {makeTableAll(props.size)}
+            </>
+        )
+    }
+    
+    useEffect(() => {
+        setArr(
+            <div className='loading' >
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        )
+        createTable()
+    }, []);
+
     return (
         <>
         <div className="title">시간표</div>
         <table>
             <tbody>
-                {firstTable()}
-                {makeTableAll(props.size)}
+                {arr}
             </tbody>
         </table>
         </>

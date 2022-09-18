@@ -1,17 +1,38 @@
 import './helpful_test.css';
 import { ME } from '../../../public/type';
+import { useEffect, useState } from 'react';
 
 
-const helpful: ME = await (await fetch('https://api.qwer.pw/request/helpful_text?apikey=guest')).json()
 export function MyoungEonDiv() {
-    return(
+    let [arr, setArr] = useState<JSX.Element>();
+    const get = async () => {
+        const helpful: ME = await (await fetch('https://api.qwer.pw/request/helpful_text?apikey=guest')).json()
+        setArr(
+            <>
+                {helpful[1].respond}
+            </>
+        )
+    }
+
+    useEffect(() => {
+        setArr(
+            <div className='loading' >
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        )
+        get()
+    }, []);
+
+    return (
         <div>
             <div className='myou-container'>
                 <div className='title d'>오늘의 명언</div>
                 <div className='arrow'></div>
             </div>
             <div>
-                {helpful[1].respond}
+                {arr}
             </div>
         </div>
     )
