@@ -161,6 +161,10 @@ export const fetchSchoolInfo = async (schoolName:string) => {  //학교 정보�
     return arr
 }
 
+const getNameList = {
+    testName: ['지필평가', '중간고사', '기말고사', '중간고사', '고사'],
+}
+
 /**매개변수는 학교 이름이다.*/
 export const fetchSchoolSchedule = async (schoolName: string, startDay: string, lastDay: string) => {
     const data = await fetchSchoolInfo(schoolName)
@@ -168,13 +172,20 @@ export const fetchSchoolSchedule = async (schoolName: string, startDay: string, 
         day: string,
         eventName:string
     }[] = []
+    const lastData: {
+        day: string,
+        eventName:string
+    }[] = []
     const scheduleData:SCHDATA = await (await fetch(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${data.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${data.SD_SCHUL_CODE}&AA_FROM_YMD=${startDay}&AA_TO_YMD=${lastDay}`)).json();
     scheduleData.SchoolSchedule[1].row.flat().map((v) => {arr.push({ day: v.AA_YMD, eventName: v.EVENT_NM})});
-    return arr
-}
-
-const getNameList = {
-    testName: ['지필평가', '중간고사', '기말고사', '중간고사', '고사'],
+    arr.map((v) => {
+        getNameList.testName.map((a:string, i) => {
+            if(v.eventName.includes(a)){
+                lastData.push(v)
+            }
+        })
+    })
+    return lastData
 }
 
 export const fetchCookInfo = async (schoolName:string, getNum:number) => { //급식 정보를 가져온다.
