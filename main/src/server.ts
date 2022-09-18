@@ -170,7 +170,9 @@ export const fetchSchoolSchedule = async (schoolName: string, startDay: string, 
     const arrd: string[] = []
     // console.log(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${arr.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${arr.SD_SCHUL_CODE}&AA_FROM_YMD=${AA_FROM_YMD}`);
     const scheduleData:SCHDATA = await (await fetch(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${arr.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${arr.SD_SCHUL_CODE}&AA_FROM_YMD=${startDay}&AA_TO_YMD=${lastDay}`)).json();
+    console.log(scheduleData);
     scheduleData.SchoolSchedule[1].row.flat().map((v) => {arrd.push(`${v.AA_YMD}: ${v.EVENT_NM}`)})
+    
     return arrd
 }
 
@@ -219,27 +221,27 @@ export const checkSchool = async (schoolName:string, year:number, Class:number) 
     } 
 }
 
-// 날씨 정보 가져오는거
-const SkyUrl = {
-    url:'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst',
-    key: '272fQOyP6ihzZ0qF5xrgmgQVltQLoew2X%2BjoJoeS00FhJELrgdmz00MrKpzXsTT4kSqoXWEbsudcdBOtnsX%2BTw%3D%3D'
-}
+// 날씨 정보 가져오는거 기상청꺼
+// const SkyUrl = {
+//     url:'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst',
+//     key: '272fQOyP6ihzZ0qF5xrgmgQVltQLoew2X%2BjoJoeS00FhJELrgdmz00MrKpzXsTT4kSqoXWEbsudcdBOtnsX%2BTw%3D%3D'
+// }
 
-export const dataType = {
-    POP : '강수확률',
-    PTY : '강수형태',
-    PCP : '1시간 강수량',
-    REH : '습도',
-    SNO : '1시간 신적설',
-    SKY : '하늘상태',
-    TMP : '1시간 기온',
-    TMN : '일 최저기온',
-    UUU : '풍속(동서성분)',
-    WAV	: '파고',
-    VVV : '강수확률',
-    VEC : '풍향',
-    WSD : '풍속',
-}
+// export const dataType = {
+//     POP : '강수확률',
+//     PTY : '강수형태',
+//     PCP : '1시간 강수량',
+//     REH : '습도',
+//     SNO : '1시간 신적설',
+//     SKY : '하늘상태',
+//     TMP : '1시간 기온',
+//     TMN : '일 최저기온',
+//     UUU : '풍속(동서성분)',
+//     WAV	: '파고',
+//     VVV : '강수확률',
+//     VEC : '풍향',
+//     WSD : '풍속',
+// }
 
 // export const getSkyData = async (lat: number, lng: number) => {
 //     const Day = new Date()

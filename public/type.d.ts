@@ -168,3 +168,38 @@ export type Skydata = {
     "name": string,
     "cod": number
 }
+
+export type SCHDATA = {
+    SchoolSchedule:[
+        {
+            head:[
+                {list_total_count: number},
+                msg
+            ]
+        },
+        {
+            row:[
+                {
+                    AA_YMD: string
+                    ATPT_OFCDC_SC_CODE: string
+                    ATPT_OFCDC_SC_NM: string
+                    AY: string
+                    DGHT_CRSE_SC_NM: string
+                    EVENT_CNTNT: null
+                    EVENT_NM: string
+                    FIV_GRADE_EVENT_YN: string
+                    FR_GRADE_EVENT_YN: string
+                    LOAD_DTM: string
+                    ONE_GRADE_EVENT_YN: string
+                    SBTR_DD_SC_NM: string
+                    SCHUL_CRSE_SC_NM: string
+                    SCHUL_NM: string
+                    SD_SCHUL_CODE: string
+                    SIX_GRADE_EVENT_YN: string
+                    THREE_GRADE_EVENT_YN: string
+                    TW_GRADE_EVENT_YN: string
+                }[]
+            ]
+        }
+    ]
+}
