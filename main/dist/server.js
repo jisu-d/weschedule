@@ -150,9 +150,8 @@ const schoolScheduleDataParsing = (data) => {
     });
     const datas = [];
     for (let i of lastData) {
-        // i.eventName을 찾고 없으면 하나 넣음
-        // start, end를 똑같이 씀
         if (!datas) {
+            console.log(1);
             datas.push({
                 day: {
                     start: i.day,
@@ -162,6 +161,7 @@ const schoolScheduleDataParsing = (data) => {
             });
         }
         else {
+            console.log(2);
             datas.forEach((_v) => {
                 if (_v.eventName !== i.eventName) {
                     datas.push({
@@ -182,6 +182,8 @@ const schoolScheduleDataParsing = (data) => {
                 }
             });
         }
+        // i.eventName을 찾고 없으면 하나 넣음
+        // start, end를 똑같이 씀
         // i.eventName가 있는 경우
         // start보다 작으면 start에
         // end보다 크면 end에
