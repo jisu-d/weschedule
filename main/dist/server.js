@@ -168,7 +168,7 @@ const schoolScheduleDataParsing = (data) => {
             day = v.day;
         }
     });
-    return lastData;
+    return reallastData;
 };
 export const fetchCookInfo = async (schoolName, getNum) => {
     const arr = await fetchSchoolInfo(schoolName);
