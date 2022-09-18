@@ -84,8 +84,6 @@ export const getComciganData = async (school:string, a:number, b:number, num:num
     
     const parsingData:Datai = await comciganDataParsing(mainData, a, b, num) //mainData에서 받은 데이터를 파싱해줌
 
-    
-
     return parsingData
 }
 
@@ -165,16 +163,18 @@ export const fetchSchoolInfo = async (schoolName:string) => {  //학교 정보�
 
 /**매개변수는 학교 이름이다.*/
 export const fetchSchoolSchedule = async (schoolName: string, startDay: string, lastDay: string) => {
-    const arr = await fetchSchoolInfo(schoolName)
-    const AA_FROM_YMD = changeDay(0)
-    const arrd: string[] = []
-    // console.log(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${arr.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${arr.SD_SCHUL_CODE}`);
-    // const scheduleData:SCHDATA = await (await fetch(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${arr.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${arr.SD_SCHUL_CODE}&AA_FROM_YMD=${startDay}&AA_TO_YMD=${lastDay}`)).json();
-    const scheduleData:SCHDATA = await (await fetch(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${arr.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${arr.SD_SCHUL_CODE}`)).json();
-    console.log(scheduleData);
-    scheduleData.SchoolSchedule[1].row.flat().map((v) => {arrd.push(`${v.AA_YMD}: ${v.EVENT_NM}`)})
-    
-    return arrd
+    const data = await fetchSchoolInfo(schoolName)
+    const arr: {
+        day: string,
+        eventName:string
+    }[] = []
+    const scheduleData:SCHDATA = await (await fetch(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${data.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${data.SD_SCHUL_CODE}&AA_FROM_YMD=${startDay}&AA_TO_YMD=${lastDay}`)).json();
+    scheduleData.SchoolSchedule[1].row.flat().map((v) => {arr.push({ day: v.AA_YMD, eventName: v.EVENT_NM})});
+    return arr
+}
+
+const getNameList = {
+    testName: ['지필평가', '중간고사', '기말고사', '중간고사', '고사'],
 }
 
 export const fetchCookInfo = async (schoolName:string, getNum:number) => { //급식 정보를 가져온다.
@@ -222,7 +222,7 @@ export const checkSchool = async (schoolName:string, year:number, Class:number) 
     } 
 }
 
-// 날씨 정보 가져오는거 기상청꺼
+// 날씨 정보 가져오는거 교육청꺼
 // const SkyUrl = {
 //     url:'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst',
 //     key: '272fQOyP6ihzZ0qF5xrgmgQVltQLoew2X%2BjoJoeS00FhJELrgdmz00MrKpzXsTT4kSqoXWEbsudcdBOtnsX%2BTw%3D%3D'
