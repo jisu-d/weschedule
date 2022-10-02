@@ -234,7 +234,7 @@ const schoolScheduleDataParsing = (data) => {
     //     // start보다 작으면 start에
     //     // end보다 크면 end에
     // }
-    return datas;
+    return lastData;
 };
 export const fetchCookInfo = async (schoolName, getNum) => {
     const arr = await fetchSchoolInfo(schoolName);
@@ -277,118 +277,4 @@ export const checkSchool = async (schoolName, year, Class) => {
         return false;
     }
 };
-// 날씨 정보 가져오는거 교육청꺼
-// const SkyUrl = {
-//     url:'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst',
-//     key: '272fQOyP6ihzZ0qF5xrgmgQVltQLoew2X%2BjoJoeS00FhJELrgdmz00MrKpzXsTT4kSqoXWEbsudcdBOtnsX%2BTw%3D%3D'
-// }
-// export const dataType = {
-//     POP : '강수확률',
-//     PTY : '강수형태',
-//     PCP : '1시간 강수량',
-//     REH : '습도',
-//     SNO : '1시간 신적설',
-//     SKY : '하늘상태',
-//     TMP : '1시간 기온',
-//     TMN : '일 최저기온',
-//     UUU : '풍속(동서성분)',
-//     WAV	: '파고',
-//     VVV : '강수확률',
-//     VEC : '풍향',
-//     WSD : '풍속',
-// }
-// export const getSkyData = async (lat: number, lng: number) => {
-//     const Day = new Date()
-//     const month = `${Day.getMonth() + 1}`.padStart(2, '0');
-//     const date = `${Day.getDate()}`.padStart(2, '0');
-//     const base_date = `${Day.getFullYear()}${month}${date}`;
-//     const xydata = dfs_xy_conv(lat, lng);
-//     const hour = Day.getHours() + 9
-//     const minute = Day.getMinutes()
-//     let baseTime = ''
-//     if(minute >= 10){
-//         if(hour === 2){
-//             baseTime = `${hour}`.padStart(2, '0') + '00'
-//         } else{
-//             baseTime = `${Math.floor((hour - 2) / 3) * 3 + 2}`.padStart(2, '0') + '00'
-//         }
-//     } else {
-//         if(hour === 2){
-//             baseTime = `${hour}`.padStart(2, '0') + '00'
-//         } else{
-//             baseTime = `${Math.floor(((hour - 1) - 2) / 3) * 3 + 2}`.padStart(2, '0') + '00'
-//         }
-//     }
-//     const fetchData: Sky = await (await fetch(`${SkyUrl.url}?serviceKey=${SkyUrl.key}&pageNo=1&numOfRows=14&dataType=JSON&base_date=${base_date}&base_time=${baseTime}&nx=${xydata.x}&ny=${xydata.y}`)).json()
-//     const reData: string[] = []
-//     fetchData.response.body.items.item.map((v) => {
-//         if(v.category === 'SKY'){
-//             const arr = {
-//                 '1': '맑음',
-//                 '3': '구름많음',
-//                 '4': '흐림',
-//             }
-//             const d = v.fcstValue as keyof typeof arr
-//             reData.push(`${dataType[v.category]}: ${arr[d]}`)
-//         } else if(v.category === 'PTY'){
-//             const arr = {
-//                 '0': '없음',
-//                 '1': '비',
-//                 '2': '비/눈',
-//                 '3': '눈',
-//                 '4': '소나기',
-//             }
-//             const d = v.fcstValue as keyof typeof arr
-//             reData.push(`${dataType[v.category]}: ${arr[d]}`)
-//         } else {
-//             reData.push(`${dataType[v.category]}: ${v.fcstValue}`)
-//         }
-//     })
-//     return (
-//         {
-//             data: reData,
-//             msg: "본 저작물은 기상청에서 2021년 작성하여 공공누리 제1유형으로 개방한 '기상청_단기예보 ((구)_동네예보) 조회서비스'를 이용하였으며, https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15084084에서 이용하실 수 있습니다.",
-//         }
-//     )
-// }
-// 이 함수 위경도 -> 좌표로 변환 //이거 기상청만 쓰는것임..
-// const dfs_xy_conv = (v1: number, v2: number) => { //위도, 경도
-//     const RE = 6371.00877; // 지구 반경(km)
-//     const GRID = 5.0; // 격자 간격(km)
-//     const SLAT1 = 30.0; // 투영 위도1(degree)
-//     const SLAT2 = 60.0; // 투영 위도2(degree)
-//     const OLON = 126.0; // 기준점 경도(degree)
-//     const OLAT = 38.0; // 기준점 위도(degree)
-//     const XO = 43; // 기준점 X좌표(GRID)
-//     const YO = 136; // 기1준점 Y좌표(GRID)
-//     const DEGRAD = Math.PI / 180.0;
-//     const re = RE / GRID;
-//     const slat1 = SLAT1 * DEGRAD;
-//     const slat2 = SLAT2 * DEGRAD;
-//     const olon = OLON * DEGRAD;
-//     const olat = OLAT * DEGRAD;
-//     let sn = Math.tan(Math.PI * 0.25 + slat2 * 0.5) / Math.tan(Math.PI * 0.25 + slat1 * 0.5);
-//     sn = Math.log(Math.cos(slat1) / Math.cos(slat2)) / Math.log(sn);
-//     let sf = Math.tan(Math.PI * 0.25 + slat1 * 0.5);
-//     sf = Math.pow(sf, sn) * Math.cos(slat1) / sn;
-//     let ro = Math.tan(Math.PI * 0.25 + olat * 0.5);
-//     ro = re * sf / Math.pow(ro, sn);
-//     let rs = {
-//         lat: 0,
-//         lng: 0,
-//         x: 0,
-//         y: 0,
-//     };
-//     rs['lat'] = v1;
-//     rs['lng'] = v2;
-//     let ra = Math.tan(Math.PI * 0.25 + (v1) * DEGRAD * 0.5);
-//     ra = re * sf / Math.pow(ra, sn);
-//     let theta = v2 * DEGRAD - olon;
-//     if (theta > Math.PI) theta -= 2.0 * Math.PI;
-//     if (theta < -Math.PI) theta += 2.0 * Math.PI;
-//     theta *= sn;
-//     rs['x'] = Math.floor(ra * Math.sin(theta) + XO + 0.5);
-//     rs['y'] = Math.floor(ro - ra * Math.cos(theta) + YO + 0.5);
-//     return rs;
-// }
 //# sourceMappingURL=server.js.map
