@@ -1,5 +1,5 @@
 import './Sky_div.css'
-import { sever_Sky, Skydata } from '../../../public/type';
+import { Skydata } from '../../../public/type';
 import React, { useEffect, useState } from "react";
 
 // const getPosition = () => {

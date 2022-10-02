@@ -13,6 +13,10 @@ import { Sky_div } from './Sky_div'
 import { Href } from './user-div'
 import { Href2 } from './helpful_test'
 
+import { School_schedule_Dday } from './school_schedule'
+
+// import { MyApp } from './school_schedule'
+
 import './index.css'
 
 const app = document.getElementById('app');
@@ -38,6 +42,12 @@ ReactDOM.createRoot(app).render(
         {/* <div className='google_adsense box_shadow'>
             <AdsensebyGoogleDiv />
         </div> */}
+        {/* <div>
+          <MyApp />
+        </div> */}
+        <div className='school_schedule box_shadow'>
+          <School_schedule_Dday />
+        </div>
         <div className='myoungEon-container box_shadow' onClick={Href2}>
           <MyoungEonDiv />
         </div>

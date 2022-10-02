@@ -92,7 +92,7 @@ fastify.get('/checkSchool', async (req:MyRequest<c>, rep) => { // ?school=새솔
     return d
 });
 
-fastify.get('/schoolSchedule', async (req:MyRequest<f>, rep) => { // ?school=새솔고등학교&Year=1&class=1
+fastify.get('/schoolSchedule', async (req:MyRequest<f>, rep) => { // ?school=새솔고등학교&startDay=1&lastDay=1
     const queryObj = req.query
     let d
     if(queryObj.school && queryObj.startDay && queryObj.lastDay){
@@ -102,18 +102,6 @@ fastify.get('/schoolSchedule', async (req:MyRequest<f>, rep) => { // ?school=새
     }
     return d
 });
-
-// fastify.get('/Skydata', async (req:MyRequest<Sky>, rep) => { // /Skydata?x=37.2926537&y=126.8142501
-//     const queryObj = req.query
-//     let d
-//     if(queryObj.x && queryObj.y){
-//         if(queryObj.y > 0 && queryObj.y > 0)
-//         d = await getSkyData(queryObj.x, queryObj.y);
-//     } else{
-//         d = '해당 데이터가 존재하지 않음.'
-//     }
-//     return d
-// });
 
 fastify.listen(3000, '0.0.0.0', () => {
     console.log('server listening...');

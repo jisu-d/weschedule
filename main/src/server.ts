@@ -194,84 +194,28 @@ const schoolScheduleDataParsing = (data:SCHDATA) => {
     })
     const datas:EVLILF[] = [];
 
-    for(let i = 0 ; i < lastData.length ; i++){
-        if(!datas){
-            datas.push({
-                day: {
-                    start: lastData[i].day,
-                    last: lastData[i].day
-                },
-                eventName: lastData[i].eventName
-            })
-        } else{
-            for(let j of datas){
-                if(j.eventName !== lastData[i].eventName){
-                        datas.push({
-                            day: {
-                                start: lastData[i].day,
-                                last: lastData[i].day
-                            },
-                            eventName: lastData[i].eventName
-                        })
-                    } else if(j.eventName === lastData[i].eventName){
-                        if(j.day.start > lastData[i].day){
-                            j.day.start = lastData[i].day
-                        } else if (j.day.last > lastData[i].day){
-                            j.day.last = lastData[i].day
-                        }
-                    }
-            }
+    const map = new Map()
+    for (let i of lastData) {
+        if (!map.has(i.eventName)) {
+            map.set(i.eventName, [])
         }
+        map.get(i.eventName).push(i.day)
     }
+    for(let [key, value] of map){
+        value.sort((a: string, b: string) => a.localeCompare(b))
+    }
+    const keys = map.keys();
 
-    // for (let i of lastData) {
-    //     for (let j of datas) {
-    //         if (j.eventName !== i.eventName) {
-    //             datas.push({
-    //                 day: {
-    //                     start: i.day,
-    //                     last: i.day
-    //                 },
-    //                 eventName: i.eventName
-    //             })
-    //         } else if (j.eventName === i.eventName) {
-    //             if (j.day.start > i.day) {
-    //                 j.day.start = i.day
-    //             } else if (j.day.last > i.day) {
-    //                 j.day.last = i.day
-    //             }
-    //         }
-    //     }
-    //     console.log(datas);
-    //     if (datas) {
-    //         datas.push({
-    //             day: {
-    //                 start: i.day,
-    //                 last: i.day
-    //             },
-    //             eventName: i.eventName
-    //         })
-    //     } else if (!datas) {
-    //         console.log(2);
+    map.forEach((i:string[]) => {
+        datas.push({
+            day: {
+                start: i[0],
+                last: i.at(-1)
+            },
+            eventName: keys.next().value
+        })
+    })
 
-    //         for (let j of datas) {
-    //             if (j.eventName !== i.eventName) {
-    //                 datas.push({
-    //                     day: {
-    //                         start: i.day,
-    //                         last: i.day
-    //                     },
-    //                     eventName: i.eventName
-    //                 })
-    //             } else if (j.eventName === i.eventName) {
-    //                 if (j.day.start > i.day) {
-    //                     j.day.start = i.day
-    //                 } else if (j.day.last > i.day) {
-    //                     j.day.last = i.day
-    //                 }
-    //             }
-    //         }
-    //     }
     //     // i.eventName을 찾고 없으면 하나 넣음
     //     // start, end를 똑같이 씀
     //     // i.eventName가 있는 경우
@@ -279,7 +223,7 @@ const schoolScheduleDataParsing = (data:SCHDATA) => {
     //     // end보다 크면 end에
 
     // }
-    return lastData
+    return datas
 }
 
 export const fetchCookInfo = async (schoolName:string, getNum:number) => { //급식 정보를 가져온다.

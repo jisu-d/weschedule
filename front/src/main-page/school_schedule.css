@@ -1,0 +1,11 @@
+.school_schedule{
+    padding: 20px;
+}
+.D-day-container{
+    font-size: 15px;
+    color: lightgray;
+}
+
+.D-day-container > div:nth-child(1){
+    color: black;
+}

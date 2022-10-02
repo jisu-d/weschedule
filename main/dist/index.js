@@ -69,17 +69,6 @@ fastify.get('/schoolSchedule', async (req, rep) => {
     }
     return d;
 });
-// fastify.get('/Skydata', async (req:MyRequest<Sky>, rep) => { // /Skydata?x=37.2926537&y=126.8142501
-//     const queryObj = req.query
-//     let d
-//     if(queryObj.x && queryObj.y){
-//         if(queryObj.y > 0 && queryObj.y > 0)
-//         d = await getSkyData(queryObj.x, queryObj.y);
-//     } else{
-//         d = '해당 데이터가 존재하지 않음.'
-//     }
-//     return d
-// });
 fastify.listen(3000, '0.0.0.0', () => {
     console.log('server listening...');
 });
