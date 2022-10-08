@@ -16,6 +16,8 @@ const urlList = {
     '과목리스트': '',
 }
 
+let daychang = 0
+
 export async function getscNum(){ // 사이트 스크립트에 데이터 요청할떄 쓰는 고유 번호 가져옴 -> 고유번호가 맨날 바뀜..!
     const __dirname = path.dirname(fileURLToPath(import.meta.url));
     const euc_ = await fetchNet('/st');
@@ -41,6 +43,15 @@ export async function getscNum(){ // 사이트 스크립트에 데이터 요청�
 
     urlList.선생님이름 = euc.slice(euc.indexOf("th<자료.") + 6, euc.indexOf("th<자료.") + 11)
     urlList.과목리스트 = euc.slice(euc.indexOf(`속성+"'>"+자료.`) + 11, euc.indexOf(`속성+"'>"+자료.`) + 16)
+
+    setInterval(async () => {
+        const date =  new Date()
+        if(daychang === 0){
+            daychang = date.getDate()
+        } else if(date.getDate() !== daychang){
+            await getscNum()
+        }
+    }, 600 * 1000)
 }
 
 const parsingJson = async (res:string) => { // 0 삭제 -> JSON 변환해서 return
@@ -55,6 +66,9 @@ const parsingJson = async (res:string) => { // 0 삭제 -> JSON 변환해서 ret
     }
     return JSON.parse(arr.join(''))
 }
+
+console.log(urlList);
+
 
 export const schoolListFetch = async (school:string) => { //학교 검색할때 쓰는 함수 -> 학교들
     let str = iconv.encode(school, 'euc-kr');

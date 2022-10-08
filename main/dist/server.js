@@ -12,6 +12,7 @@ const urlList = {
     '선생님이름': '',
     '과목리스트': '',
 };
+let daychang = 0;
 export async function getscNum() {
     const __dirname = path.dirname(fileURLToPath(import.meta.url));
     const euc_ = await fetchNet('/st');
@@ -32,6 +33,15 @@ export async function getscNum() {
     urlList.시간표번호_다음주 = euc.slice(euc.indexOf("원자료=자료.") + 7, euc.indexOf("원자료=자료.") + 12);
     urlList.선생님이름 = euc.slice(euc.indexOf("th<자료.") + 6, euc.indexOf("th<자료.") + 11);
     urlList.과목리스트 = euc.slice(euc.indexOf(`속성+"'>"+자료.`) + 11, euc.indexOf(`속성+"'>"+자료.`) + 16);
+    setInterval(async () => {
+        const date = new Date();
+        if (daychang === 0) {
+            daychang = date.getDate();
+        }
+        else if (date.getDate() !== daychang) {
+            await getscNum();
+        }
+    }, 600 * 1000);
 }
 const parsingJson = async (res) => {
     const arr = [];
@@ -45,6 +55,7 @@ const parsingJson = async (res) => {
     }
     return JSON.parse(arr.join(''));
 };
+console.log(urlList);
 export const schoolListFetch = async (school) => {
     let str = iconv.encode(school, 'euc-kr');
     let d = [];
