@@ -14,6 +14,7 @@ const urlList = {
 };
 let daychang = 0;
 export async function getscNum() {
+    console.log(urlList);
     const __dirname = path.dirname(fileURLToPath(import.meta.url));
     const euc_ = await fetchNet('/st');
     const euc = euc_.euc;
@@ -38,7 +39,7 @@ export async function getscNum() {
         if (daychang === 0) {
             daychang = date.getDate();
         }
-        else if (date.getDate() !== daychang) {
+        else if (date.getDate() !== daychang && daychang !== 0) {
             await getscNum();
         }
     }, 600 * 1000);

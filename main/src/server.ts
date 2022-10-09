@@ -19,6 +19,7 @@ const urlList = {
 let daychang = 0
 
 export async function getscNum(){ // 사이트 스크립트에 데이터 요청할떄 쓰는 고유 번호 가져옴 -> 고유번호가 맨날 바뀜..!
+    console.log(urlList);
     const __dirname = path.dirname(fileURLToPath(import.meta.url));
     const euc_ = await fetchNet('/st');
 
@@ -48,7 +49,7 @@ export async function getscNum(){ // 사이트 스크립트에 데이터 요청�
         const date =  new Date()
         if(daychang === 0){
             daychang = date.getDate()
-        } else if(date.getDate() !== daychang){
+        } else if(date.getDate() !== daychang && daychang !== 0){
             await getscNum()
         }
     }, 600 * 1000)
