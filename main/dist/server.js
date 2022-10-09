@@ -44,6 +44,7 @@ export async function getscNum() {
         }
     }, 600 * 1000);
 }
+getscNum();
 const parsingJson = async (res) => {
     const arr = [];
     res = res.slice(res.indexOf('{'));
@@ -56,7 +57,6 @@ const parsingJson = async (res) => {
     }
     return JSON.parse(arr.join(''));
 };
-console.log(urlList);
 export const schoolListFetch = async (school) => {
     let str = iconv.encode(school, 'euc-kr');
     let d = [];

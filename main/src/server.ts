@@ -55,6 +55,8 @@ export async function getscNum(){ // 사이트 스크립트에 데이터 요청�
     }, 600 * 1000)
 }
 
+getscNum()
+
 const parsingJson = async (res:string) => { // 0 삭제 -> JSON 변환해서 return
     const arr:string[] = []
 
@@ -67,8 +69,6 @@ const parsingJson = async (res:string) => { // 0 삭제 -> JSON 변환해서 ret
     }
     return JSON.parse(arr.join(''))
 }
-
-console.log(urlList);
 
 
 export const schoolListFetch = async (school:string) => { //학교 검색할때 쓰는 함수 -> 학교들
