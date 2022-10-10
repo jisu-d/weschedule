@@ -35,13 +35,13 @@ export async function getscNum() {
     urlList.과목리스트 = euc.slice(euc.indexOf(`속성+"'>"+자료.`) + 11, euc.indexOf(`속성+"'>"+자료.`) + 16);
     console.log(urlList);
     setInterval(async () => {
-        const date = new Date();
-        if (daychang === 0) {
-            daychang = date.getDate();
-        }
-        else if (date.getDate() !== daychang && daychang !== 0) {
-            await getscNum();
-        }
+        // const date =  new Date()
+        // if(daychang === 0){
+        //     daychang = date.getDate()
+        // } else if(date.getDate() !== daychang && daychang !== 0){
+        //     await getscNum()
+        // }
+        getscNum();
     }, 600 * 1000);
 }
 getscNum();

@@ -47,12 +47,13 @@ export async function getscNum(){ // 사이트 스크립트에 데이터 요청�
     console.log(urlList);
 
     setInterval(async () => {
-        const date =  new Date()
-        if(daychang === 0){
-            daychang = date.getDate()
-        } else if(date.getDate() !== daychang && daychang !== 0){
-            await getscNum()
-        }
+        // const date =  new Date()
+        // if(daychang === 0){
+        //     daychang = date.getDate()
+        // } else if(date.getDate() !== daychang && daychang !== 0){
+        //     await getscNum()
+        // }
+        getscNum()
     }, 600 * 1000)
 }
 
