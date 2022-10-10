@@ -46,18 +46,16 @@ export async function getscNum(){ // 사이트 스크립트에 데이터 요청�
 
     console.log(urlList);
 
-    setInterval(async () => {
-        // const date =  new Date()
-        // if(daychang === 0){
-        //     daychang = date.getDate()
-        // } else if(date.getDate() !== daychang && daychang !== 0){
-        //     await getscNum()
-        // }
-        getscNum()
-    }, 600 * 1000)
+    // setInterval(async () => {
+    //     // const date =  new Date()
+    //     // if(daychang === 0){
+    //     //     daychang = date.getDate()
+    //     // } else if(date.getDate() !== daychang && daychang !== 0){
+    //     //     await getscNum()
+    //     // }
+    //     getscNum()
+    // }, 600 * 1000)
 }
-
-getscNum()
 
 const parsingJson = async (res:string) => { // 0 삭제 -> JSON 변환해서 return
     const arr:string[] = []
@@ -80,9 +78,12 @@ export const schoolListFetch = async (school:string) => { //학교 검색할때 
     for(let i = 0 ; str.length > i ; i++){
         d.push(`%${str[i].toString(16).toUpperCase()}`)
     }
-    if(!urlList['학교찾기']){
-        await getscNum(); 
-    }
+    // if(!urlList['학교찾기']){
+    //     await getscNum(); 
+    // }
+    //이부분은 어짜피 트래픽이 많이 없어서 사이트 접속하면 데이터 얻어오는 걸로 변경 
+    // 트레픽이 많이 발생하면 하루에 한번 가져 오는걸로 변경..!
+    await getscNum();
     const euc = await fetchNet(`http://comci.kr:4082${urlList['학교찾기']}${d.join('')}`);
     return parsingJson(euc.utf)
 }

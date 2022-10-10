@@ -34,17 +34,16 @@ export async function getscNum() {
     urlList.선생님이름 = euc.slice(euc.indexOf("th<자료.") + 6, euc.indexOf("th<자료.") + 11);
     urlList.과목리스트 = euc.slice(euc.indexOf(`속성+"'>"+자료.`) + 11, euc.indexOf(`속성+"'>"+자료.`) + 16);
     console.log(urlList);
-    setInterval(async () => {
-        // const date =  new Date()
-        // if(daychang === 0){
-        //     daychang = date.getDate()
-        // } else if(date.getDate() !== daychang && daychang !== 0){
-        //     await getscNum()
-        // }
-        getscNum();
-    }, 600 * 1000);
+    // setInterval(async () => {
+    //     // const date =  new Date()
+    //     // if(daychang === 0){
+    //     //     daychang = date.getDate()
+    //     // } else if(date.getDate() !== daychang && daychang !== 0){
+    //     //     await getscNum()
+    //     // }
+    //     getscNum()
+    // }, 600 * 1000)
 }
-getscNum();
 const parsingJson = async (res) => {
     const arr = [];
     res = res.slice(res.indexOf('{'));
@@ -63,9 +62,12 @@ export const schoolListFetch = async (school) => {
     for (let i = 0; str.length > i; i++) {
         d.push(`%${str[i].toString(16).toUpperCase()}`);
     }
-    if (!urlList['학교찾기']) {
-        await getscNum();
-    }
+    // if(!urlList['학교찾기']){
+    //     await getscNum(); 
+    // }
+    //이부분은 어짜피 트래픽이 많이 없어서 사이트 접속하면 데이터 얻어오는 걸로 변경 
+    // 트레픽이 많이 발생하면 하루에 한번 가져 오는걸로 변경..!
+    await getscNum();
     const euc = await fetchNet(`http://comci.kr:4082${urlList['학교찾기']}${d.join('')}`);
     return parsingJson(euc.utf);
 };
