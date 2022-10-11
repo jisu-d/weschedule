@@ -39,17 +39,6 @@ const firstTable = () => {
 
 export function Table(props:{size:number}){
     let [arr, setArr] = useState<JSX.Element>();
-    // return (
-    //     <>
-    //     <div className="title">시간표</div>
-    //     <table>
-    //         <tbody>
-    //             {firstTable()}
-    //             {makeTableAll(props.size)}
-    //         </tbody>
-    //     </table>
-    //     </>
-    // )
 
     const createTable = () => {
         setArr (

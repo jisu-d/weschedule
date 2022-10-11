@@ -11,7 +11,8 @@ export default defineConfig({
       input:{
         index:path.resolve(__dirname, 'index.html'),
         page:path.resolve(__dirname, 'login/index.html'),
-        page2:path.resolve(__dirname, 'myounEon/index.html')
+        page2:path.resolve(__dirname, 'myounEon/index.html'),
+        page3:path.resolve(__dirname, 'calender/index.html'),
       }
     },
     outDir:path.resolve(__dirname, '..', '..', 'jisu-d.github.io')

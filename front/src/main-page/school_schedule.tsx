@@ -31,7 +31,7 @@ export function School_schedule_Dday() {
       arr2.push(
         <div>
           <span>{_v.eventName} </span>
-          <span>D-{diffDay}</span><br/>
+          <span>D-{diffDay + 1}</span><br/>
         </div>
       )
     })
