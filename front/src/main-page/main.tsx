@@ -34,7 +34,8 @@ ReactDOM.createRoot(app).render(
           <Sky_div />
         </div>
         <div className="timetable-container box_shadow" id="timetable-container">
-          <Table size={7} />
+          {/* <Table size={7} /> */}
+          서버 문제로 점검중 입니다...
         </div>
         <div className="cooktable-container box_shadow" id="cooktable-container">
           <CookDiv />
