@@ -48,7 +48,8 @@ ReactDOM.createRoot(app).render(
           <MyApp />
         </div> */}
         <div className='school_schedule box_shadow'>
-          <School_schedule_Dday />
+          {/* <School_schedule_Dday /> */}
+          서버 문제로 점검중 입니다...
         </div>
         <div className='myoungEon-container box_shadow' onClick={Href2}>
           <MyoungEonDiv />
