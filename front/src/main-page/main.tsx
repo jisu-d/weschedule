@@ -38,7 +38,8 @@ ReactDOM.createRoot(app).render(
           서버 문제로 점검중 입니다...
         </div>
         <div className="cooktable-container box_shadow" id="cooktable-container">
-          <CookDiv />
+          {/* <CookDiv /> */}
+          서버 문제로 점검중 입니다...
         </div>
         {/* <div className='google_adsense box_shadow'>
             <AdsensebyGoogleDiv />
