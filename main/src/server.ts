@@ -188,12 +188,31 @@ type EVLI = {
 }
 
 /**매개변수는 학교 이름이다.*/
-export const fetchSchoolSchedule = async (schoolName: string, startDay: string, lastDay: string) => {
+export const fetchSchoolScheduleDday = async (schoolName: string, startDay: string, lastDay: string) => {
     const data = await fetchSchoolInfo(schoolName)
     const scheduleData:SCHDATA = await (await fetch(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${data.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${data.SD_SCHUL_CODE}&AA_FROM_YMD=${startDay}&AA_TO_YMD=${lastDay}`)).json();
     const parsingData = await schoolScheduleDataParsing(scheduleData)
     return parsingData
 }
+
+export const fetchSchoolScheduleAll = async (schoolName: string, startDay: string, lastDay: string) => {
+    const data = await fetchSchoolInfo(schoolName)
+    const scheduleData:SCHDATA = await (await fetch(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${data.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${data.SD_SCHUL_CODE}&AA_FROM_YMD=${startDay}&AA_TO_YMD=${lastDay}`)).json();
+    
+    const arr: EVLI[] = []
+    const lastData: EVLI[] = []
+    scheduleData.SchoolSchedule[1].row.flat().map((v) => {arr.push({ day: v.AA_YMD, eventName: v.EVENT_NM})});
+
+    arr.forEach((v) => {
+        getNameList.testName.forEach((a:string, i) => {
+            if(v.eventName.includes(a)){
+                lastData.push(v)
+            }
+        })
+    })
+
+    return arr
+} 
 
 /**D-day 태그로 만들기 위해 학사일정 데이터를 파싱하는 함수 */
 const schoolScheduleDataParsing = (data:SCHDATA) => {

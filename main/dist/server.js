@@ -33,7 +33,6 @@ export async function getscNum() {
     urlList.시간표번호_다음주 = euc.slice(euc.indexOf("원자료=자료.") + 7, euc.indexOf("원자료=자료.") + 12);
     urlList.선생님이름 = euc.slice(euc.indexOf("th<자료.") + 6, euc.indexOf("th<자료.") + 11);
     urlList.과목리스트 = euc.slice(euc.indexOf(`속성+"'>"+자료.`) + 11, euc.indexOf(`속성+"'>"+자료.`) + 16);
-    console.log(urlList);
     // setInterval(async () => {
     //     // const date =  new Date()
     //     // if(daychang === 0){
@@ -144,11 +143,26 @@ const getNameList = {
     testName: ['지필평가', '중간고사', '기말고사', '중간고사', '고사'],
 };
 /**매개변수는 학교 이름이다.*/
-export const fetchSchoolSchedule = async (schoolName, startDay, lastDay) => {
+export const fetchSchoolScheduleDday = async (schoolName, startDay, lastDay) => {
     const data = await fetchSchoolInfo(schoolName);
     const scheduleData = await (await fetch(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${data.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${data.SD_SCHUL_CODE}&AA_FROM_YMD=${startDay}&AA_TO_YMD=${lastDay}`)).json();
     const parsingData = await schoolScheduleDataParsing(scheduleData);
     return parsingData;
+};
+export const fetchSchoolScheduleAll = async (schoolName, startDay, lastDay) => {
+    const data = await fetchSchoolInfo(schoolName);
+    const scheduleData = await (await fetch(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${data.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${data.SD_SCHUL_CODE}&AA_FROM_YMD=${startDay}&AA_TO_YMD=${lastDay}`)).json();
+    const arr = [];
+    const lastData = [];
+    scheduleData.SchoolSchedule[1].row.flat().map((v) => { arr.push({ day: v.AA_YMD, eventName: v.EVENT_NM }); });
+    arr.forEach((v) => {
+        getNameList.testName.forEach((a, i) => {
+            if (v.eventName.includes(a)) {
+                lastData.push(v);
+            }
+        });
+    });
+    return arr;
 };
 /**D-day 태그로 만들기 위해 학사일정 데이터를 파싱하는 함수 */
 const schoolScheduleDataParsing = (data) => {
