@@ -11,7 +11,7 @@ import { MyoungEonDiv } from './helpful_test'
 import { Sky_div } from './Sky_div'
 
 import { Href } from './user-div'
-import { Href2 } from './helpful_test'
+import { Href2, Href3 } from './helpful_test'
 
 import { School_schedule_Dday } from './school_schedule'
 
@@ -34,12 +34,10 @@ ReactDOM.createRoot(app).render(
           <Sky_div />
         </div>
         <div className="timetable-container box_shadow" id="timetable-container">
-          {/* <Table size={7} /> */}
-          서버 문제로 점검중 입니다...
+          <Table size={7} />
         </div>
         <div className="cooktable-container box_shadow" id="cooktable-container">
-          {/* <CookDiv /> */}
-          서버 문제로 점검중 입니다...
+          <CookDiv />
         </div>
         {/* <div className='google_adsense box_shadow'>
             <AdsensebyGoogleDiv />
@@ -47,9 +45,8 @@ ReactDOM.createRoot(app).render(
         {/* <div>
           <MyApp />
         </div> */}
-        <div className='school_schedule box_shadow'>
-          {/* <School_schedule_Dday /> */}
-          서버 문제로 점검중 입니다...
+        <div className='school_schedule box_shadow' onClick={Href3}>
+          <School_schedule_Dday />
         </div>
         <div className='myoungEon-container box_shadow' onClick={Href2}>
           <MyoungEonDiv />

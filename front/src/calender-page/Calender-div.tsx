@@ -1,84 +1,114 @@
-import './Calender-div.css'
-import React, { useState, useEffect } from 'react';
+import "./Calender-div.css"
 
+import React, { useEffect, useState } from "react";
 
-const Dayname = ['일', '월', '화', '수', '목', '금', '토']
-function DaysTable(date:Date){
-    const arr:JSX.Element[] = [];
-    const lastDay = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
-    console.log(lastDay);
-    for(let i = 0 ; i < 5 ; i++){
-        for(let j = 0 ; j < Dayname.length ; j++){
+let date = new Date();
 
+const yearData = () => {
+    const viewYear = date.getFullYear();
+    const viewMonth = date.getMonth();
+
+    return (`${viewYear}년 ${viewMonth + 1}월`)
+}
+
+export function CalendarDiv() {
+    let [arr, setArr] = useState<JSX.Element>()
+
+    const renderCalendar = () => {
+        const viewYear = date.getFullYear();
+        const viewMonth = date.getMonth();
+
+        const prevLast = new Date(viewYear, viewMonth, 0);
+        const thisLast = new Date(viewYear, viewMonth + 1, 0);
+
+        const PLDate = prevLast.getDate();
+        const PLDay = prevLast.getDay();
+
+        const TLDate = thisLast.getDate();
+        const TLDay = thisLast.getDay();
+
+        const prevDates = [];
+        const thisDates = [...Array(TLDate + 1).keys()].slice(1);
+        const nextDates = [];
+
+        if (PLDay !== 6) {
+            for (let i = 0; i < PLDay + 1; i++) {
+                prevDates.unshift(PLDate - i);
+            }
         }
-    }
-    
-    // return(
 
-    // )
-}
+        for (let i = 1; i < 7 - TLDay; i++) {
+            nextDates.push(i)
+        }
 
-const firstTable = () => {
-    const arr:JSX.Element[] = []
-    Dayname.map((v, i) => arr.push(<td key={`first-${i}`}>{v}</td>))
-    
-    return(
-        <tr>
-            <td></td>
-            {arr}
-        </tr>
-    )
-}
+        const dates = prevDates.concat(thisDates, nextDates);
+        const dates2: JSX.Element[] = []
 
-export function Calender() {
-    let [arr, setArr] = useState<JSX.Element>();
-    let [date, setDate] = useState<Date>(new Date());
+        const firstDateIndex = dates.indexOf(1);
+        const lastDateIndex = dates.lastIndexOf(TLDate);
+        dates.forEach((date, i) => {
+            const condition = i >= firstDateIndex && i < lastDateIndex + 1 ? 'this' : 'other';
+            dates2.push(<div className="date" ><span className={condition} >{date}</span></div>);
+        })
 
-    const makeTable = () => {
-        setArr(
-            <>
-                <div className='heder'>
-                    <button onClick={leftBtn}>&lsaquo;</button>
-                    <div className='Day'>{date.getFullYear()}년 {date.getMonth() + 1}월 {date.getDate()}일</div>
-                    <button onClick={rightBtn}>&rsaquo;</button>
-                </div>
-                <div className='calender-div'>
-                    <table>
-                        <tbody>
-                            {firstTable()}
-                        </tbody>
-                    </table>
-                </div>
-            </>
-        )
+        const today = new Date();
+
+        // if (viewMonth === today.getMonth() && viewYear === today.getFullYear()) {
+        //     for (let date of document.querySelectorAll('.this')) {
+        //         if (date.innerHTML === today.getDate()) {
+        //             date.classList.add('today');
+        //             break;
+        //         }
+        //     }
+        // }
+
+        setArr(<>{dates2.join('')}</>)
+
     }
 
-    const leftBtn = () => {
-        setDate(new Date(date.setMonth(date.getMonth() - 1)))
-        makeTable()
-        DaysTable(date)
+    const prevMonth = () => {
+        date.setDate(1);
+        date.setMonth(date.getMonth() - 1);
+        renderCalendar();
     }
 
-    const rightBtn = () => {
-        setDate(new Date(date.setMonth(date.getMonth() + 1)))
-        makeTable()
-        DaysTable(date)
+    const nextMonth = () => {
+        date.setDate(1);
+        date.setMonth(date.getMonth() + 1);
+        renderCalendar();
+    }
+
+    const goToday = () => {
+        date = new Date();
+        renderCalendar();
     }
 
     useEffect(() => {
-        setArr(
-            <div className='loading' >
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        )
-        makeTable()
+        renderCalendar()
     }, [])
 
-    return(
-        <>
-            {arr}
-        </>
+    return (
+        <div className="calendar">
+            <div className="header">
+                <div className="year-month">{yearData()}</div>
+                <div className="nav">
+                    <button className="nav-btn go-prev" onClick={prevMonth}>&lt;</button>
+                    <button className="nav-btn go-today" onClick={goToday}>Today</button>
+                    <button className="nav-btn go-next" onClick={nextMonth}>&gt;</button>
+                </div>
+            </div>
+            <div className="main">
+                <div className="days">
+                    <div className="day">일</div>
+                    <div className="day">월</div>
+                    <div className="day">화</div>
+                    <div className="day">수</div>
+                    <div className="day">목</div>
+                    <div className="day">금</div>
+                    <div className="day">토</div>
+                </div>
+                <div className="dates">{arr}</div>
+            </div>
+        </div>
     )
 }
