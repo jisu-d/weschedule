@@ -56,7 +56,10 @@ export function School_schedule_Dday() {
 
   return (
     <div>
-      <div className='title d'>학사일정 D-Day</div>
+      <div className='D-day-container1'>
+        <div className='title d'>학사일정 D-Day</div>
+        <div className='arrow'></div>
+      </div>
       <div className='D-day-container'>
           {arr}
       </div>

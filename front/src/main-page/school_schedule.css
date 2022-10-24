@@ -1,5 +1,6 @@
 .school_schedule{
     padding: 20px;
+    cursor: pointer;
 }
 .D-day-container{
     font-size: 15px;
@@ -8,4 +9,13 @@
 
 .D-day-container > div:nth-child(1){
     color: black;
+}
+
+.D-day-container1 {
+    display: flex;
+    align-items: center;
+}
+
+.D-day-container1 > div:nth-child(1){
+    padding-right: 4px;
 }

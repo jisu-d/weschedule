@@ -179,3 +179,8 @@ export type SCHDATA = {
         }
     ]
 }
+
+export type EVLI = {
+    day: string,
+    eventName:string
+}

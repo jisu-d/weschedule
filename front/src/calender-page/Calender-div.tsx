@@ -2,25 +2,56 @@ import "./Calender-div.css"
 
 import React, { useEffect, useState } from "react";
 
+import { proxy } from "../proxy";
+
+import { localda } from '../Search-page/local_data'
+
+import { EVLI } from '../../../public/type'
+
 let date = new Date();
 
 const yearData = () => {
     const viewYear = date.getFullYear();
     const viewMonth = date.getMonth();
-
+    
     return (`${viewYear}년 ${viewMonth + 1}월`)
 }
 
+// const changeDay = (i:number) => {
+//     const Day = new Date()
+//     Day.setDate(Day.getDate() + Number(i))
+//     const y: string = `${Day.getFullYear()}`.padStart(2, '0');
+//     const m: string = `${Day.getMonth() + 1}`.padStart(2, '0');
+//     const d: string = `${Day.getDate()}`.padStart(2, '0');
+  
+//     return `${y}${m}${d}`
+//   }
+
+const changeDay = (date:Date) => {
+    const y: string = `${date.getFullYear()}`.padStart(2, '0');
+    const m: string = `${date.getMonth() + 1}`.padStart(2, '0');
+    const d: string = `${date.getDate()}`.padStart(2, '0');
+  
+    return `${y}${m}${d}`
+  }
+
 export function CalendarDiv() {
     let [arr, setArr] = useState<JSX.Element>()
-
-    const renderCalendar = () => {
+    
+    const renderCalendar = async () => {
         const viewYear = date.getFullYear();
         const viewMonth = date.getMonth();
-
+        
         const prevLast = new Date(viewYear, viewMonth, 0);
         const thisLast = new Date(viewYear, viewMonth + 1, 0);
+        
+        const nowDate = {
+            start:changeDay(new Date(viewYear, viewMonth, 1)), 
+            last:changeDay(new Date(viewYear, viewMonth + 1, 0)),
+        }
 
+        const SchoolScheduleAllData:EVLI[] = await (await fetch(`${proxy}/fetchSchoolScheduleAll?school=${localda.schoolname}&startDay=${nowDate.start}&lastDay=${nowDate.last}`)).json()
+        
         const PLDate = prevLast.getDate();
         const PLDay = prevLast.getDay();
 
@@ -48,7 +79,19 @@ export function CalendarDiv() {
         const lastDateIndex = dates.lastIndexOf(TLDate);
         dates.forEach((date, i) => {
             const condition = i >= firstDateIndex && i < lastDateIndex + 1 ? 'this' : 'other';
-            dates2.push(<div className="date" ><span className={condition} >{date}</span></div>);
+                if(SchoolScheduleAllData.length > 0 && date === Number(SchoolScheduleAllData[0].day.slice(6))){
+                    dates2.push(
+                        <div className="date" key={`data-date-num-${i}`}>
+                            <span className={condition}>
+                                {date}
+                            </span>
+                            <div className="eventname">{SchoolScheduleAllData[0].eventName}</div>
+                        </div>
+                    );
+                    SchoolScheduleAllData.shift()
+                } else{
+                    dates2.push(<div className="date" key={`data-date-num-${i}`}><span className={condition}>{date}</span></div>);
+                }
         })
 
         const today = new Date();
@@ -62,7 +105,7 @@ export function CalendarDiv() {
         //     }
         // }
 
-        setArr(<>{dates2.join('')}</>)
+        setArr(<>{dates2}</>)
 
     }
 
@@ -109,6 +152,11 @@ export function CalendarDiv() {
                 </div>
                 <div className="dates">{arr}</div>
             </div>
+            <div className="m-nav">
+                    <button className="nav-btn go-prev" onClick={prevMonth}>&lt;</button>
+                    <button className="nav-btn go-today" onClick={goToday}>Today</button>
+                    <button className="nav-btn go-next" onClick={nextMonth}>&gt;</button>
+                </div>
         </div>
     )
 }
