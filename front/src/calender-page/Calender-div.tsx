@@ -131,6 +131,7 @@ export function CalendarDiv() {
     }, [])
 
     return (
+        <>
         <div className="calendar">
             <div className="header">
                 <div className="year-month">{yearData()}</div>
@@ -152,11 +153,12 @@ export function CalendarDiv() {
                 </div>
                 <div className="dates">{arr}</div>
             </div>
-            <div className="m-nav">
-                    <button className="nav-btn go-prev" onClick={prevMonth}>&lt;</button>
-                    <button className="nav-btn go-today" onClick={goToday}>Today</button>
-                    <button className="nav-btn go-next" onClick={nextMonth}>&gt;</button>
-                </div>
         </div>
+        <div className="m-nav">
+            <button className="nav-btn go-prev" onClick={prevMonth}>&lt;</button>
+            <button className="nav-btn go-today" onClick={goToday}>Today</button>
+            <button className="nav-btn go-next" onClick={nextMonth}>&gt;</button>
+        </div>
+        </>
     )
 }
