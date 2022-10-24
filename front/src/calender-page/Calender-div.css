@@ -50,7 +50,7 @@
 .dates {
     display: flex;
     flex-flow: row wrap;
-    height: 500px;
+    height: 450px;
     border-top: 1px solid #333333;
     border-right: 1px solid #333333;
 }
@@ -58,9 +58,10 @@
 .date {
     width: calc(100% / 7);
     /*padding: 15px;*/
-    padding-top: 15px;
+    padding-top: 7px;
     text-align: right;
     border-bottom: 1px solid #333333;
+    height: calc(450px / 6);
     border-left: 1px solid #333333;
 }
 
@@ -103,6 +104,7 @@
 
 .eventname{
     font-size: 10px;
+    margin-top: 5px;
     text-align: center;
     background-color: lightgray;
     color: white;
@@ -114,7 +116,7 @@
 
 @media screen and (max-width:767px) {
     #app{
-        margin-top: 8vh;
+        margin-top: 5vh;
     }
     .year-month{
         font-size: 20px;
