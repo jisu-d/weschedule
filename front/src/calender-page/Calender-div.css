@@ -128,10 +128,6 @@
     .nav{
         display: none;
     }
-
-    .date{
-        margin-top: 5px;
-    }
 }
 
 @media screen and (min-width:767px) {
