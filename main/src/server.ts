@@ -3,7 +3,7 @@ import fs from 'fs/promises';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import { fetchNet } from './fetch.js';
-import { Datai, msg, CI, mSDI, SCHDATA, EVLILF } from '../../public/type'
+import { Datai, msg, CI, mSDI, SCHDATA, EVLILF, EVLI } from '../../public/type'
 import { type } from 'os';
 
 const urlList = {
@@ -180,11 +180,6 @@ export const fetchSchoolInfo = async (schoolName:string) => {  //학교 정보�
 
 const getNameList = {
     testName: ['지필평가', '중간고사', '기말고사', '중간고사', '고사'],
-}
-
-type EVLI = {
-    day: string,
-    eventName:string
 }
 
 /**매개변수는 학교 이름이다.*/

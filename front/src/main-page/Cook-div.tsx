@@ -7,13 +7,13 @@ import { msg, mSDI } from "../../../public/type"
 import { useEffect, useState } from 'react';
 
 // let da: msg | mSDI  = await (await fetch(`${proxy}/cookInfo?school=${localda.schoolname}&getnum=5`)).json()
-let da: msg | mSDI  = await (await fetch(`${proxy}/cookInfo?school=${localda.schoolname}&getnum=14`)).json()
 //이거 급식 불러오는 날짜수정 필요함
 
 export function CookDiv() {
     let [arr, setArr] = useState<JSX.Element>();
-
-    const createCook = () => {
+    
+    const createCook = async () => {
+        let da: msg | mSDI  = await (await fetch(`${proxy}/cookInfo?school=${localda.schoolname}&getnum=14`)).json()
         const arr:JSX.Element[] = [];
         if('RESULT' in da){
             if(da.RESULT.MESSAGE === '해당하는 데이터가 없습니다.'){

@@ -15,13 +15,13 @@ const changeDay = (i:number) => {
   return `${y}${m}${d}`
 }
 
-const da:EVLILF[] = await (await fetch(`${proxy}/schoolSchedule?school=${localda.schoolname}&startDay=${changeDay(0)}&lastDay=${changeDay(200)}`)).json()
 
 export function School_schedule_Dday() {
   let [arr, setArr] = useState<JSX.Element>();
   let arr2: JSX.Element[] = []
-
-  const Ddayelement = () => {
+  
+  const Ddayelement = async () => {
+    const da:EVLILF[] = await (await fetch(`${proxy}/schoolSchedule?school=${localda.schoolname}&startDay=${changeDay(0)}&lastDay=${changeDay(200)}`)).json()
     arr2 = []
     da.forEach((_v) => {
       const date = new Date();
