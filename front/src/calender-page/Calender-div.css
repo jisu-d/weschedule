@@ -5,6 +5,11 @@
     box-sizing: border-box;
 }
 
+#app, body, html{
+    height: 100%;
+    margin: 0;
+}
+
 .header {
     display: flex;
     justify-content: space-between;
@@ -107,6 +112,7 @@
     margin-top: 5px;
     text-align: center;
     background-color: lightgray;
+    padding: 2px;
     color: white;
 }
 
@@ -116,7 +122,7 @@
 
 @media screen and (max-width:767px) {
     #app{
-        margin-top: 5vh;
+        padding-top: 5vh;
     }
     .year-month{
         font-size: 20px;
@@ -124,11 +130,18 @@
     }
 
     .m-nav{
-        display: block;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 15px;
     }
 
     .nav{
         display: none;
+    }
+
+    .m-btn{
+        font-size: 25px;
+        cursor: pointer;
     }
 }
 

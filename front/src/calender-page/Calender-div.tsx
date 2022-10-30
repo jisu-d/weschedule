@@ -37,6 +37,7 @@ const changeDay = (date:Date) => {
 
 export function CalendarDiv() {
     let [arr, setArr] = useState<JSX.Element>()
+    let [day, setday] = useState<string>()
     
     const renderCalendar = async () => {
         const viewYear = date.getFullYear();
@@ -156,9 +157,9 @@ export function CalendarDiv() {
         </div>
         <div>
             <div className="m-nav">
-                <button className="nav-btn go-prev" onClick={prevMonth}>&lt;</button>
-                <button className="nav-btn go-today" onClick={goToday}>Today</button>
-                <button className="nav-btn go-next" onClick={nextMonth}>&gt;</button>
+                <div className="m-btn" onClick={prevMonth}>&lt;</div>
+                <div className="click-day">{day}</div>
+                <div className="m-btn" onClick={nextMonth}>&gt;</div>
             </div>
         </div>
         </>
