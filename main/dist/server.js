@@ -12,7 +12,6 @@ const urlList = {
     '선생님이름': '',
     '과목리스트': '',
 };
-let daychang = 0;
 export async function getscNum() {
     const __dirname = path.dirname(fileURLToPath(import.meta.url));
     const euc_ = await fetchNet('/st');
@@ -188,6 +187,7 @@ const schoolScheduleDataParsing = (data) => {
         value.sort((a, b) => a.localeCompare(b));
     }
     const keys = map.keys();
+    console.log(keys);
     map.forEach((i) => {
         datas.push({
             day: {
