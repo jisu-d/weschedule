@@ -234,7 +234,7 @@ const schoolScheduleDataParsing = (data:SCHDATA) => {
     }
     const keys = map.keys();
 
-    console.log(keys);
+    console.log(map);
     
 
     map.forEach((i:string[]) => {

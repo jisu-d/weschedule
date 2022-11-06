@@ -187,7 +187,7 @@ const schoolScheduleDataParsing = (data) => {
         value.sort((a, b) => a.localeCompare(b));
     }
     const keys = map.keys();
-    console.log(keys);
+    console.log(map);
     map.forEach((i) => {
         datas.push({
             day: {
