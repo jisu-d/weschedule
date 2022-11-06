@@ -62,3 +62,8 @@ export function CookDiv() {
     )
     return element
 }
+
+const click = (e:Event) => {
+    console.log(e.target);
+     
+}
