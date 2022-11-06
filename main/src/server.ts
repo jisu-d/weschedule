@@ -222,6 +222,9 @@ const schoolScheduleDataParsing = (data:SCHDATA) => {
     })
     const datas:EVLILF[] = [];
 
+    console.log(lastData);
+    
+
     const map = new Map()
     for (let i of lastData) {
         if (!map.has(i.eventName)) {
@@ -233,8 +236,6 @@ const schoolScheduleDataParsing = (data:SCHDATA) => {
         value.sort((a: string, b: string) => a.localeCompare(b))
     }
     const keys = map.keys();
-
-    console.log(map);
     
 
     map.forEach((i:string[]) => {

@@ -176,6 +176,7 @@ const schoolScheduleDataParsing = (data) => {
         });
     });
     const datas = [];
+    console.log(lastData);
     const map = new Map();
     for (let i of lastData) {
         if (!map.has(i.eventName)) {
@@ -187,7 +188,6 @@ const schoolScheduleDataParsing = (data) => {
         value.sort((a, b) => a.localeCompare(b));
     }
     const keys = map.keys();
-    console.log(map);
     map.forEach((i) => {
         datas.push({
             day: {
