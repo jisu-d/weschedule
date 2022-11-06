@@ -111,12 +111,14 @@ export function CalendarDiv() {
     }
 
     const prevMonth = () => {
+        setday('')
         date.setDate(1);
         date.setMonth(date.getMonth() - 1);
         renderCalendar();
     }
 
     const nextMonth = () => {
+        setday('')
         date.setDate(1);
         date.setMonth(date.getMonth() + 1);
         renderCalendar();
@@ -152,7 +154,15 @@ export function CalendarDiv() {
                     <div className="day">금</div>
                     <div className="day">토</div>
                 </div>
-                <div className="dates">{arr}</div>
+                <div className="dates" onClick={(e) => {
+                    const tar = e.target as HTMLDivElement;
+                    if(tar.className === 'eventname'){
+                        setday(tar.innerHTML)
+                    } else if (tar.className === 'date' && tar.querySelector('.eventname')){
+                        setday(tar.querySelector('.eventname').innerHTML)
+                    }
+                    
+                }}>{arr}</div>
             </div>
         </div>
         <div>
@@ -164,4 +174,8 @@ export function CalendarDiv() {
         </div>
         </>
     )
+}
+
+const on = (e:Event) => {
+    console.log(e.currentTarget);
 }
