@@ -1,13 +1,12 @@
-import {localda} from './localda';
+import { localda } from '../local_data'
 
-export const check = () => { // true false여부를 확인함 
-    if(localda!){
-        if(localda.login > 0){
-            return false
-        } else {
-            return true
-        }
-    } else{
-        return true
+
+const check = () => { // true false여부를 확인함
+    if(!localda){
+        location.href = '/login/'
+    }else if (localda.year <= 0){
+        location.href = '/login/'
     }
 }
+
+check()

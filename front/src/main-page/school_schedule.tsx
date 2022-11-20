@@ -3,7 +3,7 @@ import { EVLILF } from '../../../public/type';
 import { useEffect, useState } from 'react';
 import { proxy } from "../proxy";
 
-import { localda } from '../login-page/local_data'
+import { localda } from '../local_data'
 
 const changeDay = (i:number) => {
   const Day = new Date()

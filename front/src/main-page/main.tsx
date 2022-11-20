@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import './local_data'
+import './cook_check'
 
 import { Table } from './Table'
 import { InfoDiv } from './user-div'

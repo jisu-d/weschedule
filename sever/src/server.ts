@@ -243,16 +243,18 @@ export const fetchSchoolScheduleDday = async (schoolName: string, startDay: stri
 }
 
 /**학교의 시간표 데이터 리턴 함수 */
-export const fetchSchoolScheduleData = async (schoolName: string, year:number, Class:number,) => {
-    const schoolData = fetchSchoolInfo(schoolName)
-    // if(schoolName.includes('초등학교')){
+// export const fetchSchoolScheduleData = async (schoolName: string, year:number, Class:number,) => {
+//     const schoolData = await fetchSchoolInfo(schoolName)
+//     if(schoolName.includes('초등학교')){
 
-    // } else if(schoolName.includes('중학교')){
+//     } else if(schoolName.includes('중학교')){
+
+//     } else if(schoolName.includes('고등학교')){
+//         console.log(`${neisApis.고등학교_시간표}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${schoolData.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${schoolData.SD_SCHUL_CODE}`);
         
-    // } else if(schoolName.includes('고등학교')){
-
-    // } 
-}
+//         await fetch(`${neisApis.고등학교_시간표}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${schoolData.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${schoolData.SD_SCHUL_CODE}&ALL_TI_YMD=${changeDay(0)}&GRADE=${year}&CLASS_NM=${Class}`)
+//     } 
+// }
 
 /**학교의 모든 학사 일정을 리턴 함수*/
 export const fetchSchoolScheduleAll = async (schoolName: string, startDay: string, lastDay: string) => {
@@ -299,18 +301,11 @@ export const checkSchool = async (schoolName:string, year:number, Class:number )
     const date = new Date()
     
     const res: msg | CI = await (await fetch(`${neisApis.반정보}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=10&ATPT_OFCDC_SC_CODE=${schoolInfo.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${schoolInfo.SD_SCHUL_CODE}&AY=${date.getFullYear()}&GRADE=${year}`)).json();
-    // 컴시간 검색한후 데이터 없으면 나이스로 검색
     if ('classInfo' in res) {
         if(res.classInfo[1].row.length >= Class){
             return true
         } else{
-            const data = await fetchSchoolInfo(schoolName)
-            if(data){
-                return true
-            } else{
-                return false
-            }
-
+            return false
         }
     } else {
        return false;

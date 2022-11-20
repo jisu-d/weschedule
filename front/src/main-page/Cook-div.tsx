@@ -1,5 +1,5 @@
 import './Cook-div.css';
-import { localda } from '../login-page/local_data'
+import { localda } from '../local_data'
 
 import { proxy } from "../proxy";
 
@@ -61,9 +61,4 @@ export function CookDiv() {
         </>
     )
     return element
-}
-
-const click = (e:Event) => {
-    console.log(e.target);
-     
 }

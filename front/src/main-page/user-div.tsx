@@ -1,4 +1,4 @@
-import {localda} from './localda';
+import {localda} from '../local_data'
 
 import './user-div.css';
 

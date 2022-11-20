@@ -18,11 +18,11 @@ export default defineConfig({
     outDir:path.resolve(__dirname, '..', '..', 'jisu-d.github.io')
   },
   server:{
-    port:3000,
+    port:5576,
     proxy:{
       '/api': {
-        target: 'https://weschedule.kro.kr',
-        //target: 'http://0.0.0.0:3000',
+        // target: 'https://weschedule.kro.kr',
+        target: 'http://0.0.0.0:3000',
         rewrite: (path) => path.replace(/^\/api/, ''),
         secure:true,
         changeOrigin:true,
