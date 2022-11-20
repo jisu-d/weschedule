@@ -76,7 +76,7 @@ const schoolInfoFetch = async (schoolNum) => {
 };
 export const getComciganData = async (school, a, b, num) => {
     // 학교 컴시간 데이터 요청하는곳 매개변수에 들어가는 학교이름이 정확해야함 -> 왜냐면 데이터 1개 오는걸 감안하고 만들었기 때문
-    const schoolNum = await schoolListFetch(school); // 학교 고유번호 받아옴ㅋ
+    const schoolNum = await schoolListFetch(school); // 학교 고유번호 받아옴
     const mainData = await schoolInfoFetch(schoolNum['학교검색'][0][3]); //schoolNum에서 받아온 데이터 넘겨줌
     const parsingData = await comciganDataParsing(mainData, a, b, num); //mainData에서 받은 데이터를 파싱해줌
     return parsingData;
@@ -120,6 +120,9 @@ const neisApis = {
     급식식단정보: 'https://open.neis.go.kr/hub/mealServiceDietInfo',
     반정보: 'https://open.neis.go.kr/hub/classInfo',
     학사일정: 'https://open.neis.go.kr/hub/SchoolSchedule',
+    초등학교_시간표: 'https://open.neis.go.kr/hub/elsTimetable',
+    중학교_시간표: 'https://open.neis.go.kr/hub/misTimetable',
+    고등학교_시간표: 'https://open.neis.go.kr/hub/hisTimetable',
 };
 const changeDay = (i) => {
     const Day = new Date();
@@ -129,8 +132,10 @@ const changeDay = (i) => {
     const d = `${Day.getDate()}`.padStart(2, '0');
     return `${y}${m}${d}`;
 };
+/**학교명 -> 시도교육청코드, 표준학교코드, 학교명 */
 export const fetchSchoolInfo = async (schoolName) => {
     const res = await (await fetch(`${neisApis['학교기본정보']}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&SCHUL_NM=${schoolName}`)).json();
+    console.log(`${neisApis['학교기본정보']}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&SCHUL_NM=${schoolName}`);
     const arr = {
         ATPT_OFCDC_SC_CODE: res.schoolInfo[1].row[0].ATPT_OFCDC_SC_CODE,
         SD_SCHUL_CODE: res.schoolInfo[1].row[0].SD_SCHUL_CODE,
@@ -138,30 +143,9 @@ export const fetchSchoolInfo = async (schoolName) => {
     };
     return arr;
 };
+/**학사일정 데이터에서 가져올 text list들 */
 const getNameList = {
-    testName: ['지필평가', '중간고사', '기말고사', '중간고사', '고사'],
-};
-/**매개변수는 학교 이름이다.*/
-export const fetchSchoolScheduleDday = async (schoolName, startDay, lastDay) => {
-    const data = await fetchSchoolInfo(schoolName);
-    const scheduleData = await (await fetch(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${data.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${data.SD_SCHUL_CODE}&AA_FROM_YMD=${startDay}&AA_TO_YMD=${lastDay}`)).json();
-    const parsingData = await schoolScheduleDataParsing(scheduleData);
-    return parsingData;
-};
-export const fetchSchoolScheduleAll = async (schoolName, startDay, lastDay) => {
-    const data = await fetchSchoolInfo(schoolName);
-    const scheduleData = await (await fetch(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${data.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${data.SD_SCHUL_CODE}&AA_FROM_YMD=${startDay}&AA_TO_YMD=${lastDay}`)).json();
-    const arr = [];
-    const lastData = [];
-    scheduleData.SchoolSchedule[1].row.flat().map((v) => { arr.push({ day: v.AA_YMD, eventName: v.EVENT_NM }); });
-    arr.forEach((v) => {
-        getNameList.testName.forEach((a, i) => {
-            if (v.eventName.includes(a)) {
-                lastData.push(v);
-            }
-        });
-    });
-    return arr;
+    textName: ['지필평가', '중간고사', '기말고사', '중간고사', '고사'],
 };
 /**D-day 태그로 만들기 위해 학사일정 데이터를 파싱하는 함수 */
 const schoolScheduleDataParsing = (data) => {
@@ -169,7 +153,7 @@ const schoolScheduleDataParsing = (data) => {
     const lastData = [];
     data.SchoolSchedule[1].row.flat().map((v) => { arr.push({ day: v.AA_YMD, eventName: v.EVENT_NM }); });
     arr.forEach((v) => {
-        getNameList.testName.forEach((a, i) => {
+        getNameList.textName.forEach((a, i) => {
             if (v.eventName.includes(a)) {
                 lastData.push(v);
             }
@@ -204,6 +188,32 @@ const schoolScheduleDataParsing = (data) => {
     // }
     return datas;
 };
+/**학교 이름을 Day태그만들기 위한 데이터를 리턴 함수*/
+export const fetchSchoolScheduleDday = async (schoolName, startDay, lastDay) => {
+    const data = await fetchSchoolInfo(schoolName);
+    const scheduleData = await (await fetch(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${data.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${data.SD_SCHUL_CODE}&AA_FROM_YMD=${startDay}&AA_TO_YMD=${lastDay}`)).json();
+    const parsingData = await schoolScheduleDataParsing(scheduleData);
+    return parsingData;
+};
+/**학교의 시간표 데이터 리턴 함수 */
+export const fetchSchoolScheduleData = async (schoolName, year, Class) => {
+    const schoolData = fetchSchoolInfo(schoolName);
+    if (schoolName.includes('초등학교')) {
+    }
+    else if (schoolName.includes('중학교')) {
+    }
+    else if (schoolName.includes('고등학교')) {
+    }
+};
+/**학교의 모든 학사 일정을 리턴 함수*/
+export const fetchSchoolScheduleAll = async (schoolName, startDay, lastDay) => {
+    const data = await fetchSchoolInfo(schoolName);
+    const scheduleData = await (await fetch(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${data.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${data.SD_SCHUL_CODE}&AA_FROM_YMD=${startDay}&AA_TO_YMD=${lastDay}`)).json();
+    const arr = [];
+    scheduleData.SchoolSchedule[1].row.flat().map((v) => { arr.push({ day: v.AA_YMD, eventName: v.EVENT_NM }); });
+    return arr;
+};
+/**학교이름으로 급식 정보를 가져온다. */
 export const fetchCookInfo = async (schoolName, getNum) => {
     const arr = await fetchSchoolInfo(schoolName);
     const dayList = [];
@@ -229,16 +239,24 @@ export const fetchCookInfo = async (schoolName, getNum) => {
         return res;
     }
 };
+/**검색한 학교 학년 반 이 있는지 확인하는 함수 -> ture or false*/
 export const checkSchool = async (schoolName, year, Class) => {
     const schoolInfo = await fetchSchoolInfo(schoolName);
     const date = new Date();
     const res = await (await fetch(`${neisApis.반정보}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=10&ATPT_OFCDC_SC_CODE=${schoolInfo.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${schoolInfo.SD_SCHUL_CODE}&AY=${date.getFullYear()}&GRADE=${year}`)).json();
+    // 컴시간 검색한후 데이터 없으면 나이스로 검색
     if ('classInfo' in res) {
         if (res.classInfo[1].row.length >= Class) {
             return true;
         }
         else {
-            return false;
+            const data = await fetchSchoolInfo(schoolName);
+            if (data) {
+                return true;
+            }
+            else {
+                return false;
+            }
         }
     }
     else {
