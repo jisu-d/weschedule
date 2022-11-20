@@ -198,12 +198,10 @@ export const fetchSchoolScheduleDday = async (schoolName, startDay, lastDay) => 
 /**학교의 시간표 데이터 리턴 함수 */
 export const fetchSchoolScheduleData = async (schoolName, year, Class) => {
     const schoolData = fetchSchoolInfo(schoolName);
-    if (schoolName.includes('초등학교')) {
-    }
-    else if (schoolName.includes('중학교')) {
-    }
-    else if (schoolName.includes('고등학교')) {
-    }
+    // if(schoolName.includes('초등학교')){
+    // } else if(schoolName.includes('중학교')){
+    // } else if(schoolName.includes('고등학교')){
+    // } 
 };
 /**학교의 모든 학사 일정을 리턴 함수*/
 export const fetchSchoolScheduleAll = async (schoolName, startDay, lastDay) => {
