@@ -5,8 +5,13 @@ import { schoolData } from './local_data'
 import { proxy } from "../proxy";
 
 const fetchSchoolList = async (school:string) => {
-    const da = await (await fetch(`${proxy}/schoolList?school=${school}`)).json() as [number, string, string, number][];
-    return da
+    if(school !== ''){
+        const da = await (await fetch(`${proxy}/schoolList?school=${school}`)).json() as [number, string, string, number][];
+        
+        return da
+    } else{
+        return []
+    }
 }
 
 let Debounce: NodeJS.Timeout
@@ -26,22 +31,22 @@ export function School_Search_Input(this: string) {
         Debounce = setTimeout(async () => {
             const d = await fetchSchoolList(tar.value)
 
-            if (d) {
+            if (d[0]) {
                 setArr(d.map((v, i) => (
                 <div key={`list-${i}`} className="school-list-arr">
                     <div>{v[1]}</div>
                     <div>{v[2]}</div>
                 </div>
                 )))
-            } else {
-                setArr(<div></div>)
+            } else{
+                setArr(<div className="msg2">검색이 되지 않아도, 정확한 학교 학년 반을 입력후에 검색 버튼을 눌러주세요.</div>)
             }
         }, 500);
     }
 
     const onClick = (e:React.MouseEvent<HTMLDivElement>) => {
         if(!(e.target instanceof HTMLDivElement)) return;
-        if(e.target.textContent.length > 2){
+        if(e.target.textContent.length > 2 && e.target.textContent !== '검색이 되지 않아도 정확한 학교 학년 반을 입력후에 검색 버튼을 눌러주세요.'){
             schoolData.schoolname = e.target.textContent
             inputRef.current.value = e.target.textContent;
             setArr([])

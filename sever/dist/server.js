@@ -74,14 +74,21 @@ const schoolInfoFetch = async (schoolNum) => {
     const euc = await fetchNet(`http://comci.kr:4082${urlList['학교정보']}${url}`);
     return parsingJson(euc.utf);
 };
-export const getComciganData = async (school, a, b, num) => {
+/**컴시간 데이터 있는지 검색한후 없으면 나이스 데이터를 받아옴 */
+export const getComciganData = async (school, Year, Class, num) => {
     // 학교 컴시간 데이터 요청하는곳 매개변수에 들어가는 학교이름이 정확해야함 -> 왜냐면 데이터 1개 오는걸 감안하고 만들었기 때문
     const schoolNum = await schoolListFetch(school); // 학교 고유번호 받아옴
-    const mainData = await schoolInfoFetch(schoolNum['학교검색'][0][3]); //schoolNum에서 받아온 데이터 넘겨줌
-    const parsingData = await comciganDataParsing(mainData, a, b, num); //mainData에서 받은 데이터를 파싱해줌
-    return parsingData;
+    if (schoolNum['학교검색'][0]) {
+        const mainData = await schoolInfoFetch(schoolNum['학교검색'][0][3]); //schoolNum에서 받아온 데이터 넘겨줌
+        const parsingData = await comciganDataParsing(mainData, Year, Class, num); //mainData에서 받은 데이터를 파싱해줌
+        return parsingData;
+    }
+    else {
+        const neisData = await fetchSchoolScheduleData(school, Year, Class);
+        return neisData;
+    }
 };
-const comciganDataParsing = async (arr, a, b, num) => {
+const comciganDataParsing = async (arr, Year, Class, num) => {
     const data = {
         '월': [],
         '화': [],
@@ -92,10 +99,10 @@ const comciganDataParsing = async (arr, a, b, num) => {
     await fs.writeFile('./arr.json', JSON.stringify(arr), { encoding: 'utf-8' });
     const day = ['월', '화', '수', '목', '금'];
     const days = ['시간표번호_이번주', '시간표번호_다음주'];
-    const myComciganData = arr[urlList[days[num]]][a][b];
+    const myComciganData = arr[urlList[days[num]]][Year][Class];
     for (let i = 0; i < myComciganData.length; i++) {
         for (let j = 0; j < day.length + 4; j++) {
-            const classNumData = String(arr[urlList[days[num]]][a][b][i][j]);
+            const classNumData = String(arr[urlList[days[num]]][Year][Class][i][j]);
             if (classNumData.length === 3) {
                 const l = parseInt(classNumData.slice(0, 1));
                 const f = parseInt(classNumData.slice(2));
@@ -196,15 +203,50 @@ export const fetchSchoolScheduleDday = async (schoolName, startDay, lastDay) => 
     return parsingData;
 };
 /**학교의 시간표 데이터 리턴 함수 */
-// export const fetchSchoolScheduleData = async (schoolName: string, year:number, Class:number,) => {
-//     const schoolData = await fetchSchoolInfo(schoolName)
-//     if(schoolName.includes('초등학교')){
-//     } else if(schoolName.includes('중학교')){
-//     } else if(schoolName.includes('고등학교')){
-//         console.log(`${neisApis.고등학교_시간표}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${schoolData.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${schoolData.SD_SCHUL_CODE}`);
-//         await fetch(`${neisApis.고등학교_시간표}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${schoolData.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${schoolData.SD_SCHUL_CODE}&ALL_TI_YMD=${changeDay(0)}&GRADE=${year}&CLASS_NM=${Class}`)
-//     } 
-// }
+export const fetchSchoolScheduleData = async (schoolName, year, Class) => {
+    const schoolData = await fetchSchoolInfo(schoolName);
+    const data = {
+        '월': [],
+        '화': [],
+        '수': [],
+        '목': [],
+        '금': [],
+    };
+    const day = ['월', '화', '수', '목', '금'];
+    const d = new Date();
+    d.setDate(d.getDate() - d.getDay());
+    if (schoolName.includes('초등학교')) {
+        for (let i = 0; i < 5; i++) {
+            d.setDate(d.getDate() + 1);
+            const a = `${`${d.getFullYear()}`.padStart(2, '0')}${`${d.getMonth() + 1}`.padStart(2, '0')}${`${d.getDate()}`.padStart(2, '0')}`;
+            const neisData = await (await fetch(`${neisApis.초등학교_시간표}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${schoolData.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${schoolData.SD_SCHUL_CODE}&ALL_TI_YMD=${a}&GRADE=${year}&CLASS_NM=${Class}`)).json();
+            for (let j = 0; j < neisData.elsTimetable[1].row.length; j++) {
+                data[day[d.getDay() - 1]].push([neisData.elsTimetable[1].row[j].ITRT_CNTNT, '']);
+            }
+        }
+    }
+    else if (schoolName.includes('중학교')) {
+        for (let i = 0; i < 5; i++) {
+            d.setDate(d.getDate() + 1);
+            const a = `${`${d.getFullYear()}`.padStart(2, '0')}${`${d.getMonth() + 1}`.padStart(2, '0')}${`${d.getDate()}`.padStart(2, '0')}`;
+            const neisData = await (await fetch(`${neisApis.중학교_시간표}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${schoolData.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${schoolData.SD_SCHUL_CODE}&ALL_TI_YMD=${a}&GRADE=${year}&CLASS_NM=${Class}`)).json();
+            for (let j = 0; j < neisData.misTimetable[1].row.length; j++) {
+                data[day[d.getDay() - 1]].push([neisData.misTimetable[1].row[j].ITRT_CNTNT, '']);
+            }
+        }
+    }
+    else if (schoolName.includes('고등학교')) {
+        for (let i = 0; i < 5; i++) {
+            d.setDate(d.getDate() + 1);
+            const a = `${`${d.getFullYear()}`.padStart(2, '0')}${`${d.getMonth() + 1}`.padStart(2, '0')}${`${d.getDate()}`.padStart(2, '0')}`;
+            const neisData = await (await fetch(`${neisApis.고등학교_시간표}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${schoolData.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${schoolData.SD_SCHUL_CODE}&ALL_TI_YMD=${a}&GRADE=${year}&CLASS_NM=${Class}`)).json();
+            for (let j = 0; j < neisData.hisTimetable[1].row.length; j++) {
+                data[day[d.getDay() - 1]].push([neisData.hisTimetable[1].row[j].ITRT_CNTNT, '']);
+            }
+        }
+    }
+    return data;
+};
 /**학교의 모든 학사 일정을 리턴 함수*/
 export const fetchSchoolScheduleAll = async (schoolName, startDay, lastDay) => {
     const data = await fetchSchoolInfo(schoolName);

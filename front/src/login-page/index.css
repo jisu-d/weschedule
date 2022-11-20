@@ -85,6 +85,11 @@ input {
     height: 30px;
 }
 
+.msg2{
+    font-size: 13px;
+    color: rgba(128, 128, 128, 0.774);
+}
+
 @media screen and (max-width:767px) {
     main>div{
       width: 90%;

@@ -83,6 +83,94 @@ export type CI = {
     ]
 }
 
+export type neisDataEls = {
+    elsTimetable:[
+        {
+            head:[
+                {
+                    list_total_count: number
+                }, 
+                msg
+            ]
+        },
+        {
+            row:{
+                    ALL_TI_YMD:string
+                    ATPT_OFCDC_SC_CODE:string
+                    ATPT_OFCDC_SC_NM:string
+                    AY:string
+                    CLASS_NM:string
+                    GRADE:string
+                    ITRT_CNTNT:string
+                    LOAD_DTM:string
+                    PERIO:string
+                    SCHUL_NM:string
+                    SD_SCHUL_CODE:string
+                    SEM:string
+                }[]
+        }
+    ]
+}
+
+export type neisDataMis = {
+    misTimetable:[
+        {
+            head:[
+                {
+                    list_total_count: number
+                }, 
+                msg
+            ]
+        },
+        {
+            row:{
+                    ALL_TI_YMD:string
+                    ATPT_OFCDC_SC_CODE:string
+                    ATPT_OFCDC_SC_NM:string
+                    AY:string
+                    CLASS_NM:string
+                    GRADE:string
+                    ITRT_CNTNT:string
+                    LOAD_DTM:string
+                    PERIO:string
+                    SCHUL_NM:string
+                    SD_SCHUL_CODE:string
+                    SEM:string
+                }[]
+        }
+    ]
+}
+
+export type neisDataHis = {
+    hisTimetable:[
+        {
+            head:[
+                {
+                    list_total_count: number
+                }, 
+                msg
+            ]
+        },
+        {
+            row:{
+                    ALL_TI_YMD:string
+                    ATPT_OFCDC_SC_CODE:string
+                    ATPT_OFCDC_SC_NM:string
+                    AY:string
+                    CLASS_NM:string
+                    GRADE:string
+                    ITRT_CNTNT:string
+                    LOAD_DTM:string
+                    PERIO:string
+                    SCHUL_NM:string
+                    SD_SCHUL_CODE:string
+                    SEM:string
+                }[]
+        }
+    ]
+}
+
+
 export type ME = [
     {
         result: string
