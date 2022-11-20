@@ -39,7 +39,7 @@ export function School_Search_Input(this: string) {
                 </div>
                 )))
             } else{
-                setArr(<div className="msg2">검색이 되지 않아도, 정확한 학교 학년 반을 입력후에 검색 버튼을 눌러주세요.</div>)
+                setArr(<div className="msg2">검색이 되지 않을시 <strong>"정확한 정보"</strong>을 입력후에 <strong>검색 버튼</strong>을 눌러주세요.</div>)
             }
         }, 500);
     }
