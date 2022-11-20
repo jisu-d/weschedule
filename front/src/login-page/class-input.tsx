@@ -11,7 +11,7 @@ export function Class_Search_Input(this: string) {
         
     return (
         <>
-        <input onChange={onChange} type="number" placeholder='반' min="1" max='15' />
+        <input onChange={onChange} type="number" placeholder='반 ex) 1 ~ 15' min="1" max='15' />
         </>
     );
 }

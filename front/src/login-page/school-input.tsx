@@ -50,7 +50,7 @@ export function School_Search_Input(this: string) {
         
     return (
         <div>
-            <input onChange={onChange} placeholder='학교' ref={inputRef} type='text' />
+            <input onChange={onChange} placeholder='학교이름' ref={inputRef} type='text' />
             <div className="school-list" onClick={onClick}>
                 {arr}
             </div>

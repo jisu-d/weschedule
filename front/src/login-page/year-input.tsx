@@ -12,7 +12,7 @@ export function Year_Search_Input(this: string) {
         
     return (
         <>
-        <input onChange={onChange} type="number" placeholder='학년' min="1" max='15' />
+        <input onChange={onChange} type="number" placeholder='학년 ex) 1 ~ 15' min="1" max='15' />
         </>
     );
 }
