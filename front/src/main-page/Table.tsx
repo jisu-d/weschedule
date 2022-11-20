@@ -1,5 +1,5 @@
 import { Datai } from '../../../public/type';
-import { localda } from '../Search-page/local_data'
+import { localda } from '../login-page/local_data'
 import './Table.css'
 import { proxy } from "../proxy";
 import { useEffect, useState } from 'react';

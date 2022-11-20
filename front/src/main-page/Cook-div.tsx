@@ -1,5 +1,5 @@
 import './Cook-div.css';
-import { localda } from '../Search-page/local_data'
+import { localda } from '../login-page/local_data'
 
 import { proxy } from "../proxy";
 

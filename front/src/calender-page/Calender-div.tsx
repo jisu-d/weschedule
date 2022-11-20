@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 
 import { proxy } from "../proxy";
 
-import { localda } from '../Search-page/local_data'
+import { localda } from '../login-page/local_data'
 
 import { EVLI } from '../../../public/type'
 
