@@ -12,6 +12,8 @@ import { Sky_div } from './Sky_div'
 import { Href } from './user-div'
 import { Href2, Href3 } from './helpful_test'
 
+import { Kakao_ad_fit } from './kakao'
+
 import { School_schedule_Dday } from './school_schedule'
 
 // import { MyApp } from './school_schedule'
@@ -49,6 +51,9 @@ ReactDOM.createRoot(app).render(
         </div>
         <div className='myoungEon-container box_shadow' onClick={Href2}>
           <MyoungEonDiv />
+        </div>
+        <div className='kakaoAdfit-container box_shadow' >
+          <Kakao_ad_fit />
         </div>
         <div className='side-comment-container box_shadow'>
           <MsgDiv/>
