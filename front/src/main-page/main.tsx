@@ -54,6 +54,7 @@ ReactDOM.createRoot(app).render(
         </div>
         <div className='kakaoAdfit-container box_shadow' >
           <Kakao_ad_fit />
+          <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
         </div>
         <div className='side-comment-container box_shadow'>
           <MsgDiv/>
