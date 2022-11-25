@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import './kakao.css'
 
-export function Kakao_ad_fit() {
+export function Kakao_ad_fit1() {
     const element = (
         <>
             <ins className="kakao_ad_area"
@@ -14,16 +14,16 @@ export function Kakao_ad_fit() {
             </ins>
         </>
     )
-     return element
+    return element
 }
-/*
-function Kakao_ad_fit1(){
+
+export function Kakao_ad_fit(){
     useEffect(()=>{
       let ins = document.createElement('ins');
       let scr = document.createElement('script');
       ins.className = 'kakao_ad_area';
-      ins.style = "display:none; width:100%;";
-      scr.async = 'true';
+      ins.style.display = "none;";
+      scr.async = true;
       scr.type = "text/javascript";
       scr.src = "//t1.daumcdn.net/kas/static/ba.min.js";
       ins.setAttribute('data-ad-width','320');
@@ -38,4 +38,3 @@ function Kakao_ad_fit1(){
       <div className="adfit"></div>
     );
   }
-*/
