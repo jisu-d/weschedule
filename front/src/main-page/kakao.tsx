@@ -23,6 +23,7 @@ export function Kakao_ad_fit(){
       let scr = document.createElement('script');
       ins.className = 'kakao_ad_area';
       ins.style.display = "none;";
+      ins.style.width = '100%'
       scr.async = true;
       scr.type = "text/javascript";
       scr.src = "//t1.daumcdn.net/kas/static/ba.min.js";
