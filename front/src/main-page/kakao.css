@@ -1,3 +1,9 @@
 .kakaoAdfit-container{
     padding: 15px;
 }
+
+.adfit{
+    display: flex;
+    align-items: center;
+    margin: auto;
+}

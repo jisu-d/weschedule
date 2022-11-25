@@ -24,6 +24,7 @@ export function Kakao_ad_fit(){
       ins.className = 'kakao_ad_area';
       ins.style.display = "none;";
       ins.style.width = '100%'
+      ins.style.margin = 'auto'
       scr.async = true;
       scr.type = "text/javascript";
       scr.src = "//t1.daumcdn.net/kas/static/ba.min.js";
@@ -36,6 +37,9 @@ export function Kakao_ad_fit(){
     
     
     return(
-      <div className="adfit"></div>
+        <>
+            <div className="title">오늘 정보</div>
+            <div className="adfit"></div>
+        </>
     );
   }
