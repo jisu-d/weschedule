@@ -24,22 +24,23 @@ export function Kakao_ad_fit(){
       ins.className = 'kakao_ad_area';
       ins.style.display = "none;";
       ins.style.width = '100%'
-      ins.style.margin = 'auto'
       scr.async = true;
       scr.type = "text/javascript";
       scr.src = "//t1.daumcdn.net/kas/static/ba.min.js";
       ins.setAttribute('data-ad-width','320');
       ins.setAttribute('data-ad-height','100');
       ins.setAttribute('data-ad-unit','DAN-vi152nWx4gPzYI1E');
-      document.querySelector('.adfit').appendChild(ins);
-      document.querySelector('.adfit').appendChild(scr);
+      document.querySelector('.adfit > div').appendChild(ins);
+      document.querySelector('.adfit > div').appendChild(scr);
     }, [])    
     
     
     return(
         <>
-            <div className="title">오늘 정보</div>
-            <div className="adfit"></div>
+            <div className="title d">오늘 정보</div>
+            <div className="adfit">
+                <div></div>
+            </div>
         </>
     );
   }

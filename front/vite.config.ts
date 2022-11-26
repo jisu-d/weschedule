@@ -22,7 +22,7 @@ export default defineConfig({
     proxy:{
       '/api': {
         target: 'https://weschedule.kro.kr',
-        //target: 'http://0.0.0.0:3000',
+        // target: 'http://0.0.0.0:3000',
         rewrite: (path) => path.replace(/^\/api/, ''),
         secure:true,
         changeOrigin:true,

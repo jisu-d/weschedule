@@ -2,8 +2,7 @@
     padding: 15px;
 }
 
-.adfit{
+.adfit > div{
     display: flex;
     align-items: center;
-    margin: auto;
 }
