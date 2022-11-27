@@ -53,7 +53,7 @@ ReactDOM.createRoot(app).render(
           <MyoungEonDiv />
         </div>
         <div className='kakaoAdfit-container box_shadow' >
-          {/* <Kakao_ad_fit /> */}
+          <Kakao_ad_fit />
         </div>
         <div className='side-comment-container box_shadow'>
           <MsgDiv/>
