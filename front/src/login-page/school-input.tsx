@@ -9,7 +9,7 @@ import { COMSCHO } from "../../../public/type"
 const fetchSchoolList = async (school:string): Promise<[number, string, string, number][] | []> => {
     if(school !== ''){
         const da: COMSCHO = await (await fetch(`${proxy}/schoolList?school=${school}`)).json();
-        return da.학교검색[0]
+        return da.학교검색
     } else{
         return []
     }
