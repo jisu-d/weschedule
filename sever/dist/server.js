@@ -142,7 +142,7 @@ const changeDay = (i) => {
 /**학교명 -> 시도교육청코드, 표준학교코드, 학교명 */
 export const fetchSchoolInfo = async (schoolName) => {
     const res = await (await fetch(`${neisApis['학교기본정보']}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&SCHUL_NM=${schoolName}`)).json();
-    // console.log(`${neisApis['학교기본정보']}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&SCHUL_NM=${schoolName}`);
+    console.log(`${neisApis['학교기본정보']}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&SCHUL_NM=${schoolName}`);
     const arr = {
         ATPT_OFCDC_SC_CODE: res.schoolInfo[1].row[0].ATPT_OFCDC_SC_CODE,
         SD_SCHUL_CODE: res.schoolInfo[1].row[0].SD_SCHUL_CODE,
