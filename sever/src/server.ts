@@ -84,6 +84,8 @@ export const schoolListFetch = async (school:string) => { //학교 검색할때 
     const pars: COMSCHO = await parsingJson(euc.utf)
     if(pars[0]){
         return parsingJson(euc.utf)
+        console.log(1);
+        
     } else{
         const data: COMSCHO = []
         const res: schoolInfo = await (await fetch(`${neisApis['학교기본정보']}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&SCHUL_NM=${school}`)).json()

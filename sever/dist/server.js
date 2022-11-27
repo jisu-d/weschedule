@@ -70,6 +70,7 @@ export const schoolListFetch = async (school) => {
     const pars = await parsingJson(euc.utf);
     if (pars[0]) {
         return parsingJson(euc.utf);
+        console.log(1);
     }
     else {
         const data = [];
