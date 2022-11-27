@@ -74,9 +74,7 @@ export const schoolListFetch = async (school) => {
     else {
         const data = [];
         const res = await (await fetch(`${neisApis['학교기본정보']}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&SCHUL_NM=${school}`)).json();
-        console.log(`${neisApis['학교기본정보']}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&SCHUL_NM=${school}`);
-        console.log(res, 234567890);
-        res[1].row.forEach((v) => {
+        res.schoolInfo[1].row.forEach((v) => {
             data.push([0, v.LCTN_SC_NM, v.SCHUL_NM, 0]);
         });
         return data;
