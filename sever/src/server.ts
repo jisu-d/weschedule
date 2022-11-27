@@ -87,14 +87,12 @@ export const schoolListFetch = async (school:string) => { //학교 검색할때 
     } else{
         const data: [number, string, string, number][] = []
         const res: schoolInfo = await (await fetch(`${neisApis['학교기본정보']}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&SCHUL_NM=${school}`)).json()
-        console.log(res.schoolInfo[1].row);
-        
         res.schoolInfo[1].row.forEach((v) => {
             data.push([0, v.LCTN_SC_NM, v.SCHUL_NM, 0])
         })
         console.log(data);
         
-        return data
+        return  await data
     }
 }
 
