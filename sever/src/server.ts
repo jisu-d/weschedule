@@ -83,12 +83,12 @@ export const schoolListFetch = async (school:string) => { //학교 검색할때 
     const euc = await fetchNet(`http://comci.kr:4082${urlList['학교찾기']}${d.join('')}`);
     const pars: COMSCHO = await parsingJson(euc.utf)
     if(pars.학교검색[0]){
-        return pars.학교검색
+        return pars.학교검색[0]
     } else{
-        const data: [[number, string, string, number][]] = [[]]
+        const data: [number, string, string, number][] = []
         const res: schoolInfo = await (await fetch(`${neisApis['학교기본정보']}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&SCHUL_NM=${school}`)).json()
         res.schoolInfo[1].row.forEach((v) => {
-            data.push([[0, v.LCTN_SC_NM, v.SCHUL_NM, 0]])
+            data.push([0, v.LCTN_SC_NM, v.SCHUL_NM, 0])
         })
         return await data
     }
@@ -106,7 +106,7 @@ export const getComciganData = async (school:string, Year:number, Class:number, 
     // 학교 컴시간 데이터 요청하는곳 매개변수에 들어가는 학교이름이 정확해야함 -> 왜냐면 데이터 1개 오는걸 감안하고 만들었기 때문
     const schoolNum = await schoolListFetch(school) // 학교 고유번호 받아옴
     if(schoolNum[0]){
-        const mainData = await schoolInfoFetch(schoolNum[0][0][3]) //schoolNum에서 받아온 데이터 넘겨줌
+        const mainData = await schoolInfoFetch(schoolNum[0][3]) //schoolNum에서 받아온 데이터 넘겨줌
         const parsingData:Datai = await comciganDataParsing(mainData, Year, Class, num) //mainData에서 받은 데이터를 파싱해줌
         return parsingData
     } else{
