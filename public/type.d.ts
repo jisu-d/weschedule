@@ -273,13 +273,17 @@ export type EVLI = {
     eventName:string
 }
 
-export type COMSCHO =
-    [
-        number,
-        string,
-        string,
-        number
-    ][]
+export type COMSCHO = {
+    학교검색: [
+        [
+            number,
+            string,
+            string,
+            number
+        ][]
+    ]
+}
+
 
 export type schoolInfo = [
     {
