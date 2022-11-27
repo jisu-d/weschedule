@@ -23,7 +23,7 @@ fastify.get('/schoolList', async (req, rep) => {
     else {
         d = notDataMsg;
     }
-    return d.json();
+    return d;
 });
 fastify.get('/cookInfo', async (req, rep) => {
     const queryObj = req.query;
