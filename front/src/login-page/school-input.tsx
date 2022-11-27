@@ -4,10 +4,11 @@ import { schoolData } from './local_data'
 
 import { proxy } from "../proxy";
 
-const fetchSchoolList = async (school:string) => {
+import { COMSCHO } from "../../../public/type"
+
+const fetchSchoolList = async (school:string): Promise<COMSCHO | []> => {
     if(school !== ''){
-        const da = await (await fetch(`${proxy}/schoolList?school=${school}`)).json() as [number, string, string, number][];
-        
+        const da: COMSCHO = await (await fetch(`${proxy}/schoolList?school=${school}`)).json();
         return da
     } else{
         return []

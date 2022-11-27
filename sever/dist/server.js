@@ -67,7 +67,18 @@ export const schoolListFetch = async (school) => {
     // 트레픽이 많이 발생하면 하루에 한번 가져 오는걸로 변경..!
     await getscNum();
     const euc = await fetchNet(`http://comci.kr:4082${urlList['학교찾기']}${d.join('')}`);
-    return parsingJson(euc.utf);
+    const pars = await parsingJson(euc.utf);
+    if (pars[0]) {
+        return parsingJson(euc.utf);
+    }
+    else {
+        const data = [];
+        const res = await (await fetch(`${neisApis['학교기본정보']}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&SCHUL_NM=${school}`)).json();
+        res[1].row.forEach((v) => {
+            data.push([0, v.LCTN_SC_NM, v.SCHUL_NM, 0]);
+        });
+        return data;
+    }
 };
 const schoolInfoFetch = async (schoolNum) => {
     const url = Buffer.from(`${urlList['sc']}${schoolNum}_0_1`, 'utf8').toString('base64'); // -> 이거 오류가 있었음 `${urlList['sc']}_ <- 이거 유무${schoolNum}_0_1`

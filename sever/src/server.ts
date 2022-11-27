@@ -3,7 +3,7 @@ import fs from 'fs/promises';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import { fetchNet } from './fetch.js';
-import { Datai, msg, CI, mSDI, SCHDATA, EVLILF, EVLI, neisDataEls, neisDataMis, neisDataHis } from '../../public/type'
+import { Datai, msg, CI, mSDI, SCHDATA, EVLILF, EVLI, neisDataEls, neisDataMis, neisDataHis, COMSCHO, schoolInfo } from '../../public/type'
 import { type } from 'os';
 
 const urlList = {
@@ -81,7 +81,17 @@ export const schoolListFetch = async (school:string) => { //학교 검색할때 
     // 트레픽이 많이 발생하면 하루에 한번 가져 오는걸로 변경..!
     await getscNum();
     const euc = await fetchNet(`http://comci.kr:4082${urlList['학교찾기']}${d.join('')}`);
-    return parsingJson(euc.utf)
+    const pars: COMSCHO = await parsingJson(euc.utf)
+    if(pars[0]){
+        return parsingJson(euc.utf)
+    } else{
+        const data: COMSCHO = []
+        const res: schoolInfo = await (await fetch(`${neisApis['학교기본정보']}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&SCHUL_NM=${school}`)).json()
+        res[1].row.forEach((v) => {
+            data.push([0, v.LCTN_SC_NM, v.SCHUL_NM, 0])
+        })
+        return data
+    }
 }
 
 const schoolInfoFetch = async (schoolNum:string) => { // 여기에 들어가는 매개변수는 schoolListFetch()했을때 받은 값중에서 마지막 숫자
