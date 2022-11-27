@@ -56,7 +56,7 @@ fastify.get('/schoolList', async (req:MyRequest<d>, rep) => {// ?school=새솔
     } else {
         d = notDataMsg
     }
-    return d['학교검색']
+    return d.json()
 })
 
 fastify.get('/cookInfo', async (req: MyRequest<c>, rep) => { // ?school=학교&getnum=받아올 양
