@@ -68,9 +68,10 @@ export const schoolListFetch = async (school) => {
     await getscNum();
     const euc = await fetchNet(`http://comci.kr:4082${urlList['학교찾기']}${d.join('')}`);
     const pars = await parsingJson(euc.utf);
+    console.log(pars[0], 23456);
     if (pars[0]) {
         return parsingJson(euc.utf);
-        console.log(1);
+        console.log(222222222222222222222);
     }
     else {
         const data = [];
