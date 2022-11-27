@@ -274,14 +274,13 @@ export type EVLI = {
 }
 
 export type COMSCHO = {
-    학교검색: [
-        [
-            number,
-            string,
-            string,
-            number
-        ][]
-    ]
+    학교검색:
+    [
+        number,
+        string,
+        string,
+        number
+    ][]
 }
 
 
