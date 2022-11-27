@@ -91,6 +91,7 @@ export const getComciganData = async (school, Year, Class, num) => {
     const schoolNum = await schoolListFetch(school); // 학교 고유번호 받아옴
     if (schoolNum[0]) {
         const mainData = await schoolInfoFetch(schoolNum[0][0][3]); //schoolNum에서 받아온 데이터 넘겨줌
+        console.log(schoolNum);
         const parsingData = await comciganDataParsing(mainData, Year, Class, num); //mainData에서 받은 데이터를 파싱해줌
         return parsingData;
     }
