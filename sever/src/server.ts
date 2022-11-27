@@ -82,18 +82,15 @@ export const schoolListFetch = async (school:string) => { //학교 검색할때 
     await getscNum();
     const euc = await fetchNet(`http://comci.kr:4082${urlList['학교찾기']}${d.join('')}`);
     const pars: COMSCHO = await parsingJson(euc.utf)
-    console.log(pars.학교검색[0], 23456);
     if(pars.학교검색[0]){
         return parsingJson(euc.utf)
-        console.log(222222222222222222222);
     } else{
         const data: [number, string, string, number][] = []
         const res: schoolInfo = await (await fetch(`${neisApis['학교기본정보']}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&SCHUL_NM=${school}`)).json()
         console.log(`${neisApis['학교기본정보']}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&SCHUL_NM=${school}`);
-        
-        // res[1].row.forEach((v) => {
-        //     data.push([0, v.LCTN_SC_NM, v.SCHUL_NM, 0])
-        // })
+        res[1].row.forEach((v) => {
+            data.push([0, v.LCTN_SC_NM, v.SCHUL_NM, 0])
+        })
         return data
     }
 }
