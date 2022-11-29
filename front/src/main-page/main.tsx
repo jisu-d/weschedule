@@ -46,14 +46,14 @@ ReactDOM.createRoot(app).render(
         {/* <div>
           <MyApp />
         </div> */}
+        <div className='kakaoAdfit-container box_shadow' >
+          <Kakao_ad_fit />
+        </div>
         <div className='school_schedule box_shadow' onClick={Href3}>
           <School_schedule_Dday />
         </div>
         <div className='myoungEon-container box_shadow' onClick={Href2}>
           <MyoungEonDiv />
-        </div>
-        <div className='kakaoAdfit-container box_shadow' >
-          <Kakao_ad_fit />
         </div>
         <div className='side-comment-container box_shadow'>
           <MsgDiv/>
