@@ -51,7 +51,6 @@ export function School_Search_Input(this: string) {
 
     const onClick = (e:React.MouseEvent<HTMLDivElement>) => {
         if(!(e.target instanceof HTMLDivElement)) return;
-        console.log(e.target.parentElement.querySelector('div:nth-child(2)'));
         
         if(e.target.textContent !== '검색이 되지 않아도 정확한 학교 학년 반을 입력후에 검색 버튼을 눌러주세요.'){
             const tar = e.target.parentElement.querySelector('div:nth-child(2)').innerHTML
