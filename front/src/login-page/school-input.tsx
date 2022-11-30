@@ -31,6 +31,8 @@ export function School_Search_Input(this: string) {
         }
         Debounce = setTimeout(async () => {
             const d = await fetchSchoolList(tar.value)
+            console.log(d);
+            
 
             if (d[0]) {
                 setArr(d.map((v, i) => (
