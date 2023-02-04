@@ -1,12 +1,6 @@
-import { type } from "os"
-// import { dataType } from '../main/src/server'
 
-export interface Datai{
+export interface WEEK_SCHEDULE_DATA{
     [key:string]:[string, string][]
-}
-
-export interface Datac{
-    [key:number]: string | number
 }
 
 export interface DBdata{
@@ -16,21 +10,21 @@ export interface DBdata{
     login: number
 }
 
-export type msg = {
+export type SEVER_MSG = {
     RESULT:{
         CODE:String;
         MESSAGE:String;
     }
 }
 
-export type mSDI= {
+export type NEIS_API_COOK_DATA = {
     mealServiceDietInfo :[
         {
             head:[
                 {
                     list_total_count:number
                 },
-                msg
+                SEVER_MSG
             ]
         },
         {
@@ -54,14 +48,14 @@ export type mSDI= {
     ]
 }
 
-export type CI = {
+export type NEIS_API_CLASS_DATA = {
     classInfo:[
         {
             head:[
                 {
                     list_total_count:number
                 },
-                msg
+                SEVER_MSG
             ]
         },
         {
@@ -90,7 +84,7 @@ export type neisDataEls = {
                 {
                     list_total_count: number
                 }, 
-                msg
+                SEVER_MSG
             ]
         },
         {
@@ -119,7 +113,7 @@ export type neisDataMis = {
                 {
                     list_total_count: number
                 }, 
-                msg
+                SEVER_MSG
             ]
         },
         {
@@ -148,7 +142,7 @@ export type neisDataHis = {
                 {
                     list_total_count: number
                 }, 
-                msg
+                SEVER_MSG
             ]
         },
         {
@@ -171,7 +165,7 @@ export type neisDataHis = {
 }
 
 
-export type ME = [
+export type MYOUN_DATA = [
     {
         result: string
     },
@@ -180,7 +174,7 @@ export type ME = [
     }
 ]
 
-export type EVLILF = {
+export type SCHOOL_EVENT_DAY_INFO = {
     day: {
         start: string,
         last: string,
@@ -233,12 +227,12 @@ export type Skydata = {
     "cod": number
 }
 
-export type SCHDATA = {
+export type NEIS_API_SCHEDULE_DATA = {
     SchoolSchedule:[
         {
             head:[
                 {list_total_count: number},
-                msg
+                SEVER_MSG
             ]
         },
         {
@@ -268,7 +262,7 @@ export type SCHDATA = {
     ]
 }
 
-export type EVLI = {
+export type SCHOOL_EVENT = {
     day: string,
     eventName:string
 }
@@ -283,13 +277,21 @@ export type COMSCHO = {
     ][]
 }
 
+export type COMSCHO2 =
+    [
+        number,
+        string,
+        string,
+        number
+    ][]
+
 
 export type schoolInfo = {
     schoolInfo: [
         {
             head: [
                 { list_total_count: number },
-                msg
+                SEVER_MSG
             ]
         },
         {

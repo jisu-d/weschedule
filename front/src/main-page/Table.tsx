@@ -1,4 +1,4 @@
-import { Datai } from '../../../public/type';
+import { WEEK_SCHEDULE_DATA } from '../../../public/type';
 import { localda } from '../local_data'
 import './Table.css'
 import { proxy } from "../proxy";
@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 const day = ['월', '화', '수', '목', '금'] as const;
 
 // const da = await (await fetch(`${proxy}/comciganData?school=${localda.schoolname}&Year=${localda.year}&class=${localda.class}&zeroOne=0`)).json() as Datai;
-const da = await (await fetch(`${proxy}/comciganData?school=${localda.schoolname}&Year=${localda.year}&class=${localda.class}&zeroOne=0`)).json() as Datai;
+const da = await (await fetch(`${proxy}/comciganData?school=${localda.schoolname}&Year=${localda.year}&class=${localda.class}&zeroOne=0`)).json() as WEEK_SCHEDULE_DATA;
 
 const makeTable = (arr:[string, string][], key:number) => <tr key={key * 6}><td>{key + 1}</td>{arr.map((v, i) => {
     if(v){

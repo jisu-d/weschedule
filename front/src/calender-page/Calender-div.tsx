@@ -6,7 +6,7 @@ import { proxy } from "../proxy";
 
 import { localda } from '../local_data'
 
-import { EVLI } from '../../../public/type'
+import { SCHOOL_EVENT } from '../../../public/type'
 
 let date = new Date();
 
@@ -51,7 +51,7 @@ export function CalendarDiv() {
             last:changeDay(new Date(viewYear, viewMonth + 1, 0)),
         }
 
-        const SchoolScheduleAllData:EVLI[] = await (await fetch(`${proxy}/fetchSchoolScheduleAll?school=${localda.schoolname}&startDay=${nowDate.start}&lastDay=${nowDate.last}`)).json()
+        const SchoolScheduleAllData:SCHOOL_EVENT[] = await (await fetch(`${proxy}/fetchSchoolScheduleAll?school=${localda.schoolname}&startDay=${nowDate.start}&lastDay=${nowDate.last}`)).json()
         
         const PLDate = prevLast.getDate();
         const PLDay = prevLast.getDay();

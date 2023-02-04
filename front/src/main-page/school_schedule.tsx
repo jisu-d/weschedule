@@ -1,5 +1,5 @@
 import './school_schedule.css'
-import { EVLILF } from '../../../public/type';
+import { SCHOOL_EVENT_DAY_INFO } from '../../../public/type';
 import { useEffect, useState } from 'react';
 import { proxy } from "../proxy";
 
@@ -21,7 +21,7 @@ export function School_schedule_Dday() {
   let arr2: JSX.Element[] = []
   
   const Ddayelement = async () => {
-    const da:EVLILF[] = await (await fetch(`${proxy}/schoolSchedule?school=${localda.schoolname}&startDay=${changeDay(0)}&lastDay=${changeDay(200)}`)).json()
+    const da:SCHOOL_EVENT_DAY_INFO[] = await (await fetch(`${proxy}/schoolSchedule?school=${localda.schoolname}&startDay=${changeDay(0)}&lastDay=${changeDay(200)}`)).json()
     arr2 = []
     da.forEach((_v) => {
       const date = new Date();

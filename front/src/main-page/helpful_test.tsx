@@ -1,12 +1,12 @@
 import './helpful_test.css';
-import { ME } from '../../../public/type';
+import { MYOUN_DATA } from '../../../public/type';
 import { useEffect, useState } from 'react';
 
 
 export function MyoungEonDiv() {
     let [arr, setArr] = useState<JSX.Element>();
     const get = async () => {
-        const helpful: ME = await (await fetch('https://api.qwer.pw/request/helpful_text?apikey=guest')).json()
+        const helpful: MYOUN_DATA = await (await fetch('https://api.qwer.pw/request/helpful_text?apikey=guest')).json()
         setArr(
             <>
                 {helpful[1].respond}

@@ -3,7 +3,7 @@ import fs from 'fs/promises';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import { fetchNet } from './fetch.js';
-import { Datai, msg, CI, mSDI, SCHDATA, EVLILF, EVLI, neisDataEls, neisDataMis, neisDataHis, COMSCHO, schoolInfo } from '../../public/type'
+import { WEEK_SCHEDULE_DATA, SEVER_MSG, NEIS_API_CLASS_DATA, NEIS_API_COOK_DATA, NEIS_API_SCHEDULE_DATA, SCHOOL_EVENT_DAY_INFO, SCHOOL_EVENT, neisDataEls, neisDataMis, neisDataHis, COMSCHO, schoolInfo } from '../../public/type'
 import { type } from 'os';
 
 const urlList = {
@@ -107,7 +107,7 @@ export const getComciganData = async (school:string, Year:number, Class:number, 
     const schoolNum = await schoolListFetch(school) // 학교 고유번호 받아옴
     if(schoolNum[0][0]){
         const mainData = await schoolInfoFetch(schoolNum[0][3]) //schoolNum에서 받아온 데이터 넘겨줌
-        const parsingData:Datai = await comciganDataParsing(mainData, Year, Class, num) //mainData에서 받은 데이터를 파싱해줌
+        const parsingData:WEEK_SCHEDULE_DATA = await comciganDataParsing(mainData, Year, Class, num) //mainData에서 받은 데이터를 파싱해줌
         return parsingData
     } else{
         
@@ -117,7 +117,7 @@ export const getComciganData = async (school:string, Year:number, Class:number, 
 }
 
 const comciganDataParsing = async (arr:any, Year:number, Class:number, num:number) => { //이거 여기서 데이터 받아서 파싱 하는 함수 임 getComciganData 여기서 받아서하면됨
-    const data:Datai = {
+    const data:WEEK_SCHEDULE_DATA = {
         '월': [],
         '화': [],
         '수': [],
@@ -201,9 +201,9 @@ const getNameList = {
 }
 
 /**D-day 태그로 만들기 위해 학사일정 데이터를 파싱하는 함수 */
-const schoolScheduleDataParsing = (data:SCHDATA) => {
-    const arr: EVLI[] = []
-    const lastData: EVLI[] = []
+const schoolScheduleDataParsing = (data:NEIS_API_SCHEDULE_DATA) => {
+    const arr: SCHOOL_EVENT[] = []
+    const lastData: SCHOOL_EVENT[] = []
     data.SchoolSchedule[1].row.flat().map((v) => {arr.push({ day: v.AA_YMD, eventName: v.EVENT_NM})});
 
     arr.forEach((v) => {
@@ -213,7 +213,7 @@ const schoolScheduleDataParsing = (data:SCHDATA) => {
             }
         })
     })
-    const datas:EVLILF[] = [];
+    const datas:SCHOOL_EVENT_DAY_INFO[] = [];
 
     const map = new Map()
     for (let i of lastData) {
@@ -251,7 +251,7 @@ const schoolScheduleDataParsing = (data:SCHDATA) => {
 /**학교 이름을 Day태그만들기 위한 데이터를 리턴 함수*/
 export const fetchSchoolScheduleDday = async (schoolName: string, startDay: string, lastDay: string) => {
     const data = await fetchSchoolInfo(schoolName)
-    const scheduleData:SCHDATA = await (await fetch(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${data.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${data.SD_SCHUL_CODE}&AA_FROM_YMD=${startDay}&AA_TO_YMD=${lastDay}`)).json();
+    const scheduleData:NEIS_API_SCHEDULE_DATA = await (await fetch(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${data.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${data.SD_SCHUL_CODE}&AA_FROM_YMD=${startDay}&AA_TO_YMD=${lastDay}`)).json();
     const parsingData = await schoolScheduleDataParsing(scheduleData)
     return parsingData
 }
@@ -259,7 +259,7 @@ export const fetchSchoolScheduleDday = async (schoolName: string, startDay: stri
 /**학교의 시간표 데이터 리턴 함수 */
 export const fetchSchoolScheduleData = async (schoolName: string, year:number, Class:number) => {
     const schoolData = await fetchSchoolInfo(schoolName)
-    const data:Datai = {
+    const data:WEEK_SCHEDULE_DATA = {
         '월': [],
         '화': [],
         '수': [],
@@ -306,9 +306,9 @@ export const fetchSchoolScheduleData = async (schoolName: string, year:number, C
 /**학교의 모든 학사 일정을 리턴 함수*/
 export const fetchSchoolScheduleAll = async (schoolName: string, startDay: string, lastDay: string) => {
     const data = await fetchSchoolInfo(schoolName)
-    const scheduleData:SCHDATA = await (await fetch(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${data.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${data.SD_SCHUL_CODE}&AA_FROM_YMD=${startDay}&AA_TO_YMD=${lastDay}`)).json();
+    const scheduleData:NEIS_API_SCHEDULE_DATA = await (await fetch(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${data.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${data.SD_SCHUL_CODE}&AA_FROM_YMD=${startDay}&AA_TO_YMD=${lastDay}`)).json();
     
-    const arr: EVLI[] = []
+    const arr: SCHOOL_EVENT[] = []
     scheduleData.SchoolSchedule[1].row.flat().map((v) => {arr.push({ day: v.AA_YMD, eventName: v.EVENT_NM})});
 
     return arr
@@ -331,7 +331,7 @@ export const fetchCookInfo = async (schoolName:string, getNum:number) => {
         }
     }
 
-    const res: msg | mSDI = await (await fetch(`${neisApis.급식식단정보}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${arr.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${arr.SD_SCHUL_CODE}&MLSV_FROM_YMD=${dayList[0]}&MLSV_TO_YMD=${dayList[1]}`)).json();
+    const res: SEVER_MSG | NEIS_API_COOK_DATA = await (await fetch(`${neisApis.급식식단정보}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${arr.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${arr.SD_SCHUL_CODE}&MLSV_FROM_YMD=${dayList[0]}&MLSV_TO_YMD=${dayList[1]}`)).json();
     if('RESULT' in res){
         if(res.RESULT.MESSAGE === '해당하는 데이터가 없습니다.'){
             return res
@@ -347,7 +347,7 @@ export const checkSchool = async (schoolName:string, year:number, Class:number )
 
     const date = new Date()
     
-    const res: msg | CI = await (await fetch(`${neisApis.반정보}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=10&ATPT_OFCDC_SC_CODE=${schoolInfo.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${schoolInfo.SD_SCHUL_CODE}&AY=${date.getFullYear()}&GRADE=${year}`)).json();
+    const res: SEVER_MSG | NEIS_API_CLASS_DATA = await (await fetch(`${neisApis.반정보}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=10&ATPT_OFCDC_SC_CODE=${schoolInfo.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${schoolInfo.SD_SCHUL_CODE}&AY=${date.getFullYear()}&GRADE=${year}`)).json();
     if ('classInfo' in res) {
         if(res.classInfo[1].row.length >= Class){
             return true

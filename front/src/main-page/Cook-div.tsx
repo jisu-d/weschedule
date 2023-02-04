@@ -3,7 +3,7 @@ import { localda } from '../local_data'
 
 import { proxy } from "../proxy";
 
-import { msg, mSDI } from "../../../public/type"
+import { SEVER_MSG, NEIS_API_COOK_DATA } from "../../../public/type"
 import { useEffect, useState } from 'react';
 
 // let da: msg | mSDI  = await (await fetch(`${proxy}/cookInfo?school=${localda.schoolname}&getnum=5`)).json()
@@ -13,7 +13,7 @@ export function CookDiv() {
     let [arr, setArr] = useState<JSX.Element>();
     
     const createCook = async () => {
-        let da: msg | mSDI  = await (await fetch(`${proxy}/cookInfo?school=${localda.schoolname}&getnum=14`)).json()
+        let da: SEVER_MSG | NEIS_API_COOK_DATA  = await (await fetch(`${proxy}/cookInfo?school=${localda.schoolname}&getnum=14`)).json()
         const arr:JSX.Element[] = [];
         if('RESULT' in da){
             if(da.RESULT.MESSAGE === '해당하는 데이터가 없습니다.'){

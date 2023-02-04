@@ -4,12 +4,12 @@ import { schoolData } from './local_data'
 
 import { proxy } from "../proxy";
 
-import { COMSCHO } from "../../../public/type"
+import { COMSCHO2 } from "../../../public/type"
 
 const fetchSchoolList = async (school:string): Promise<[number, string, string, number][] | []> => {
     if(school !== ''){
-        const da: COMSCHO = await (await fetch(`${proxy}/schoolList?school=${school}`)).json();
-        return da.학교검색
+        const da: COMSCHO2 = await (await fetch(`${proxy}/schoolList?school=${school}`)).json();
+        return da
     } else{
         return []
     }
@@ -31,10 +31,8 @@ export function School_Search_Input(this: string) {
         }
         Debounce = setTimeout(async () => {
             const d = await fetchSchoolList(tar.value)
-            console.log(d);
             
-
-            if (d[0]) {
+            if (d[0]){
                 setArr(d.map((v, i) => (
                 <div key={`list-${i}`} className="school-list-arr">
                     <div>{v[1]}</div>
@@ -43,10 +41,11 @@ export function School_Search_Input(this: string) {
                 )))
             } else{
                 setArr(<div className="msg2">검색이 되지 않을시 <strong>"정확한 정보"</strong>을 입력후에 <strong>검색 버튼</strong>을 눌러주세요.</div>)
-                // setTimeout(() => {
-                //     setArr(<div></div>)
-                // }, 3 * 1000)
+                setTimeout(() => {
+                    setArr(<div></div>)
+                }, 3 * 1000)
             }
+            
         }, 500);
 
     }
