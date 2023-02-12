@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 
 export function CookDiv() {
     let [arr, setArr] = useState<JSX.Element>();
-    
+     
     const createCook = async () => {
         let da: SEVER_MSG | NEIS_API_COOK_DATA  = await (await fetch(`${proxy}/cookInfo?school=${localda.schoolname}&getnum=14`)).json()
         const arr:JSX.Element[] = [];
