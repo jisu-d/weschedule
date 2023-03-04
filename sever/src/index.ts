@@ -6,7 +6,7 @@ import { type } from "os";
 const fastify = Fastify({
     logger:true
 });
-fastify.register(fastifyCors, {
+await fastify.register(fastifyCors, {
     //origin:"https://weschedule.kr"dfghm
     origin:"/*"
 });
