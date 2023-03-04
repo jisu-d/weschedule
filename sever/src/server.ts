@@ -80,7 +80,6 @@ export const schoolListFetch = async (school:string) => { //학교 검색할때 
     //이부분은 어짜피 트래픽이 많이 없어서 사이트 접속하면 데이터 얻어오는 걸로 변경
     // 트레픽이 많이 발생하면 하루에 한번 가져 오는걸로 변경..!
     await getscNum();
-    console.log((urlList));
     const euc = await fetchNet(`http://comci.kr:4082${urlList['학교찾기']}${d.join('')}`);
     const pars: COMSCHO = await parsingJson(euc.utf)
     if(pars.학교검색[0]){
@@ -109,7 +108,7 @@ export const getComciganData = async (school:string, Year:number, Class:number, 
     if(schoolNum[0][0]){
         const mainData = await schoolInfoFetch(schoolNum[0][3]) //schoolNum에서 받아온 데이터 넘겨줌
         const parsingData:WEEK_SCHEDULE_DATA = await comciganDataParsing(mainData, Year, Class, num) //mainData에서 받은 데이터를 파싱해줌
-        console.log(parsingData);
+        // console.log(parsingData);
 
         return parsingData
     } else{
