@@ -1,5 +1,4 @@
 import iconv from 'iconv-lite';
-import fs from 'fs/promises';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import { fetchNet } from './fetch.js';
@@ -28,10 +27,10 @@ export async function getscNum() {
     urlList.학교찾기 = euc.slice(d[0] + 1, euc.indexOf(`'`, d[0] + 1));
     urlList.학교정보 = euc.slice(d[1] + 1, euc.indexOf(`'`, d[1] + 1));
     urlList.sc = euc.slice(euc.indexOf("sc_data('") + 9, euc.indexOf("_'", euc.indexOf("sc_data('")) + 1);
-    urlList.시간표번호_이번주 = euc.slice(euc.indexOf("일일자료=자료.") + 8, euc.indexOf("일일자료=자료.") + 13);
-    urlList.시간표번호_다음주 = euc.slice(euc.indexOf("원자료=자료.") + 7, euc.indexOf("원자료=자료.") + 12);
+    urlList.시간표번호_이번주 = euc.slice(euc.indexOf("일일자료=Q자료(자료.") + 12, euc.indexOf("일일자료=Q자료(자료.") + 17);
+    urlList.시간표번호_다음주 = euc.slice(euc.indexOf("원자료=Q자료(자료.") + 11, euc.indexOf("원자료=Q자료(자료.") + 16);
     urlList.선생님이름 = euc.slice(euc.indexOf("th<자료.") + 6, euc.indexOf("th<자료.") + 11);
-    urlList.과목리스트 = euc.slice(euc.indexOf(`속성+"'>"+자료.`) + 11, euc.indexOf(`속성+"'>"+자료.`) + 16);
+    urlList.과목리스트 = euc.slice(euc.indexOf(`+m2+자료.`) + 7, euc.indexOf(`+m2+자료.`) + 12);
     // setInterval(async () => {
     //     // const date =  new Date()
     //     // if(daychang === 0){
@@ -61,11 +60,12 @@ export const schoolListFetch = async (school) => {
         d.push(`%${str[i].toString(16).toUpperCase()}`);
     }
     // if(!urlList['학교찾기']){
-    //     await getscNum(); 
+    //     await getscNum();
     // }
-    //이부분은 어짜피 트래픽이 많이 없어서 사이트 접속하면 데이터 얻어오는 걸로 변경 
+    //이부분은 어짜피 트래픽이 많이 없어서 사이트 접속하면 데이터 얻어오는 걸로 변경
     // 트레픽이 많이 발생하면 하루에 한번 가져 오는걸로 변경..!
     await getscNum();
+    console.log((urlList));
     const euc = await fetchNet(`http://comci.kr:4082${urlList['학교찾기']}${d.join('')}`);
     const pars = await parsingJson(euc.utf);
     if (pars.학교검색[0]) {
@@ -92,6 +92,7 @@ export const getComciganData = async (school, Year, Class, num) => {
     if (schoolNum[0][0]) {
         const mainData = await schoolInfoFetch(schoolNum[0][3]); //schoolNum에서 받아온 데이터 넘겨줌
         const parsingData = await comciganDataParsing(mainData, Year, Class, num); //mainData에서 받은 데이터를 파싱해줌
+        console.log(parsingData);
         return parsingData;
     }
     else {
@@ -107,7 +108,7 @@ const comciganDataParsing = async (arr, Year, Class, num) => {
         '목': [],
         '금': [],
     };
-    await fs.writeFile('./arr.json', JSON.stringify(arr), { encoding: 'utf-8' });
+    // await fs.writeFile('./arr.json', JSON.stringify(arr), {encoding:'utf-8'});
     const day = ['월', '화', '수', '목', '금'];
     const days = ['시간표번호_이번주', '시간표번호_다음주'];
     const myComciganData = arr[urlList[days[num]]][Year][Class];
@@ -153,7 +154,7 @@ const changeDay = (i) => {
 /**학교명 -> 시도교육청코드, 표준학교코드, 학교명 */
 export const fetchSchoolInfo = async (schoolName) => {
     const res = await (await fetch(`${neisApis['학교기본정보']}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&SCHUL_NM=${schoolName}`)).json();
-    console.log(`${neisApis['학교기본정보']}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&SCHUL_NM=${schoolName}`);
+    // console.log(`${neisApis['학교기본정보']}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&SCHUL_NM=${schoolName}`);
     const arr = {
         ATPT_OFCDC_SC_CODE: res.schoolInfo[1].row[0].ATPT_OFCDC_SC_CODE,
         SD_SCHUL_CODE: res.schoolInfo[1].row[0].SD_SCHUL_CODE,

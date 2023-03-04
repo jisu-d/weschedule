@@ -3,7 +3,7 @@ import fs from 'fs/promises';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import { fetchNet } from './fetch.js';
-import { WEEK_SCHEDULE_DATA, SEVER_MSG, NEIS_API_CLASS_DATA, NEIS_API_COOK_DATA, NEIS_API_SCHEDULE_DATA, SCHOOL_EVENT_DAY_INFO, SCHOOL_EVENT, neisDataEls, neisDataMis, neisDataHis, COMSCHO, schoolInfo } from '../../public/type'
+import { WEEK_SCHEDULE_DATA, SEVER_MSG, NEIS_API_CLASS_DATA, NEIS_API_COOK_DATA, NEIS_API_SCHEDULE_DATA, SCHOOL_EVENT_DAY_INFO, SCHOOL_EVENT, neisDataEls, neisDataMis, neisDataHis, COMSCHO, schoolInfo, ComSiGanData, 자료 } from '../../public/type'
 import { type } from 'os';
 
 const urlList = {
@@ -21,7 +21,7 @@ export async function getscNum(){ // 사이트 스크립트에 데이터 요청�
     const euc_ = await fetchNet('/st');
 
     const euc = euc_.euc
-    
+
     const d: number[] = []
     for (var i = 0; i < 2; i++) {
         if (!d.length) {
@@ -36,11 +36,11 @@ export async function getscNum(){ // 사이트 스크립트에 데이터 요청�
 
     urlList.sc = euc.slice(euc.indexOf("sc_data('") + 9, euc.indexOf("_'", euc.indexOf("sc_data('")) + 1)
 
-    urlList.시간표번호_이번주 = euc.slice(euc.indexOf("일일자료=자료.") + 8, euc.indexOf("일일자료=자료.") + 13)
-    urlList.시간표번호_다음주 = euc.slice(euc.indexOf("원자료=자료.") + 7, euc.indexOf("원자료=자료.") + 12)
+    urlList.시간표번호_이번주 = euc.slice(euc.indexOf("일일자료=Q자료(자료.") + 12, euc.indexOf("일일자료=Q자료(자료.") + 17)
+    urlList.시간표번호_다음주 = euc.slice(euc.indexOf("원자료=Q자료(자료.") + 11, euc.indexOf("원자료=Q자료(자료.") + 16)
 
     urlList.선생님이름 = euc.slice(euc.indexOf("th<자료.") + 6, euc.indexOf("th<자료.") + 11)
-    urlList.과목리스트 = euc.slice(euc.indexOf(`속성+"'>"+자료.`) + 11, euc.indexOf(`속성+"'>"+자료.`) + 16)
+    urlList.과목리스트 = euc.slice(euc.indexOf(`+m2+자료.`) + 7, euc.indexOf(`+m2+자료.`) + 12)
 
     // setInterval(async () => {
     //     // const date =  new Date()
@@ -57,7 +57,7 @@ const parsingJson = async (res:string) => { // 0 삭제 -> JSON 변환해서 ret
     const arr:string[] = []
 
     res = res.slice(res.indexOf('{'))
-    
+
     for(let i of res){
         if(i.charCodeAt(0) !== 0){
             arr.push(i);
@@ -75,11 +75,12 @@ export const schoolListFetch = async (school:string) => { //학교 검색할때 
         d.push(`%${str[i].toString(16).toUpperCase()}`)
     }
     // if(!urlList['학교찾기']){
-    //     await getscNum(); 
+    //     await getscNum();
     // }
-    //이부분은 어짜피 트래픽이 많이 없어서 사이트 접속하면 데이터 얻어오는 걸로 변경 
+    //이부분은 어짜피 트래픽이 많이 없어서 사이트 접속하면 데이터 얻어오는 걸로 변경
     // 트레픽이 많이 발생하면 하루에 한번 가져 오는걸로 변경..!
     await getscNum();
+    console.log((urlList));
     const euc = await fetchNet(`http://comci.kr:4082${urlList['학교찾기']}${d.join('')}`);
     const pars: COMSCHO = await parsingJson(euc.utf)
     if(pars.학교검색[0]){
@@ -102,15 +103,16 @@ const schoolInfoFetch = async (schoolNum:number) => { // 여기에 들어가는 
 }
 
 /**컴시간 데이터 있는지 검색한후 없으면 나이스 데이터를 받아옴 */
-export const getComciganData = async (school:string, Year:number, Class:number, num:number) => { 
+export const getComciganData = async (school:string, Year:number, Class:number, num:number) => {
     // 학교 컴시간 데이터 요청하는곳 매개변수에 들어가는 학교이름이 정확해야함 -> 왜냐면 데이터 1개 오는걸 감안하고 만들었기 때문
     const schoolNum = await schoolListFetch(school) // 학교 고유번호 받아옴
     if(schoolNum[0][0]){
         const mainData = await schoolInfoFetch(schoolNum[0][3]) //schoolNum에서 받아온 데이터 넘겨줌
         const parsingData:WEEK_SCHEDULE_DATA = await comciganDataParsing(mainData, Year, Class, num) //mainData에서 받은 데이터를 파싱해줌
+        console.log(parsingData);
+
         return parsingData
     } else{
-        
         const neisData = await fetchSchoolScheduleData(school, Year, Class)
         return neisData
     }
@@ -125,21 +127,21 @@ const comciganDataParsing = async (arr:any, Year:number, Class:number, num:numbe
         '금': [],
     }
 
-    await fs.writeFile('./arr.json', JSON.stringify(arr), {encoding:'utf-8'});
-    
+    // await fs.writeFile('./arr.json', JSON.stringify(arr), {encoding:'utf-8'});
+
     const day = ['월', '화', '수', '목', '금'] as const
 
     const days = ['시간표번호_이번주', '시간표번호_다음주'] as const
 
     const myComciganData:Array<7> = arr[urlList[days[num]]][Year][Class]
-    
+
     for(let i = 0 ; i < myComciganData.length ; i++){
             for(let j = 0 ; j < day.length + 4; j++){
                 const classNumData = String(arr[urlList[days[num]]][Year][Class][i][j])
                     if(classNumData.length === 3){
                         const l = parseInt(classNumData.slice(0, 1))
                         const f = parseInt(classNumData.slice(2))
-                        
+
                         data[day[i - 1]].push([`${arr[urlList.과목리스트][f]}`, `${arr[urlList.선생님이름][l].slice(0, 2)}`])
                     } else if(classNumData.length === 4){
                         const l = parseInt(classNumData.slice(0, 2))
@@ -183,10 +185,10 @@ interface SCINFO {
 
 /**학교명 -> 시도교육청코드, 표준학교코드, 학교명 */
 export const fetchSchoolInfo = async (schoolName:string) => {  //학교 정보를 가져 오는 코드
-    
+
     const res = await (await fetch(`${neisApis['학교기본정보']}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&SCHUL_NM=${schoolName}`)).json()
-    console.log(`${neisApis['학교기본정보']}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&SCHUL_NM=${schoolName}`);
-    
+    // console.log(`${neisApis['학교기본정보']}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&SCHUL_NM=${schoolName}`);
+
     const arr:SCINFO = {
         ATPT_OFCDC_SC_CODE: res.schoolInfo[1].row[0].ATPT_OFCDC_SC_CODE,
         SD_SCHUL_CODE: res.schoolInfo[1].row[0].SD_SCHUL_CODE,
@@ -226,7 +228,7 @@ const schoolScheduleDataParsing = (data:NEIS_API_SCHEDULE_DATA) => {
         value.sort((a: string, b: string) => a.localeCompare(b))
     }
     const keys = map.keys();
-    
+
 
     map.forEach((i:string[]) => {
         datas.push({
@@ -298,7 +300,7 @@ export const fetchSchoolScheduleData = async (schoolName: string, year:number, C
                 data[day[d.getDay() - 1]].push([neisData.hisTimetable[1].row[j].ITRT_CNTNT, ''])
             }
         }
-    } 
+    }
 
     return data
 }
@@ -307,7 +309,7 @@ export const fetchSchoolScheduleData = async (schoolName: string, year:number, C
 export const fetchSchoolScheduleAll = async (schoolName: string, startDay: string, lastDay: string) => {
     const data = await fetchSchoolInfo(schoolName)
     const scheduleData:NEIS_API_SCHEDULE_DATA = await (await fetch(`${neisApis.학사일정}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${data.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${data.SD_SCHUL_CODE}&AA_FROM_YMD=${startDay}&AA_TO_YMD=${lastDay}`)).json();
-    
+
     const arr: SCHOOL_EVENT[] = []
     scheduleData.SchoolSchedule[1].row.flat().map((v) => {arr.push({ day: v.AA_YMD, eventName: v.EVENT_NM})});
 
@@ -315,7 +317,7 @@ export const fetchSchoolScheduleAll = async (schoolName: string, startDay: strin
 }
 
 /**학교이름으로 급식 정보를 가져온다. */
-export const fetchCookInfo = async (schoolName:string, getNum:number) => { 
+export const fetchCookInfo = async (schoolName:string, getNum:number) => {
     const arr = await fetchSchoolInfo(schoolName)
     const dayList:string[] = []
 
@@ -323,7 +325,7 @@ export const fetchCookInfo = async (schoolName:string, getNum:number) => {
         if(i !== 0){
             dayList.push(changeDay(getNum))
         } else {
-            const Day = new Date()  
+            const Day = new Date()
             const month = `${Day.getMonth() + 1}`.padStart(2, '0');
             const date = `${Day.getDate()}`.padStart(2, '0');
             const now = `${Day.getFullYear()}${month}${date}`;
@@ -346,7 +348,7 @@ export const checkSchool = async (schoolName:string, year:number, Class:number )
     const schoolInfo = await fetchSchoolInfo(schoolName)
 
     const date = new Date()
-    
+
     const res: SEVER_MSG | NEIS_API_CLASS_DATA = await (await fetch(`${neisApis.반정보}?KEY=${neisApis.key}&Type=json&pIndex=1&pSize=10&ATPT_OFCDC_SC_CODE=${schoolInfo.ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${schoolInfo.SD_SCHUL_CODE}&AY=${date.getFullYear()}&GRADE=${year}`)).json();
     if ('classInfo' in res) {
         if(res.classInfo[1].row.length >= Class){
@@ -356,5 +358,5 @@ export const checkSchool = async (schoolName:string, year:number, Class:number )
         }
     } else {
        return false;
-    } 
+    }
 }

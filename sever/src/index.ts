@@ -8,7 +8,7 @@ const fastify = Fastify({
 });
 fastify.register(fastifyCors, {
     origin:"https://weschedule.kr"
-    // origin:"/*"
+    //origin:"/*"
 });
 
 fastify.register(route, {prefix:'/'});//이거 슈밤바/f/main 해야함 /* 모든것
@@ -70,8 +70,10 @@ fastify.get('/cookInfo', async (req: MyRequest<c>, rep) => { // ?school=학교&g
     return d
 });
 
+
 fastify.get('/comciganData', async (req:MyRequest<c>, rep) => { // ?school=새솔고등학교&Year=1&class=1&zeroOne=1
     const queryObj = req.query
+    
     let d
     if(queryObj.school && queryObj.Year && queryObj.class && queryObj.zeroOne){
         d = await getComciganData(queryObj.school, queryObj.Year, queryObj.class, queryObj.zeroOne);

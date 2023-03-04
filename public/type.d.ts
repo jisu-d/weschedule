@@ -325,3 +325,36 @@ export type schoolInfo = {
         }
     ]
 }
+
+export type 숏날짜 = `${number}${number}-${number}${number}-${number}${number}`;
+export type 날짜 = `${number}${number}${숏날짜}`;
+export type 일과시간 = `${number}(${number}${number}:${number}${number})`;
+export type JA = [void, number[][][], number[][][], number[][][]]
+
+type ComSiGanDataWithout자료 = {
+    교사수:number;
+    학급수:[number, number, number, number];
+    요일별시수:[void, number[], number[], number[]];
+    전일제:[number, number, number];
+    버전:string;
+    담임:[number[], number[], number[]];
+    기상학급수:[number, number, number, number];
+    특별실수:number;
+    열람제한일:날짜;
+    학기시작일자:날짜;
+    학교명:string;
+    지역명:string;
+    학년도:number;
+    복수교사:string[];
+    시작일:날짜;
+    강의실: number[];
+    일과시간:일과시간[];
+    일과자료:[number, `${숏날짜} ~ ${숏날짜}`][];
+    오늘r:number;
+}
+
+export type 자료 = {
+    [p in `${''|'긴'}자료${number}`]?:string[]|JA;
+}
+
+export type ComSiGanData = ComSiGanDataWithout자료 & 자료;
