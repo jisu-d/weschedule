@@ -126,7 +126,7 @@ const comciganDataParsing = async (arr:any, Year:number, Class:number, num:numbe
         '금': [],
     }
 
-    // await fs.writeFile('./arr.json', JSON.stringify(arr), {encoding:'utf-8'});
+    await fs.writeFile('./arr.json', JSON.stringify(arr), {encoding:'utf-8'});
 
     const day = ['월', '화', '수', '목', '금'] as const
 

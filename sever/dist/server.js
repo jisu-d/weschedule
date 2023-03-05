@@ -1,4 +1,5 @@
 import iconv from 'iconv-lite';
+import fs from 'fs/promises';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import { fetchNet } from './fetch.js';
@@ -107,7 +108,7 @@ const comciganDataParsing = async (arr, Year, Class, num) => {
         '목': [],
         '금': [],
     };
-    // await fs.writeFile('./arr.json', JSON.stringify(arr), {encoding:'utf-8'});
+    await fs.writeFile('./arr.json', JSON.stringify(arr), { encoding: 'utf-8' });
     const day = ['월', '화', '수', '목', '금'];
     const days = ['시간표번호_이번주', '시간표번호_다음주'];
     const myComciganData = arr[urlList[days[num]]][Year][Class];
